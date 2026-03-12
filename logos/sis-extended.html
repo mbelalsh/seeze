@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>S𝑖S — Extended Refinements</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400&family=Cormorant+Garamond:ital,wght@0,300;1,300&family=Cormorant+Infant:ital,wght@0,300;1,300&family=Cormorant+SC:wght@300&family=Lora:wght@400&family=Marcellus&family=Libre+Caslon+Display&family=Cinzel:wght@400&family=Philosopher&family=Forum&family=Della+Respira&display=swap" rel="stylesheet">
+<style>
+
+:root {
+  --bg:   #04060c;
+  --s1:   #070a16;
+  --s2:   #0a0e1e;
+  --b1:   #0f1826;
+  --b2:   #18243a;
+  --w2:   #eef2ff;
+  --dim:  #2e3d58;
+  --dim2: #4a6080;
+  /* accent palette */
+  --blue:   #4f8ff2;
+  --sky:    #7ab3f5;
+  --cyan:   #38bdf8;
+  --indigo: #818cf8;
+  --gold:   #c8a84e;
+  --amber:  #d4913a;
+  --teal:   #4a9e8e;
+  --silver: #c0c8d8;
+  --lav:    #a09ad0;
+  --sage:   #6b9e8a;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  background: var(--bg);
+  color: var(--w2);
+  font-family: 'DM Mono', monospace;
+  padding: 52px 24px 90px;
+}
+
+/* KaTeX */
+.katex, .katex * { color: inherit !important; }
+
+/* Core lockup */
+.sis { display: inline-flex; align-items: baseline; line-height: 1; }
+.sis-i { display: inline; vertical-align: baseline; line-height: 1; margin: 0 -0.04em; }
+.sis-i .katex { vertical-align: baseline; }
+
+/* Layout */
+.wrap { max-width: 980px; margin: 0 auto; }
+.slbl {
+  font-size: 8px; letter-spacing: .32em; color: var(--dim2);
+  text-transform: uppercase; text-align: center; padding: 32px 0 12px;
+}
+.grid3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 2px; margin-bottom: 2px; }
+.grid4 { display: grid; grid-template-columns: repeat(4,1fr); gap: 2px; margin-bottom: 2px; }
+
+.card {
+  background: var(--s1); border: 1px solid var(--b1);
+  padding: 40px 14px 24px;
+  display: flex; flex-direction: column; align-items: center;
+  position: relative; overflow: hidden;
+}
+.num  { position:absolute; top:11px; left:13px;  font-size:8px; color:var(--dim); }
+.lbl  { position:absolute; top:11px; right:13px; font-size:7px; color:var(--blue); opacity:.5; text-transform:uppercase; letter-spacing:.1em; }
+.note {
+  font-size:8px; line-height:1.9; color:var(--dim2); text-align:center;
+  border-top:1px solid var(--b1); padding-top:11px; width:100%; margin-top:18px;
+}
+.note b { color: var(--w2); font-weight:500; }
+
+/* mark stack — tight */
+.mark { display:flex; flex-direction:column; align-items:center; gap:5px; }
+.rule-thin { width:155px; height:1px; background:linear-gradient(90deg,transparent,var(--b2),transparent); }
+.tg  { /* tagline base */ font-family:'Cormorant Garamond',serif; font-weight:300; font-style:italic; font-size:11.5px; letter-spacing:.18em; color:var(--dim2); }
+
+/* orbit arc */
+.arc-wrap { position:relative; display:inline-flex; align-items:baseline; }
+.arc-svg  { position:absolute; inset:0; width:100%; height:100%; pointer-events:none; overflow:visible; }
+
+@keyframes fadeUp  { from{opacity:0;transform:translateY(5px)} to{opacity:1;transform:none} }
+@keyframes twinkle { 0%,100%{opacity:.07} 50%{opacity:.5} }
+.card:nth-child(1){animation:fadeUp .32s ease both}
+.card:nth-child(2){animation:fadeUp .32s .04s ease both}
+.card:nth-child(3){animation:fadeUp .32s .08s ease both}
+.card:nth-child(4){animation:fadeUp .32s .12s ease both}
+
+/* ── Font-specific tagline overrides ── */
+.tg-infant   { font-family:'Cormorant Infant',serif; }
+.tg-sc       { font-family:'Cormorant SC',serif; font-style:normal; letter-spacing:.32em; font-size:10px; }
+.tg-lora     { font-family:'Lora',serif; }
+.tg-marc     { font-family:'Marcellus',serif; font-style:normal; letter-spacing:.22em; font-size:10.5px; }
+.tg-caslon   { font-family:'Libre Caslon Display',serif; font-style:normal; font-weight:400; font-size:10px; letter-spacing:.18em; }
+.tg-cinzel   { font-family:'Cinzel',serif; font-style:normal; letter-spacing:.26em; font-size:9px; }
+.tg-philo    { font-family:'Philosopher',serif; }
+.tg-forum    { font-family:'Forum',serif; font-style:normal; letter-spacing:.18em; }
+.tg-della    { font-family:'Della Respira',serif; font-style:normal; letter-spacing:.18em; font-size:10.5px; }
+
+</style>
+</head>
+<body>
+
+<!-- PAGE HEADER -->
+<div style="text-align:center;margin-bottom:54px">
+  <div style="font-size:8px;letter-spacing:.38em;color:var(--dim);text-transform:uppercase;margin-bottom:20px">S𝑖S · Extended Font & Colour Study</div>
+  <div class="mark" style="gap:5px">
+    <div class="arc-wrap">
+      <svg class="arc-svg" viewBox="0 0 240 120" style="opacity:.09" preserveAspectRatio="xMidYMid meet">
+        <ellipse cx="120" cy="98" rx="110" ry="26" stroke="#4f8ff2" stroke-width="1.1" stroke-dasharray="4.5 3" fill="none"/>
+        <circle cx="230" cy="98" r="3" fill="#4f8ff2"/>
+      </svg>
+      <div class="sis" style="position:relative;z-index:1">
+        <span style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:76px;color:var(--w2);line-height:1">S</span>
+        <span class="sis-i mi" id="hdr_i" style="color:var(--blue);font-size:34px"></span>
+        <span style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:76px;color:var(--w2);line-height:1">S</span>
+      </div>
+    </div>
+    <div class="tg">Safe · Interpretable · Simple</div>
+  </div>
+</div>
+
+<div class="wrap">
+
+<!-- ══════════════════════════
+     SECTION A — FONT FAMILIES
+     Closest relatives to Cormorant Garamond 300
+══════════════════════════ -->
+<div class="slbl">Font families — closest relatives to Cormorant Garamond 300</div>
+
+<!-- Macro: arc + sis -->
+<!-- all cards use the same arc dimensions (260×130 viewBox) -->
+
+<div class="grid3">
+
+  <!-- A1 Cormorant Garamond 300 — reference -->
+  <div class="card">
+    <span class="num">A1</span><span class="lbl">CG 300 · ref ★</span>
+    <div class="mark">
+      <div class="arc-wrap">
+        <svg class="arc-svg" viewBox="0 0 260 126" style="opacity:.09" preserveAspectRatio="xMidYMid meet">
+          <ellipse cx="130" cy="100" rx="118" ry="27" stroke="var(--blue)" stroke-width="1.2" stroke-dasharray="5 3.5" fill="none"/>
+          <circle cx="248" cy="100" r="3.5" fill="var(--blue)"/>
+        </svg>
+        <div class="sis" style="position:relative;z-index:1">
+          <span style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:108px;color:var(--w2);line-height:1">S</span>
+          <span class="sis-i mi" style="color:var(--blue);font-size:47px"></span>
+          <span style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:108px;color:var(--w2);line-height:1">S</span>
+        </div>
+      </div>
+      <div class="rule-thin"></div>
+      <div class="tg">Safe · Interpretable · Simple</div>
+    </div>
+    <div class="note"><b>Cormorant Garamond 300 ★.</b> The reference. High-contrast Renaissance italic origins. The S has a fluid spine, angled stress, and fine hairline serifs. Elegant and calligraphic — the benchmark for this study.</div>
+  </div>
+
+  <!-- A2 Cormorant Infant 300 — near-identical, rounder spine -->
+  <div class="card">
+    <span class="num">A2</span><span class="lbl">Cormorant Infant 300</span>
+    <div class="mark">
+      <div class="arc-wrap">
+        <svg class="arc-svg" viewBox="0 0 260 126" style="opacity:.09" preserveAspectRatio="xMidYMid meet">
+          <ellipse cx="130" cy="100" rx="118" ry="27" stroke="var(--blue)" stroke-width="1.2" stroke-dasharray="5 3.5" fill="none"/>
+          <circle cx="248" cy="100" r="3.5" fill="var(--blue)"/>
+        </svg>
+        <div class="sis" style="position:relative;z-index:1">
+          <span style="font-family:'Cormorant Infant',serif;font-weight:300;font-size:108px;color:var(--w2);line-height:1">S</span>
+          <span class="sis-i mi" style="color:var(--blue);font-size:47px"></span>
+          <span style="font-family:'Cormorant Infant',serif;font-weight:300;font-size:108px;color:var(--w2);line-height:1">S</span>
+        </div>
+      </div>
+      <div class="rule-thin"></div>
+      <div class="tg tg-infant">Safe · Interpretable · Simple</div>
+    </div>
+    <div class="note"><b>Cormorant Infant 300.</b> Near-identical to the reference — same designer, same skeleton. Terminals are fractionally softer and the stress angle slightly warmer. Almost indistinguishable at a glance. The safest swap.</div>
+  </div>
+
+  <!-- A3 Cormorant SC — same skeleton, small-caps proportions -->
+  <div class="card">
+    <span class="num">A3</span><span class="lbl">Cormorant SC 300</span>
+    <div class="mark">
+      <div class="arc-wrap">
+        <svg class="arc-svg" viewBox="0 0 260 126" style="opacity:.09" preserveAspectRatio="xMidYMid meet">
+          <ellipse cx="130" cy="100" rx="118" ry="27" stroke="var(--blue)" stroke-width="1.2" stroke-dasharray="5 3.5" fill="none"/>
+          <circle cx="248" cy="100" r="3.5" fill="var(--blue)"/>
+        </svg>
+        <div class="sis" style="position:relative;z-index:1">
+          <span style="font-family:'Cormorant SC',serif;font-weight:300;font-size:108px;color:var(--w2);line-height:1">S</span>
+          <span class="sis-i mi" style="color:var(--blue);font-size:47px"></span>
+          <span style="font-family:'Cormorant SC',serif;font-weight:300;font-size:108px;color:var(--w2);line-height:1">S</span>
+        </div>
+      </div>
+      <div class="rule-thin"></div>
+      <div class="tg tg-sc">Safe · Interpretable · Simple</div>
+    </div>
+    <div class="note"><b>Cormorant SC 300.</b> Small-caps variant of Cormorant. The S is slightly wider and squarer — more monumental. The same hairline contrast but with a more upright, architectural quality. Best for institutional signage.</div>
+  </div>
+
+</div>
+<div class="grid3">
+
+  <!-- A4 Lora 400 — transitional serif, similar contrast -->
+  <div class="card">
+    <span class="num">A4</span><span class="lbl">Lora 400</span>
+    <div class="mark">
+      <div class="arc-wrap">
+        <svg class="arc-svg" viewBox="0 0 260 126" style="opacity:.09" preserveAspectRatio="xMidYMid meet">
+          <ellipse cx="130" cy="100" rx="118" ry="27" stroke="var(--blue)" stroke-width="1.2" stroke-dasharray="5 3.5" fill="none"/>
+          <circle cx="248" cy="100" r="3.5" fill="var(--blue)"/>
+        </svg>
+        <div class="sis" style="position:relative;z-index:1">
+          <span style="font-family:'Lora',serif;font-weight:400;font-size:108px;color:var(--w2);line-height:1">S</span>
+          <span class="sis-i mi" style="color:var(--blue);font-size:47px"></span>
+          <span style="font-family:'Lora',serif;font-weight:400;font-size:108px;color:var(--w2);line-height:1">S</span>
+        </div>
+      </div>
+      <div class="rule-thin"></div>
+      <div class="tg tg-lora">Safe · Interpretable · Simple</div>
+    </div>
+    <div class="note"><b>Lora 400.</b> Calligraphic transitional serif — similar contrast to Cormorant but slightly more robust and contemporary. Warmer and more approachable. Excellent screen rendering at all sizes.</div>
+  </div>
+
+  <!-- A5 Marcellus — clean, high-contrast, upright -->
+  <div class="card">
+    <span class="num">A5</span><span class="lbl">Marcellus</span>
+    <div class="mark">
+      <div class="arc-wrap">
+        <svg class="arc-svg" viewBox="0 0 260 126" style="opacity:.09" preserveAspectRatio="xMidYMid meet">
+          <ellipse cx="130" cy="100" rx="118" ry="27" stroke="var(--blue)" stroke-width="1.2" stroke-dasharray="5 3.5" fill="none"/>
+          <circle cx="248" cy="100" r="3.5" fill="var(--blue)"/>
+        </svg>
+        <div class="sis" style="position:relative;z-index:1">
+          <span style="font-family:'Marcellus',serif;font-weight:400;font-size:108px;color:var(--w2);line-height:1">S</span>
+          <span class="sis-i mi" style="color:var(--blue);font-size:47px"></span>
+          <span style="font-family:'Marcellus',serif;font-weight:400;font-size:108px;color:var(--w2);line-height:1">S</span>
+        </div>
+      </div>
+      <div class="rule-thin"></div>
+      <div class="tg tg-marc">Safe · Interpretable · Simple</div>
+    </div>
+    <div class="note"><b>Marcellus.</b> Roman lapidary inscriptions — upright, clean, precise. Less calligraphic than Cormorant but shares the high stroke contrast. The S is more architectural and geometric. Signals rigour.</div>
+  </div>
+
+  <!-- A6 Cinzel — classical Roman epigraphic -->
+  <div class="card">
+    <span class="num">A6</span><span class="lbl">Cinzel 400</span>
+    <div class="mark">
+      <div class="arc-wrap">
+        <svg class="arc-svg" viewBox="0 0 260 126" style="opacity:.09" preserveAspectRatio="xMidYMid meet">
+          <ellipse cx="130" cy="100" rx="118" ry="27" stroke="var(--blue)" stroke-width="1.2" stroke-dasharray="5 3.5" fill="none"/>
+          <circle cx="248" cy="100" r="3.5" fill="var(--blue)"/>
+        </svg>
+        <div class="sis" style="position:relative;z-index:1">
+          <span style="font-family:'Cinzel',serif;font-weight:400;font-size:108px;color:var(--w2);line-height:1">S</span>
+          <span class="sis-i mi" style="color:var(--blue);font-size:47px"></span>
+          <span style="font-family:'Cinzel',serif;font-weight:400;font-size:108px;color:var(--w2);line-height:1">S</span>
+        </div>
+      </div>
+      <div class="rule-thin"></div>
+      <div class="tg tg-cinzel">Safe · Interpretable · Simple</div>
+    </div>
+    <div class="note"><b>Cinzel 400.</b> Based on Roman stone inscriptions — extreme stroke contrast, flat serifs, monumental authority. The S is wider and more heroic. Closest to a space-agency wordmark feel. Very distinctive.</div>
+  </div>
+
+</div>
+<div class="grid3">
+
+  <!-- A7 Libre Caslon Display -->
+  <div class="card">
+    <span class="num">A7</span><span class="lbl">Libre Caslon Display</span>
+    <div class="mark">
+      <div class="arc-wrap">
+        <svg class="arc-svg" viewBox="0 0 260 126" style="opacity:.09" preserveAspectRatio="xMidYMid meet">
+          <ellipse cx="130" cy="100" rx="118" ry="27" stroke="var(--blue)" stroke-width="1.2" stroke-dasharray="5 3.5" fill="none"/>
+          <circle cx="248" cy="100" r="3.5" fill="var(--blue)"/>
+        </svg>
+        <div class="sis" style="position:relative;z-index:1">
+          <span style="font-family:'Libre Caslon Display',serif;font-weight:400;font-size:108px;color:var(--w2);line-height:1">S</span>
+          <span class="sis-i mi" style="color:var(--blue);font-size:47px"></span>
+          <span style="font-family:'Libre Caslon Display',serif;font-weight:400;font-size:108px;color:var(--w2);line-height:1">S</span>
+        </div>
+      </div>
+      <div class="rule-thin"></div>
+      <div class="tg tg-caslon">Safe · Interpretable · Simple</div>
+    </div>
+    <div class="note"><b>Libre Caslon Display.</b> Classic Anglo-American typeface with generous ink traps and robust serifs. The S is wider and more traditional than Cormorant. Familiar, trustworthy — editorial gravitas of a scientific journal.</div>
+  </div>
+
+  <!-- A8 Della Respira — unusual, Art Nouveau inflection -->
+  <div class="card">
+    <span class="num">A8</span><span class="lbl">Della Respira</span>
+    <div class="mark">
+      <div class="arc-wrap">
+        <svg class="arc-svg" viewBox="0 0 260 126" style="opacity:.09" preserveAspectRatio="xMidYMid meet">
+          <ellipse cx="130" cy="100" rx="118" ry="27" stroke="var(--blue)" stroke-width="1.2" stroke-dasharray="5 3.5" fill="none"/>
+          <circle cx="248" cy="100" r="3.5" fill="var(--blue)"/>
+        </svg>
+        <div class="sis" style="position:relative;z-index:1">
+          <span style="font-family:'Della Respira',serif;font-weight:400;font-size:108px;color:var(--w2);line-height:1">S</span>
+          <span class="sis-i mi" style="color:var(--blue);font-size:47px"></span>
+          <span style="font-family:'Della Respira',serif;font-weight:400;font-size:108px;color:var(--w2);line-height:1">S</span>
+        </div>
+      </div>
+      <div class="rule-thin"></div>
+      <div class="tg tg-della">Safe · Interpretable · Simple</div>
+    </div>
+    <div class="note"><b>Della Respira.</b> Roman inscriptional serifs with a warm, humanist rhythm. The S has flowing curves without feeling calligraphic. Dignified and refined — less common than Cormorant, giving the mark a unique voice.</div>
+  </div>
+
+  <!-- A9 Forum — epigraphic, upright, clean -->
+  <div class="card">
+    <span class="num">A9</span><span class="lbl">Forum</span>
+    <div class="mark">
+      <div class="arc-wrap">
+        <svg class="arc-svg" viewBox="0 0 260 126" style="opacity:.09" preserveAspectRatio="xMidYMid meet">
+          <ellipse cx="130" cy="100" rx="118" ry="27" stroke="var(--blue)" stroke-width="1.2" stroke-dasharray="5 3.5" fill="none"/>
+          <circle cx="248" cy="100" r="3.5" fill="var(--blue)"/>
+        </svg>
+        <div class="sis" style="position:relative;z-index:1">
+          <span style="font-family:'Forum',serif;font-weight:400;font-size:108px;color:var(--w2);line-height:1">S</span>
+          <span class="sis-i mi" style="color:var(--blue);font-size:47px"></span>
+          <span style="font-family:'Forum',serif;font-weight:400;font-size:108px;color:var(--w2);line-height:1">S</span>
+        </div>
+      </div>
+      <div class="rule-thin"></div>
+      <div class="tg tg-forum">Safe · Interpretable · Simple</div>
+    </div>
+    <div class="note"><b>Forum.</b> Roman epigraphic with uncial roots. Upright, monumental, slightly informal — the S has a distinctive open curve and clean exit strokes. Unusual choice that reads as both ancient and contemporary.</div>
+  </div>
+
+</div>
+
+<!-- ══════════════════════════
+     SECTION B — COLOURS
+     All Cormorant Garamond 300
+══════════════════════════ -->
+<div class="slbl">Colours — all Cormorant Garamond 300 · arc matches 𝑖 colour</div>
+
+<div class="grid4">
+
+  <!-- B1 white · blue  (reference) -->
+  <div class="card">
+    <span class="num">B1</span><span class="lbl">White · blue ★</span>
+    <div class="mark">
+      <div class="arc-wrap">
+        <svg class="arc-svg" viewBox="0 0 260 126" style="opacity:.09" preserveAspectRatio="xMidYMid meet">
+          <ellipse cx="130" cy="100" rx="118" ry="27" stroke="var(--blue)" stroke-width="1.2" stroke-dasharray="5 3.5" fill="none"/>
+          <circle cx="248" cy="100" r="3.5" fill="var(--blue)"/>
+        </svg>
+        <div class="sis" style="position:relative;z-index:1">
+          <span style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:108px;color:var(--w2);line-height:1">S</span>
+          <span class="sis-i mi" style="color:var(--blue);font-size:47px"></span>
+          <span style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:108px;color:var(--w2);line-height:1">S</span>
+        </div>
+      </div>
+      <div class="rule-thin"></div>
+      <div class="tg">Safe · Interpretable · Simple</div>
+    </div>
+    <div class="note"><b>White S · blue 𝑖 ★.</b> The reference hero. Neutral frame, accent center. The 𝑖 is the singular pop of colour — interpretability highlighted.</div>
+  </div>
+
+  <!-- B2 white · sky -->
+  <div class="card">
+    <span class="num">B2</span><span class="lbl">White · sky</span>
+    <div class="mark">
+      <div class="arc-wrap">
+        <svg class="arc-svg" viewBox="0 0 260 126" style="opacity:.09" preserveAspectRatio="xMidYMid meet">
+          <ellipse cx="130" cy="100" rx="118" ry="27" stroke="var(--sky)" stroke-width="1.2" stroke-dasharray="5 3.5" fill="none"/>
+          <circle cx="248" cy="100" r="3.5" fill="var(--sky)"/>
+        </svg>
+        <div class="sis" style="position:relative;z-index:1">
+          <span style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:108px;color:var(--w2);line-height:1">S</span>
+          <span class="sis-i mi" style="color:var(--sky);font-size:47px"></span>
+          <span style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:108px;color:var(--w2);line-height:1">S</span>
+        </div>
+      </div>
+      <div class="rule-thin"></div>
+      <div class="tg" style="color:#3a5070">Safe · Interpretable · Simple</div>
+    </div>
+    <div class="note"><b>White · sky blue.</b> Lighter, more atmospheric. Less electric than the reference — feels like high altitude or deep orbit. Calmer and more approachable while still clearly technical.</div>
+  </div>
+
+  <!-- B3 white · cyan -->
+  <div class="card">
+    <span class="num">B3</span><span class="lbl">White · cyan</span>
+    <div class="mark">
+      <div class="arc-wrap">
+        <svg class="arc-svg" viewBox="0 0 260 126" style="opacity:.09" preserveAspectRatio="xMidYMid meet">
+          <ellipse cx="130" cy="100" rx="118" ry="27" stroke="var(--cyan)" stroke-width="1.2" stroke-dasharray="5 3.5" fill="none"/>
+          <circle cx="248" cy="100" r="3.5" fill="var(--cyan)"/>
+        </svg>
+        <div class="sis" style="position:relative;z-index:1">
+          <span style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:108px;color:var(--w2);line-height:1">S</span>
+          <span class="sis-i mi" style="color:var(--cyan);font-size:47px"></span>
+          <span style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:108px;color:var(--w2);line-height:1">S</span>
+        </div>
+      </div>
+      <div class="rule-thin"></div>
+      <div class="tg" style="color:#2e4e58">Safe · Interpretable · Simple</div>
+    </div>
+    <div class="note"><b>White · cyan.</b> Electric, colder, more digital. Signals telemetry, real-time data, live ML inference. The 𝑖 in cyan reads as an active indicator — the system is running.</div>
+  </div>
+
+  <!-- B4 white · indigo -->
+  <div class="card">
+    <span class="num">B4</span><span class="lbl">White · indigo</span>
+    <div class="mark">
+      <div class="arc-wrap">
+        <svg class="arc-svg" viewBox="0 0 260 126" style="opacity:.09" preserveAspectRatio="xMidYMid meet">
+          <ellipse cx="130" cy="100" rx="118" ry="27" stroke="var(--indigo)" stroke-width="1.2" stroke-dasharray="5 3.5" fill="none"/>
+          <circle cx="248" cy="100" r="3.5" fill="var(--indigo)"/>
+        </svg>
+        <div class="sis" style="position:relative;z-index:1">
+          <span style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:108px;color:var(--w2);line-height:1">S</span>
+          <span class="sis-i mi" style="color:var(--indigo);font-size:47px"></span>
+          <span style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:108px;color:var(--w2);line-height:1">S</span>
+        </div>
+      </div>
+      <div class="rule-thin"></div>
+      <div class="tg" style="color:#3e3870">Safe · Interpretable · Simple</div>
+    </div>
+    <div class="note"><b>White · indigo.</b> Deeper, more cerebral. Indigo sits between blue and violet — intellectual and slightly mysterious. Signals deep mathematical structure; probability, manifolds, latent space.</div>
+  </div>
+
+</div>
+<div class="grid4">
+
+  <!-- B5 sky S · white i -->
+  <div class="card">
+    <span class="num">B5</span><span class="lbl">Sky S · white 𝑖</span>
+    <div class="mark">
+      <div class="arc-wrap">
+        <svg class="arc-svg" viewBox="0 0 260 126" style="opacity:.1" preserveAspectRatio="xMidYMid meet">
+          <ellipse cx="130" cy="100" rx="118" ry="27" stroke="var(--sky)" stroke-width="1.2" stroke-dasharray="5 3.5" fill="none"/>
+          <circle cx="248" cy="100" r="3.5" fill="var(--sky)"/>
+        </svg>
+        <div class="sis" style="position:relative;z-index:1">
+          <span style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:108px;color:var(--sky);line-height:1">S</span>
+          <span class="sis-i mi" style="color:var(--w2);font-size:47px"></span>
+          <span style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:108px;color:var(--sky);line-height:1">S</span>
+        </div>
+      </div>
+      <div style="width:155px;height:1px;background:linear-gradient(90deg,transparent,rgba(122,179,245,.2),transparent)"></div>
+      <div class="tg" style="color:#3a5070">Safe · Interpretable · Simple</div>
+    </div>
+    <div class="note"><b>Sky S · white 𝑖.</b> Inverted: the structure is atmospheric blue, interpretability is pure white. Reads as a window inside the system. Atmospheric and considered.</div>
+  </div>
+
+  <!-- B6 gold S · white i -->
+  <div class="card">
+    <span class="num">B6</span><span class="lbl">Gold · white 𝑖</span>
+    <div class="mark">
+      <div class="arc-wrap">
+        <svg class="arc-svg" viewBox="0 0 260 126" style="opacity:.1" preserveAspectRatio="xMidYMid meet">
+          <ellipse cx="130" cy="100" rx="118" ry="27" stroke="var(--gold)" stroke-width="1.2" stroke-dasharray="5 3.5" fill="none"/>
+          <circle cx="248" cy="100" r="3.5" fill="var(--gold)"/>
+        </svg>
+        <div class="sis" style="position:relative;z-index:1">
+          <span style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:108px;color:var(--gold);line-height:1">S</span>
+          <span class="sis-i mi" style="color:var(--w2);font-size:47px"></span>
+          <span style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:108px;color:var(--gold);line-height:1">S</span>
+        </div>
+      </div>
+      <div style="width:155px;height:1px;background:linear-gradient(90deg,transparent,rgba(200,168,78,.2),transparent)"></div>
+      <div class="tg" style="color:#7a6535">Safe · Interpretable · Simple</div>
+    </div>
+    <div class="note"><b>Gold · white 𝑖.</b> Institutional prestige — AFRL, NASA, ESA. The hairline Cormorant S in gold is exceptional. Suited for government proposals, award ceremonies, and formal publications.</div>
+  </div>
+
+  <!-- B7 gold S · blue i -->
+  <div class="card">
+    <span class="num">B7</span><span class="lbl">Gold S · blue 𝑖</span>
+    <div class="mark">
+      <div class="arc-wrap">
+        <svg class="arc-svg" viewBox="0 0 260 126" style="opacity:.1" preserveAspectRatio="xMidYMid meet">
+          <ellipse cx="130" cy="100" rx="118" ry="27" stroke="var(--blue)" stroke-width="1.2" stroke-dasharray="5 3.5" fill="none"/>
+          <circle cx="248" cy="100" r="3.5" fill="var(--blue)"/>
+        </svg>
+        <div class="sis" style="position:relative;z-index:1">
+          <span style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:108px;color:var(--gold);line-height:1">S</span>
+          <span class="sis-i mi" style="color:var(--blue);font-size:47px"></span>
+          <span style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:108px;color:var(--gold);line-height:1">S</span>
+        </div>
+      </div>
+      <div style="width:155px;height:1px;background:linear-gradient(90deg,transparent,rgba(79,143,242,.2),transparent)"></div>
+      <div class="tg" style="color:#4a5870">Safe · Interpretable · Simple</div>
+    </div>
+    <div class="note"><b>Gold S · blue 𝑖.</b> Two distinct materials — heritage gold structure, modern data-blue precision. The split signals both tradition and technology. Unusual and memorable combination.</div>
+  </div>
+
+  <!-- B8 amber S · white i -->
+  <div class="card">
+    <span class="num">B8</span><span class="lbl">Amber · white 𝑖</span>
+    <div class="mark">
+      <div class="arc-wrap">
+        <svg class="arc-svg" viewBox="0 0 260 126" style="opacity:.1" preserveAspectRatio="xMidYMid meet">
+          <ellipse cx="130" cy="100" rx="118" ry="27" stroke="var(--amber)" stroke-width="1.2" stroke-dasharray="5 3.5" fill="none"/>
+          <circle cx="248" cy="100" r="3.5" fill="var(--amber)"/>
+        </svg>
+        <div class="sis" style="position:relative;z-index:1">
+          <span style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:108px;color:var(--amber);line-height:1">S</span>
+          <span class="sis-i mi" style="color:var(--w2);font-size:47px"></span>
+          <span style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:108px;color:var(--amber);line-height:1">S</span>
+        </div>
+      </div>
+      <div style="width:155px;height:1px;background:linear-gradient(90deg,transparent,rgba(212,145,58,.2),transparent)"></div>
+      <div class="tg" style="color:#7a5a28">Safe · Interpretable · Simple</div>
+    </div>
+    <div class="note"><b>Amber · white 𝑖.</b> Warmer than gold — bronze, re-entry glow, sunrise over Earth. Human and warm. The 𝑖 in crisp white pops sharply against the amber S. Closer to a startup than an institution.</div>
+  </div>
+
+</div>
+<div class="grid4">
+
+  <!-- B9 teal S · white i -->
+  <div class="card">
+    <span class="num">B9</span><span class="lbl">Teal · white 𝑖</span>
+    <div class="mark">
+      <div class="arc-wrap">
+        <svg class="arc-svg" viewBox="0 0 260 126" style="opacity:.1" preserveAspectRatio="xMidYMid meet">
+          <ellipse cx="130" cy="100" rx="118" ry="27" stroke="var(--teal)" stroke-width="1.2" stroke-dasharray="5 3.5" fill="none"/>
+          <circle cx="248" cy="100" r="3.5" fill="var(--teal)"/>
+        </svg>
+        <div class="sis" style="position:relative;z-index:1">
+          <span style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:108px;color:var(--teal);line-height:1">S</span>
+          <span class="sis-i mi" style="color:var(--w2);font-size:47px"></span>
+          <span style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:108px;color:var(--teal);line-height:1">S</span>
+        </div>
+      </div>
+      <div style="width:155px;height:1px;background:linear-gradient(90deg,transparent,rgba(74,158,142,.2),transparent)"></div>
+      <div class="tg" style="color:#2e5e54">Safe · Interpretable · Simple</div>
+    </div>
+    <div class="note"><b>Teal · white 𝑖.</b> Blue-green — calm, analytical, safe. Green carries "safety" associations in engineering; teal retains the precision of blue. The most distinctive departure from blue-family marks.</div>
+  </div>
+
+  <!-- B10 silver S · blue i -->
+  <div class="card">
+    <span class="num">B10</span><span class="lbl">Silver · blue 𝑖</span>
+    <div class="mark">
+      <div class="arc-wrap">
+        <svg class="arc-svg" viewBox="0 0 260 126" style="opacity:.09" preserveAspectRatio="xMidYMid meet">
+          <ellipse cx="130" cy="100" rx="118" ry="27" stroke="var(--silver)" stroke-width="1.2" stroke-dasharray="5 3.5" fill="none"/>
+          <circle cx="248" cy="100" r="3.5" fill="var(--silver)"/>
+        </svg>
+        <div class="sis" style="position:relative;z-index:1">
+          <span style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:108px;color:var(--silver);line-height:1">S</span>
+          <span class="sis-i mi" style="color:var(--blue);font-size:47px"></span>
+          <span style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:108px;color:var(--silver);line-height:1">S</span>
+        </div>
+      </div>
+      <div class="rule-thin"></div>
+      <div class="tg" style="color:#4a5a78">Safe · Interpretable · Simple</div>
+    </div>
+    <div class="note"><b>Silver S · blue 𝑖.</b> The structure is metallic — titanium or aluminium alloy, spacecraft panel. The blue 𝑖 is the data layer within the physical system. Aerospace-material aesthetic.</div>
+  </div>
+
+  <!-- B11 lavender S · white i -->
+  <div class="card">
+    <span class="num">B11</span><span class="lbl">Lavender · white</span>
+    <div class="mark">
+      <div class="arc-wrap">
+        <svg class="arc-svg" viewBox="0 0 260 126" style="opacity:.09" preserveAspectRatio="xMidYMid meet">
+          <ellipse cx="130" cy="100" rx="118" ry="27" stroke="var(--lav)" stroke-width="1.2" stroke-dasharray="5 3.5" fill="none"/>
+          <circle cx="248" cy="100" r="3.5" fill="var(--lav)"/>
+        </svg>
+        <div class="sis" style="position:relative;z-index:1">
+          <span style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:108px;color:var(--lav);line-height:1">S</span>
+          <span class="sis-i mi" style="color:var(--w2);font-size:47px"></span>
+          <span style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:108px;color:var(--lav);line-height:1">S</span>
+        </div>
+      </div>
+      <div style="width:155px;height:1px;background:linear-gradient(90deg,transparent,rgba(160,154,208,.15),transparent)"></div>
+      <div class="tg" style="color:#5a5480">Safe · Interpretable · Simple</div>
+    </div>
+    <div class="note"><b>Lavender · white 𝑖.</b> Unusual for aerospace/ML — violets signal creativity, deep mathematics, probabilistic thinking. Memorable precisely because no competitor will have it. The most distinctive colour choice.</div>
+  </div>
+
+  <!-- B12 light — ink on paper -->
+  <div class="card" style="background:#f0ece3;border-color:#d8d2c4">
+    <span class="num" style="color:#9a9080">B12</span><span class="lbl" style="color:#6060a0;opacity:.6">Light bg · ink</span>
+    <div class="mark">
+      <div class="arc-wrap">
+        <svg class="arc-svg" viewBox="0 0 260 126" style="opacity:.07" preserveAspectRatio="xMidYMid meet">
+          <ellipse cx="130" cy="100" rx="118" ry="27" stroke="#1a2a48" stroke-width="1.2" stroke-dasharray="5 3.5" fill="none"/>
+          <circle cx="248" cy="100" r="3.5" fill="#1a2a48"/>
+        </svg>
+        <div class="sis" style="position:relative;z-index:1">
+          <span style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:108px;color:#1a2040;line-height:1">S</span>
+          <span class="sis-i mi" style="color:#2a58c0;font-size:47px"></span>
+          <span style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:108px;color:#1a2040;line-height:1">S</span>
+        </div>
+      </div>
+      <div style="width:155px;height:1px;background:linear-gradient(90deg,transparent,rgba(26,32,64,.15),transparent)"></div>
+      <div style="font-family:'Cormorant Garamond',serif;font-weight:300;font-style:italic;font-size:11.5px;letter-spacing:.18em;color:#7a7060">Safe · Interpretable · Simple</div>
+    </div>
+    <div class="note" style="border-top-color:#d8d2c4;color:#7a7060"><b style="color:#2a2218">Light bg · ink.</b> Letterhead, proposals, business cards. Ink S on warm parchment — the most versatile for print. The 𝑖 in navy. The arc becomes a pencil-sketch orbit.</div>
+  </div>
+
+</div>
+
+</div><!-- /wrap -->
+
+<!-- ════════ HERO ════════ -->
+<div style="max-width:980px;margin:32px auto 0">
+  <div style="font-size:8px;letter-spacing:.32em;color:var(--dim2);text-transform:uppercase;text-align:center;padding:24px 0 14px">★ Hero — Cormorant Garamond 300 · white S · blue 𝑖</div>
+
+  <div style="background:var(--s2);border:1px solid var(--b2);padding:70px 40px 52px;display:flex;flex-direction:column;align-items:center;position:relative;overflow:hidden">
+
+    <div style="position:absolute;inset:0;background:radial-gradient(ellipse 55% 55% at 50% 48%,rgba(79,143,242,.04),transparent 70%);pointer-events:none"></div>
+
+    <svg style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none" viewBox="0 0 900 320">
+      <circle cx="72"  cy="30"  r=".65" fill="white" style="animation:twinkle 3.4s ease-in-out infinite"/>
+      <circle cx="210" cy="72"  r=".5"  fill="white" style="animation:twinkle 4.1s .5s ease-in-out infinite"/>
+      <circle cx="355" cy="20"  r=".8"  fill="white" style="animation:twinkle 2.9s .2s ease-in-out infinite"/>
+      <circle cx="505" cy="52"  r=".5"  fill="#4f8ff2" style="animation:twinkle 5.2s .8s ease-in-out infinite"/>
+      <circle cx="672" cy="26"  r=".7"  fill="white" style="animation:twinkle 3.7s .4s ease-in-out infinite"/>
+      <circle cx="834" cy="62"  r=".5"  fill="white" style="animation:twinkle 4.6s .1s ease-in-out infinite"/>
+      <circle cx="162" cy="218" r=".6"  fill="white" style="animation:twinkle 3.0s .9s ease-in-out infinite"/>
+      <circle cx="488" cy="244" r=".55" fill="#38bdf8" style="animation:twinkle 4.9s .3s ease-in-out infinite"/>
+      <circle cx="748" cy="212" r=".5"  fill="white" style="animation:twinkle 5.4s .6s ease-in-out infinite"/>
+    </svg>
+
+    <div style="display:flex;flex-direction:column;align-items:center;gap:6px;position:relative;z-index:1">
+      <div class="arc-wrap">
+        <svg class="arc-svg" viewBox="0 0 380 168" style="opacity:.09" preserveAspectRatio="xMidYMid meet">
+          <ellipse cx="190" cy="134" rx="174" ry="34" stroke="#4f8ff2" stroke-width="1.2" stroke-dasharray="5 3.5" fill="none"/>
+          <circle cx="364" cy="134" r="4" fill="#4f8ff2"/>
+        </svg>
+        <div class="sis" style="position:relative;z-index:1">
+          <span style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:160px;color:var(--w2);line-height:1">S</span>
+          <span id="hero_i" class="sis-i" style="color:var(--blue);font-size:70px"></span>
+          <span style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:160px;color:var(--w2);line-height:1">S</span>
+        </div>
+      </div>
+      <div style="width:200px;height:1px;background:linear-gradient(90deg,transparent,rgba(24,36,58,.95),transparent)"></div>
+      <div style="font-family:'Cormorant Garamond',serif;font-weight:300;font-style:italic;font-size:14px;letter-spacing:.2em;color:var(--dim2)">Safe · Interpretable · Simple</div>
+      <div style="font-family:'DM Mono',monospace;font-size:7.5px;letter-spacing:.3em;color:var(--dim);text-transform:uppercase">Space · Aviation · Uncertainty-Aware Systems</div>
+    </div>
+
+    <div style="font-size:8px;line-height:1.95;color:var(--dim2);text-align:center;border-top:1px solid var(--b2);padding-top:16px;width:100%;max-width:540px;margin-top:36px">
+      <b style="color:var(--w2)">Extended study.</b>
+      Section A: 9 font families — Cormorant Infant (A2) is the nearest sibling; Cinzel (A6) is the most monumental alternative; Marcellus (A5) the most architectural. Section B: 12 colour combinations — all arcs match the 𝑖 accent colour. B3 (cyan) is the most digital; B6 (gold) the most institutional; B9 (teal) the most distinctive; B11 (lavender) the most unusual.
+    </div>
+  </div>
+</div>
+
+<script>
+window.addEventListener('load', function() {
+  document.querySelectorAll('.mi').forEach(function(el) {
+    katex.render('i', el, { displayMode:false, throwOnError:false });
+    el.querySelectorAll('span').forEach(s => s.style.color = 'inherit');
+  });
+  ['hero_i','hdr_i'].forEach(function(id){
+    var el=document.getElementById(id);
+    if(!el) return;
+    katex.render('i',el,{displayMode:false,throwOnError:false});
+    el.querySelectorAll('span').forEach(s=>s.style.color='inherit');
+  });
+});
+</script>
+</body>
+</html>

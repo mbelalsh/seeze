@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>SiS — Hero Lockup</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Display&family=Cormorant+Garamond:wght@300&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:transparent; min-height:100vh; display:flex; align-items:center; justify-content:center; }
+.katex, .katex * { color:inherit !important; }
+
+/* Fallback: if Libre Caslon Display fails, use a close serif */
+@font-face {
+  font-family: 'Libre Caslon Display';
+  src: url('https://fonts.gstatic.com/s/librecaslondisplay/v6/TK3iWkUJAxQ2nLNGHjUHte5fKg6dAeZRTnc.woff2') format('woff2');
+  font-weight: 400;
+}
+</style>
+</head>
+<body>
+
+<div style="
+  position:relative;
+  display:inline-flex;
+  flex-direction:column;
+  align-items:center;
+  gap:0;
+  padding:60px 72px 36px;
+  background:transparent;
+  border:none;
+">
+  <!-- Background SVG: clipPath keeps lines within mark bounds -->
+  <svg style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;"
+       viewBox="300 40 440 300" preserveAspectRatio="xMidYMid slice">
+    <defs>
+      <clipPath id="c">
+        <rect x="380" y="40" width="280" height="300"/>
+      </clipPath>
+    </defs>
+    <g clip-path="url(#c)">
+      <!-- Trajectory 1: solid blue arc -->
+      <path d="M -20,310 Q 520,60 1060,200"
+        stroke="#2d6db5" stroke-width="1.6" fill="none" opacity=".9"/>
+      <!-- Trajectory 2: dashed lighter arc -->
+      <path d="M 860,10 Q 520,185 160,320"
+        stroke="#3a7abf" stroke-width="1.2" fill="none" opacity=".85" stroke-dasharray="5 3"/>
+      <!-- Orbital ring -->
+      <ellipse cx="520" cy="190" rx="110" ry="17"
+        stroke="#2d6db5" stroke-width="1.4" stroke-dasharray="5 3.5" fill="none" opacity=".9"/>
+    </g>
+  </svg>
+
+  <!-- MARK: S bright (#dce8f8), 𝑖 blue -->
+  <div id="mark" style="position:relative;display:inline-flex;align-items:baseline;line-height:1;z-index:2;">
+    <span style="font-family:'Libre Caslon Display','Palatino Linotype',Palatino,serif;font-weight:400;font-size:160px;line-height:1;color:#7a9ab8;position:relative;z-index:3;">S</span>
+    <span id="mi" style="display:inline;vertical-align:baseline;line-height:1;margin:0 -0.04em;color:#2d6db5;font-size:70px;position:relative;z-index:3;"></span>
+    <span style="font-family:'Libre Caslon Display','Palatino Linotype',Palatino,serif;font-weight:400;font-size:160px;line-height:1;color:#7a9ab8;position:relative;z-index:3;">S</span>
+  </div>
+
+  <!-- tagline: sits tight under mark, proper spacing with | -->
+  <div style="
+    font-family:'Libre Caslon Display','Palatino Linotype',Palatino,serif;
+    font-size:15px;
+    letter-spacing:.01em;
+    color:#3a6080;
+    position:relative;
+    z-index:2;
+    margin-top:-6px;
+  ">Safe &thinsp;|&thinsp; Interpretable &thinsp;|&thinsp; Simple</div>
+
+</div>
+
+<script>
+katex.render('i', document.getElementById('mi'), {displayMode:false, throwOnError:false});
+document.getElementById('mi').querySelectorAll('span').forEach(s => s.style.color = '#2d6db5');
+</script>
+</body>
+</html>

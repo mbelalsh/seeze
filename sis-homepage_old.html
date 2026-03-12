@@ -1,0 +1,2193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SiS — Safe · Interpretable · Simple</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Display&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --bg:       #0f1d33;
+  --bg2:      #142845;
+  --blue:     #4a90d9;
+  --blue2:    #5aa0e8;
+  --S:        #c8dff5;
+  --tagline:  #d6e9fb;
+  --body:     #c8ddf0;
+  --faint:    #2d4f76;
+  --white:    #f3f9ff;
+  --accent:   #6aaff5;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background:
+    radial-gradient(1100px 650px at 16% 20%, rgba(66, 108, 164, 0.16), transparent 64%),
+    radial-gradient(900px 540px at 82% 22%, rgba(50, 84, 136, 0.14), transparent 62%),
+    radial-gradient(1000px 680px at 54% 84%, rgba(28, 49, 84, 0.24), transparent 70%),
+    linear-gradient(180deg, #05080f 0%, #060b14 42%, #03060c 100%);
+  color: var(--body);
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  overflow-x: hidden;
+}
+
+/* ── NOISE OVERLAY ── */
+body::before {
+  content:'';
+  position:fixed; inset:0; z-index:0; pointer-events:none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  opacity: 0.26;
+}
+
+/* ── NEBULA WASH ── */
+body::after {
+  content:'';
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background:
+    radial-gradient(620px 360px at 24% 66%, rgba(86, 138, 206, 0.10), transparent 74%),
+    radial-gradient(680px 380px at 76% 70%, rgba(62, 102, 166, 0.08), transparent 74%),
+    radial-gradient(760px 420px at 50% 8%, rgba(114, 156, 220, 0.06), transparent 78%);
+  mix-blend-mode: screen;
+  opacity: 0.42;
+}
+
+.katex, .katex * { color: inherit !important; }
+
+/* ══════════════════════════════════════
+   NAV
+══════════════════════════════════════ */
+nav {
+  position: fixed; top:0; left:0; right:0; z-index:100;
+  display: flex; align-items:center; justify-content:space-between;
+  padding: 14px 36px;
+  background: transparent;
+  backdrop-filter: blur(2px);
+}
+.nav-menu {
+  margin-left: auto;
+}
+.nav-toggle {
+  display: none;
+  border: 1px solid rgba(132, 188, 245, 0.55);
+  background: rgba(8, 18, 32, 0.6);
+  color: #d8ebfb;
+  border-radius: 10px;
+  padding: 8px 10px;
+  font-family: 'DM Mono', monospace;
+  font-size: 13px;
+  line-height: 1;
+  cursor: pointer;
+}
+.nav-toggle:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(118, 176, 240, 0.26), 0 0 18px rgba(110, 170, 236, 0.36);
+}
+
+.nav-logo {
+  display: inline-flex; align-items:baseline; line-height:1;
+  font-family: 'Libre Caslon Display', Palatino, serif;
+}
+.nav-S { font-size:32px; color: var(--S); }
+.nav-i { font-size:14px; color: var(--blue); margin:0 -0.04em; display:inline; vertical-align:baseline; line-height:1; }
+
+.sis-logo-shell {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  background: transparent;
+  border: none;
+}
+.sis-logo-mark {
+  position: relative;
+  display: inline-flex;
+  align-items: baseline;
+  line-height: 1;
+  z-index: 2;
+}
+.sis-logo-s {
+  font-family:'Libre Caslon Display','Palatino Linotype',Palatino,serif;
+  font-weight:400;
+  line-height:1;
+  color:#EAF4FF;
+  position:relative;
+  z-index:3;
+}
+.sis-logo-i {
+  display:inline;
+  vertical-align:baseline;
+  line-height:1;
+  margin:0 -0.04em;
+  color:#56B4FF;
+  position:relative;
+  z-index:3;
+}
+.sis-logo-tagline {
+  font-family:'Libre Caslon Display','Palatino Linotype',Palatino,serif;
+  letter-spacing:.01em;
+  color:#EAF4FF;
+}
+
+.nav-links {
+  display: flex; gap: 12px; list-style: none;
+  margin-right: 2vw;
+}
+
+/* ── Number prefix slides in on hover ── */
+.nav-links li:nth-child(1) > a::before,
+.nav-links li:nth-child(2) > a::before,
+.nav-links li:nth-child(3) > a::before,
+.nav-links li:nth-child(4) > a::before { content: none; }
+
+.nav-links a {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 14px; font-weight: 400;
+  letter-spacing: .02em;
+  color: #d9ebfb;
+  text-decoration: none;
+  padding: 8px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(110, 157, 209, 0.2);
+  background: transparent;
+  transition: color .2s ease, border-color .2s ease, background .2s ease;
+}
+
+.nav-links a::before {
+  content: none;
+}
+
+.nav-links a::after {
+  content: none;
+}
+
+.nav-links a:hover {
+  color: #f4faff;
+  border-color: rgba(149, 198, 251, 0.5);
+  background: transparent;
+}
+.nav-links a[aria-current="page"] {
+  color: #f1f8ff;
+  border-color: rgba(154, 206, 255, 0.65);
+}
+
+.nav-links a:focus-visible {
+  outline: none;
+  border-color: rgba(177, 218, 255, 0.9);
+  box-shadow: 0 0 0 2px rgba(118, 176, 240, 0.24), 0 0 16px rgba(110, 170, 236, 0.3);
+}
+
+/* ── CTA button ── */
+@keyframes ctaShimmer {
+  0%   { transform: translateX(-100%) skewX(-12deg); }
+  100% { transform: translateX(300%) skewX(-12deg); }
+}
+
+.nav-cta {
+  position: relative;
+  overflow: hidden;
+  font-family: 'DM Mono', monospace;
+  font-size: 13px; font-weight: 400;
+  letter-spacing: .16em; text-transform: uppercase;
+  color: #dff0ff;
+  border: 1px solid rgba(132, 188, 245, 0.52);
+  border-radius: 999px;
+  background:
+    linear-gradient(180deg, rgba(40, 82, 130, 0.60), rgba(20, 46, 78, 0.52));
+  box-shadow:
+    inset 0 1px 0 rgba(196, 229, 255, 0.16),
+    inset 0 -1px 0 rgba(20, 50, 90, 0.4),
+    0 6px 20px rgba(6, 14, 26, 0.28);
+  padding: 10px 22px;
+  text-decoration: none;
+  transition: color .25s ease, border-color .25s ease, background .25s ease,
+              transform .25s ease, box-shadow .25s ease;
+}
+/* Shimmer sweep layer */
+.nav-cta::after {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0;
+  width: 40%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.10), transparent);
+  transform: translateX(-100%) skewX(-12deg);
+  pointer-events: none;
+}
+.nav-cta:hover {
+  border-color: rgba(173, 216, 255, 0.82);
+  color: #ffffff;
+  background: transparent;
+  transform: translateY(-2px);
+  box-shadow:
+    inset 0 1px 0 rgba(210, 238, 255, 0.22),
+    inset 0 -1px 0 rgba(20, 50, 90, 0.4),
+    0 0 0 1px rgba(132, 188, 245, 0.22),
+    0 10px 28px rgba(6, 14, 26, 0.38),
+    0 0 24px rgba(74, 144, 217, 0.18);
+}
+.nav-cta:hover::after {
+  animation: ctaShimmer 0.65s ease-out forwards;
+}
+.nav-cta:focus-visible {
+  outline: none;
+  border-color: rgba(177, 218, 255, 0.95);
+  box-shadow: 0 0 0 2px rgba(118, 176, 240, 0.26), 0 0 20px rgba(110, 170, 236, 0.4);
+}
+
+/* ══════════════════════════════════════
+   HERO
+══════════════════════════════════════ */
+#hero {
+  position:relative; min-height:92vh;
+  display:flex; flex-direction:column;
+  align-items:center; justify-content:center;
+  overflow:hidden;
+}
+#hero::before {
+  content:'';
+  position:absolute; inset:0; z-index:3; pointer-events:none;
+  background: radial-gradient(ellipse at center, transparent 48%, rgba(6,12,22,0.28) 80%, rgba(3,7,14,0.55) 100%);
+}
+
+/* Star field */
+.stars {
+  position:absolute; inset:0; z-index:0; pointer-events:none;
+  transform: rotate(var(--space-rot, 0deg)) translate3d(var(--px, 0px), var(--py, 0px), 0);
+}
+.stars-far { z-index:0; }
+.stars-mid, .stars-near, .space-layer, .meteors { display: none; }
+.space-layer {
+  position:absolute; inset:-8%; pointer-events:none;
+  transition: transform .35s ease-out;
+  transform: var(--space-base, none) rotate(var(--space-rot, 0deg)) translate3d(var(--px, 0px), var(--py, 0px), 0);
+}
+.milkyway {
+  z-index:1;
+  opacity:.38;
+  --space-base: rotate(-18deg);
+  background:
+    radial-gradient(60% 16% at 52% 44%, rgba(208, 229, 255, 0.34), rgba(148, 188, 240, 0.14) 42%, rgba(64, 102, 162, 0.05) 68%, transparent 78%),
+    radial-gradient(48% 12% at 46% 56%, rgba(224, 236, 255, 0.20), rgba(132, 173, 228, 0.09) 46%, transparent 74%);
+  filter: blur(1.3px);
+}
+.dust-lanes {
+  z-index:2;
+  opacity:.24;
+  --space-base: rotate(-16deg);
+  background:
+    radial-gradient(54% 12% at 50% 48%, rgba(8, 16, 30, 0.48), transparent 72%),
+    radial-gradient(44% 10% at 52% 58%, rgba(8, 16, 30, 0.42), transparent 72%);
+  filter: blur(1.2px);
+}
+.focal-star { z-index:3; inset:0; }
+.focal-star::before,
+.focal-star::after {
+  content:'';
+  position:absolute;
+  pointer-events:none;
+}
+.focal-star::before {
+  width:150px;
+  height:150px;
+  right:14%;
+  top:12%;
+  border-radius:50%;
+  background: radial-gradient(circle, rgba(255,255,255,0.98) 0%, rgba(219,236,255,0.82) 18%, rgba(154,198,252,0.46) 44%, transparent 76%);
+  box-shadow: 0 0 48px rgba(138, 186, 245, 0.42), 0 0 96px rgba(118, 168, 235, 0.24), 0 0 160px rgba(97, 142, 212, 0.16);
+  animation: haloPulse 6.6s ease-in-out infinite;
+}
+.focal-star::after {
+  right: calc(14% + 58px);
+  top: calc(12% + 58px);
+  width:1px; height:1px;
+  box-shadow: 0 -44px 0 0 rgba(198,226,255,0.44), 0 44px 0 0 rgba(198,226,255,0.44), -44px 0 0 0 rgba(198,226,255,0.44), 44px 0 0 0 rgba(198,226,255,0.44);
+}
+@keyframes haloPulse { 0%,100%{opacity:.82;transform:scale(1)} 50%{opacity:1;transform:scale(1.05)} }
+.meteors {
+  position:absolute; inset:0; z-index:4; pointer-events:none; overflow:hidden;
+}
+.meteor {
+  position:absolute;
+  width:var(--len,120px);
+  height:1.3px;
+  background: linear-gradient(90deg, rgba(220,238,255,0), rgba(220,238,255,0.95), rgba(220,238,255,0));
+  border-radius:999px;
+  filter: drop-shadow(0 0 8px rgba(190, 224, 255, 0.55));
+  opacity:0;
+  transform: rotate(var(--ang, -24deg)) translateX(0);
+  animation: meteorFly var(--dur, 1.35s) ease-out forwards;
+}
+.star {
+  position:absolute; border-radius:50%;
+  background: radial-gradient(circle at 35% 35%, #ffffff 0%, #d8eaff 60%, rgba(190,220,255,0.25) 100%);
+  box-shadow: 0 0 8px rgba(170, 212, 255, 0.35);
+  animation: twinkle var(--dur,4s) var(--del,0s) ease-in-out infinite;
+  transform: translate3d(0, 0, 0);
+}
+@keyframes twinkle { 0%,100%{opacity:.16} 50%{opacity:var(--op,.82)} }
+@keyframes drift {
+  0% { transform: translate3d(0, 0, 0); }
+  50% { transform: translate3d(var(--dx, 0px), var(--dy, 0px), 0); }
+  100% { transform: translate3d(0, 0, 0); }
+}
+@keyframes meteorFly {
+  0% { opacity:0; transform: translate3d(0, 0, 0) rotate(var(--ang, -24deg)); }
+  12% { opacity:1; }
+  100% { opacity:0; transform: translate3d(-220px, 140px, 0) rotate(var(--ang, -24deg)); }
+}
+
+/* Hero background SVG */
+.hero-svg {
+  position:absolute; inset:0; width:100%; height:100%;
+  pointer-events:none; z-index:1;
+}
+
+/* Hero mark */
+.hero-mark {
+  position:relative; z-index:10;
+  display:inline-flex; flex-direction:column; align-items:center; gap:0;
+  animation: fadeUp 1.2s cubic-bezier(.16,1,.3,1) both;
+}
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(28px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+
+.hero-sis {
+  display:inline-flex; align-items:baseline; line-height:1;
+  font-family: 'Libre Caslon Display', Palatino, serif;
+}
+.hero-S { font-size:160px; line-height:1; color: var(--S); }
+.hero-i { font-size:70px; line-height:1; margin:0 -0.04em; color: var(--blue); display:inline; vertical-align:baseline; }
+
+.hero-tagline {
+  font-family: 'Libre Caslon Display', Palatino, serif;
+  font-size:15px; letter-spacing:.01em; color: var(--tagline);
+  margin-top: -18px;
+  animation: fadeUp 1.2s .2s cubic-bezier(.16,1,.3,1) both;
+}
+
+.hero-codeline {
+  display: none;
+}
+.hero-codeline-inline {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin: 2px 0 4px;
+  white-space: nowrap;
+}
+.hero-code-prefix {
+  font-family:'DM Mono', monospace;
+  font-size: clamp(18px, 3.1vw, 34px);
+  color: #7fb5e9;
+  letter-spacing: .06em;
+  line-height: 1;
+}
+.hero-code-text {
+  font-family:'DM Mono', monospace;
+  font-size: clamp(16px, 2.8vw, 30px);
+  letter-spacing: .08em;
+  text-transform: lowercase;
+  color: #cfe7ff;
+  line-height: 1;
+  white-space: nowrap;
+}
+.hero-code-caret {
+  width: clamp(8px, 1.4vw, 12px);
+  height: 1em;
+  border-left: clamp(2px, .35vw, 3px) solid #a8d2ff;
+  animation: caretBlink .95s step-end infinite;
+}
+.hero-codeline-inline .hero-code-prefix {
+  font-size: clamp(14px, 1.6vw, 18px);
+  letter-spacing: .03em;
+  color: #8ebce5;
+}
+.hero-codeline-inline .hero-code-text {
+  font-size: clamp(13px, 1.5vw, 17px);
+  letter-spacing: .03em;
+  color: #c7def3;
+  text-transform: lowercase;
+}
+.hero-codeline-inline .hero-code-caret {
+  width: 9px;
+  border-left-width: 2px;
+}
+@keyframes caretBlink { 0%,45%{opacity:1} 46%,100%{opacity:.15} }
+
+.hero-sub {
+  margin-top: 52px;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 18px; font-weight:300; font-style:italic;
+  color: #8ab8d8; letter-spacing:.04em;
+  max-width: 500px; text-align:center; line-height:1.7;
+  animation: fadeUp 1.2s .4s cubic-bezier(.16,1,.3,1) both;
+}
+
+.hero-buttons {
+  margin-top: 24px;
+  display:flex; gap:16px;
+  animation: fadeUp 1.2s .6s cubic-bezier(.16,1,.3,1) both;
+  justify-content: center;
+}
+.btn-primary {
+  font-family:'Cormorant Garamond',serif;
+  font-size: 18px;
+  font-weight: 400;
+  letter-spacing:.01em;
+  background: var(--blue);
+  color: #08203a;
+  padding:12px 24px;
+  border-radius: 999px;
+  text-decoration:none; transition:all .2s ease;
+  border: none;
+  cursor: pointer;
+}
+.btn-primary:hover { background: transparent; color: #d9efff; }
+.btn-ghost {
+  font-family:'Cormorant Garamond',serif;
+  font-size: 18px;
+  letter-spacing:.01em;
+  border:1px solid var(--faint); color: #d8eafd;
+  border-radius: 999px;
+  padding:12px 24px; text-decoration:none; transition:all .2s ease;
+}
+.btn-ghost:hover { border-color:var(--S); color:var(--S); }
+.btn-primary:focus-visible,
+.btn-ghost:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(101, 165, 232, 0.35), 0 0 0 4px rgba(16, 35, 56, 0.8);
+}
+
+.hero-copy {
+  position: relative;
+  z-index: 8;
+  text-align: center;
+  max-width: 64ch;
+  margin: 0 auto 24px;
+}
+.hero-headline {
+  font-family: 'Libre Caslon Display', Palatino, serif;
+  font-size: clamp(30px, 5.0vw, 62px);
+  line-height: 1.08;
+  color: var(--white);
+  margin-bottom: 14px;
+  white-space: nowrap;
+}
+/* ══════════════════════════════════════
+   SECTION BASE
+══════════════════════════════════════ */
+section {
+  position:relative; z-index:2;
+  padding: 88px 60px;
+  scroll-margin-top: 90px;
+}
+
+.section-label {
+  font-family:'Cormorant Garamond',serif;
+  font-size:13px; font-weight:400;
+  letter-spacing:.02em;
+  color:#a9cbed;
+  margin-bottom:12px;
+}
+
+.section-title {
+  font-family:'Libre Caslon Display', Palatino, serif;
+  font-size:44px; color:var(--white); line-height:1.1;
+  margin-bottom:24px;
+}
+
+.section-body {
+  font-family:'Cormorant Garamond',serif;
+  font-size:18px; font-weight:400; line-height:1.65;
+  color:#d0e4f6; max-width:66ch;
+}
+
+/* ══════════════════════════════════════
+   PROBLEM / ABOUT
+══════════════════════════════════════ */
+#about {
+  display:grid; grid-template-columns:1fr 1fr; gap:100px; align-items:center;
+  border-top: 1px solid var(--faint);
+}
+
+.about-visual {
+  position:relative;
+  height:430px;
+  border: 1px solid rgba(47, 90, 140, 0.35);
+  background: transparent;
+  overflow: hidden;
+}
+.about-svg {
+  width:100%; height:100%; display:block;
+}
+.about-kicker {
+  font-family:'Cormorant Garamond', serif;
+  font-size: 14px;
+  letter-spacing: .02em;
+  color: #8ec0ef;
+  margin: -6px 0 16px;
+}
+.about-metrics {
+  max-width: 560px;
+  margin: 22px 0 24px;
+  display:grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap:12px;
+}
+.about-metric {
+  border:1px solid rgba(69,117,173,.34);
+  background: transparent;
+  padding:12px 12px 11px;
+}
+.metric-value {
+  font-family:'Libre Caslon Display', Palatino, serif;
+  font-size:22px;
+  line-height:1.1;
+  color:#dcecff;
+  margin-bottom:4px;
+}
+.metric-label {
+  font-family:'Cormorant Garamond', serif;
+  font-size:14px;
+  letter-spacing:.01em;
+  color:#c0daf0;
+}
+.about-compare {
+  max-width:560px;
+  margin-top:18px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+.compare-card {
+  border:1px solid rgba(69,117,173,.30);
+  background: transparent;
+  padding:12px 12px 10px;
+}
+.compare-title {
+  font-family:'Cormorant Garamond', serif;
+  font-size:14px;
+  letter-spacing:.01em;
+  color:#90bee9;
+  margin-bottom:9px;
+}
+.compare-item {
+  font-family:'Cormorant Garamond', serif;
+  font-size:14px;
+  line-height:1.5;
+  color:#9cc0e2;
+}
+.compare-item strong { color:#d2e7ff; font-weight:400; }
+.compare-meter { margin-top:8px; }
+.meter-row {
+  display:flex; justify-content:space-between; align-items:center;
+  font-family:'Cormorant Garamond', serif;
+  font-size:13px;
+  letter-spacing:.01em;
+  color:#9ec3e5;
+  margin-bottom:5px;
+}
+.meter-track {
+  height:5px; width:100%; border-radius:999px; overflow:hidden;
+  background: rgba(24,44,72,.9);
+}
+.meter-fill {
+  height:100%; width:86%;
+  background: linear-gradient(90deg,#dd6470,#f28a92);
+}
+.meter-fill.good {
+  width:26%;
+  background: linear-gradient(90deg,#5ca8ef,#9ed2ff);
+}
+.about-note {
+  margin-top:12px;
+  font-family:'Cormorant Garamond', serif;
+  font-size:14px;
+  font-style:italic;
+  color:#86b4dc;
+}
+
+/* ══════════════════════════════════════
+   WHAT WE DO — 3 pillars
+══════════════════════════════════════ */
+#pillars {
+  border-top: 1px solid var(--faint);
+  background: transparent;
+}
+
+.pillars-header {
+  max-width: 920px; margin-bottom:72px;
+}
+.pillars-thesis {
+  max-width:680px;
+  font-family:'Cormorant Garamond', serif;
+  font-size:18px;
+  line-height:1.75;
+  color:#9bc0e2;
+  margin-top:16px;
+}
+.pillars-thesis strong {
+  color:#d8ebff;
+  font-weight:400;
+}
+.pillars-chain {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  white-space: nowrap;
+  padding: 14px 22px;
+  border: 1px solid rgba(108, 162, 221, 0.38);
+  border-radius: 999px;
+  background: transparent;
+  box-shadow:
+    inset 0 1px 0 rgba(188, 225, 255, 0.10),
+    0 0 0 1px rgba(74, 144, 217, 0.06),
+    0 16px 36px rgba(4, 10, 20, 0.40);
+}
+.pillars-chain-label {
+  font-family:'Libre Caslon Display', Palatino, serif;
+  font-size: clamp(30px, 3.0vw, 44px);
+  line-height: 1;
+  color: #d4e9ff;
+  text-shadow: 0 0 28px rgba(129, 180, 236, 0.22);
+}
+.pillars-chain-arrow {
+  font-family:'DM Mono', monospace;
+  font-size: 14px;
+  color: #a8d3ff;
+  width: 28px; height: 28px;
+  display: inline-grid; place-items: center;
+  border-radius: 50%;
+  border: 1px solid rgba(134, 187, 244, 0.32);
+  background: transparent;
+}
+
+/* Per-pillar accent colours */
+.pillar:nth-child(1) { --accent: #4a90d9; --accent-glow: rgba(74,144,217,.16); }
+.pillar:nth-child(2) { --accent: #60c2f0; --accent-glow: rgba(96,194,240,.16); }
+.pillar:nth-child(3) { --accent: #38c9a8; --accent-glow: rgba(56,201,168,.16); }
+
+.pillars-grid {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0,1fr));
+  gap: 20px;
+  align-items: stretch;
+}
+
+.pillar {
+  padding: 36px 30px 28px;
+  border: 1px solid rgba(76,124,182,.36);
+  border-top: none;
+  border-radius: 16px;
+  background: transparent;
+  box-shadow:
+    inset 0 1px 0 rgba(170,210,255,.06),
+    0 4px 24px rgba(4,10,22,.28);
+  position: relative; overflow: hidden;
+  transition: border-color .35s ease, transform .35s ease, box-shadow .35s ease;
+}
+/* Top accent bar */
+.pillar::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, transparent 0%, var(--accent) 50%, transparent 100%);
+  border-radius: 16px 16px 0 0;
+}
+/* Inner corner gradient on hover */
+.pillar::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 20% 0%, var(--accent-glow, rgba(74,144,217,.14)) 0%, transparent 65%);
+  opacity: 0; transition: opacity .4s;
+  pointer-events: none;
+}
+.pillar:hover {
+  border-color: var(--accent, rgba(122,176,232,.7));
+  transform: translateY(-4px);
+  box-shadow:
+    inset 0 1px 0 rgba(170,210,255,.10),
+    0 12px 40px rgba(4,10,22,.40),
+    0 0 0 1px var(--accent, rgba(74,144,217,.3)),
+    0 0 28px var(--accent-glow, rgba(74,144,217,.12));
+}
+.pillar:hover::after { opacity: 1; }
+
+/* Watermark number behind content */
+.pillar-bg-num {
+  position: absolute;
+  right: 12px; bottom: -28px;
+  font-family: 'Libre Caslon Display', Palatino, serif;
+  font-size: 148px; line-height: 1;
+  color: var(--accent);
+  opacity: 0.05;
+  pointer-events: none; user-select: none;
+  transition: opacity .35s ease;
+}
+.pillar:hover .pillar-bg-num { opacity: 0.09; }
+
+.pillar-num {
+  font-family: 'DM Mono', monospace;
+  font-size: 13px; letter-spacing: .06em;
+  color: var(--accent, #9fcaf1);
+  opacity: .9;
+  margin-bottom: 20px;
+  display: block;
+}
+.pillar-icon {
+  margin-bottom: 20px;
+}
+.pillar-title {
+  font-family: 'Libre Caslon Display', Palatino, serif;
+  font-size: 30px; color: var(--white); margin-bottom: 12px; line-height: 1.1;
+}
+.pillar-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 18px; font-weight: 400; line-height: 1.62;
+  color: #c8dff2;
+}
+.pillar-tags {
+  display: flex; flex-wrap: wrap; gap: 7px;
+  margin-top: 22px;
+}
+.pillar-tag {
+  font-family: 'DM Mono', monospace;
+  font-size: 12px; letter-spacing: .04em;
+  color: var(--accent);
+  border: 1px solid var(--accent);
+  border-radius: 999px;
+  padding: 4px 11px;
+  opacity: 0.62;
+  background: transparent;
+  transition: opacity .25s;
+}
+.pillar:hover .pillar-tag { opacity: 0.88; }
+
+/* Verification timeline strip */
+.verification-strip {
+  margin-top: 28px;
+  padding: 20px 28px;
+  border: 1px solid rgba(60,106,158,.32);
+  border-radius: 16px;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  gap: 0;
+  overflow: hidden;
+  position: relative;
+}
+.verification-strip::before {
+  content: '';
+  position: absolute; left: 28px; right: 28px; top: 50%;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(74,144,217,.3), rgba(96,194,240,.3), rgba(56,201,168,.3));
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+.verify-node {
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  flex: 1;
+  position: relative; z-index: 1;
+}
+.verify-dot {
+  width: 10px; height: 10px; border-radius: 50%;
+  background: var(--dot-color, #4a90d9);
+  box-shadow: 0 0 10px var(--dot-color, #4a90d9);
+  border: 2px solid rgba(255,255,255,.15);
+}
+.verify-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 12px; letter-spacing: .04em;
+  color: #b4d8f5;
+  white-space: nowrap;
+  text-align: center;
+}
+
+/* ══════════════════════════════════════
+   RESEARCH / TECHNOLOGY
+══════════════════════════════════════ */
+#research {
+  border-top:1px solid var(--faint);
+  display:block;
+  background: rgba(8, 16, 28, 0.48);
+  border-radius: 16px;
+  margin: 0 24px;
+  padding: 56px 36px;
+}
+.tech-video {
+  margin-top: 18px;
+  border: 1px solid rgba(94, 148, 206, 0.36);
+  border-radius: 14px;
+  overflow: hidden;
+  background: rgba(4, 8, 14, 0.78);
+}
+.tech-video video {
+  width: 100%;
+  height: auto;
+  display: block;
+  background: #000;
+}
+.tech-caption {
+  font-family:'Cormorant Garamond',serif;
+  font-size:17px;
+  line-height:1.5;
+  color:#bdd8ef;
+  padding: 12px 14px 14px;
+  border-top: 1px solid rgba(72, 122, 182, 0.38);
+}
+.tech-actions {
+  margin-top: 14px;
+  display: flex;
+  gap: 12px;
+}
+
+/* ══════════════════════════════════════
+   METRICS / STATS
+══════════════════════════════════════ */
+#stats {
+  border-top:1px solid var(--faint);
+  display:grid; grid-template-columns:repeat(4,1fr); gap:2px;
+  padding-top:0; padding-bottom:0;
+  margin: 0 24px;
+}
+.stat {
+  padding:50px 30px;
+  border:1px solid var(--faint);
+  display:flex; flex-direction:column; gap:12px;
+  min-height: 245px;
+}
+.stat-num {
+  font-family:'Libre Caslon Display',Palatino,serif;
+  font-size:46px; color:var(--white); line-height:1.04;
+}
+.stat-label {
+  font-family:'Cormorant Garamond',serif; font-size:18px; font-weight:400;
+  color:#cfe4f7; line-height:1.52;
+  max-width: 28ch;
+}
+.stat-meta {
+  margin-top: auto;
+  font-family:'DM Mono', monospace;
+  font-size: 12px;
+  letter-spacing: .02em;
+  color: #9bbede;
+}
+
+/* ══════════════════════════════════════
+   USE CASES
+══════════════════════════════════════ */
+#use-cases {
+  border-top:1px solid var(--faint);
+  background: rgba(8, 16, 28, 0.48);
+  border-radius: 16px;
+  margin: 0 24px;
+  padding: 56px 36px;
+}
+.use-cases-grid {
+  display:grid;
+  grid-template-columns: repeat(2, minmax(0,1fr));
+  gap: 14px;
+  margin-top: 22px;
+}
+.use-case-card {
+  border:1px solid rgba(84,131,186,.34);
+  border-radius: 12px;
+  background: transparent;
+  padding: 18px;
+}
+.use-case-title {
+  font-family:'Libre Caslon Display', Palatino, serif;
+  font-size: 27px;
+  color: var(--white);
+  margin-bottom: 8px;
+}
+.use-case-text {
+  font-family:'Cormorant Garamond',serif;
+  font-size:18px;
+  line-height:1.56;
+  color:#cde2f5;
+}
+
+/* ══════════════════════════════════════
+   CTA / CONTACT
+══════════════════════════════════════ */
+#contact {
+  border-top:1px solid var(--faint);
+  text-align:center;
+  background: rgba(8, 16, 28, 0.48);
+  border-radius: 16px;
+  margin: 0 24px;
+  padding: 56px 36px;
+}
+#contact .section-title { font-size:44px; }
+#contact .section-body { margin: 0 auto 48px; text-align:center; }
+.contact-form-wrap {
+  width: min(620px, 92vw);
+  margin: 20px auto 0;
+  padding: 0;
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: max-height .45s ease, opacity .35s ease, transform .35s ease, padding .35s ease;
+  border: 1px solid transparent;
+  border-radius: 14px;
+  background: transparent;
+}
+.contact-form-wrap.open {
+  max-height: 620px;
+  opacity: 1;
+  transform: translateY(0);
+  padding: 18px;
+  border-color: rgba(92, 148, 204, 0.42);
+  background: transparent;
+}
+.contact-form {
+  display: grid;
+  gap: 12px;
+  text-align: left;
+}
+.contact-form label {
+  font-family:'Cormorant Garamond',serif;
+  font-size: 14px;
+  letter-spacing: .01em;
+  color: #cce1f5;
+}
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  margin-top: 6px;
+  padding: 11px 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(90, 142, 199, 0.44);
+  background: transparent;
+  color: #d9ecff;
+  font-family:'Cormorant Garamond',serif;
+  font-size: 18px;
+  line-height: 1.3;
+  outline: none;
+  transition: border-color .2s ease, box-shadow .2s ease;
+}
+.contact-form input:focus,
+.contact-form textarea:focus {
+  border-color: rgba(126, 184, 246, 0.86);
+  box-shadow: 0 0 0 2px rgba(92, 148, 204, 0.28);
+}
+.contact-form textarea {
+  min-height: 130px;
+  resize: vertical;
+}
+.contact-form .btn-primary {
+  justify-self: start;
+}
+.contact-form-note {
+  margin-top: 4px;
+  font-family:'Cormorant Garamond',serif;
+  font-size: 16px;
+  letter-spacing: .01em;
+  color: #a6c8e7;
+}
+
+/* ══════════════════════════════════════
+   STARTUP PHILOSOPHY
+══════════════════════════════════════ */
+#startup-philosophy {
+  position: relative;
+  z-index: 2;
+  padding: 78px 60px;
+}
+.philosophy-header {
+  max-width: 920px;
+  margin: 0 auto 28px;
+}
+.philosophy-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+.philosophy-card {
+  border: 1px solid rgba(98, 150, 208, 0.24);
+  border-radius: 14px;
+  background: rgba(10, 20, 34, 0.42);
+  padding: 20px 18px;
+}
+.philosophy-kicker {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: #8ebce8;
+  margin-bottom: 8px;
+}
+.philosophy-title {
+  font-family: 'Libre Caslon Display', serif;
+  font-size: clamp(28px, 3vw, 40px);
+  line-height: 1;
+  color: #eef7ff;
+  margin-bottom: 10px;
+}
+.philosophy-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 21px;
+  line-height: 1.25;
+  color: #c8ddf0;
+}
+
+/* ══════════════════════════════════════
+   FOOTER
+══════════════════════════════════════ */
+footer {
+  position:relative; z-index:2;
+  padding:40px 60px;
+  border-top:1px solid var(--faint);
+  display:flex; align-items:center; justify-content:space-between;
+}
+.footer-copy {
+  font-family:'Cormorant Garamond',serif; font-size:14px; letter-spacing:.01em;
+  color:#b8d3ea;
+}
+.footer-tagline {
+  font-family:'Cormorant Garamond',serif; font-size:16px;
+  color:#c7def2;
+}
+
+/* ══════════════════════════════════════
+   SCROLL ANIMATIONS
+══════════════════════════════════════ */
+.reveal {
+  opacity:0; transform:translateY(24px);
+  transition: opacity .48s ease, transform .48s ease;
+}
+.reveal.visible { opacity:1; transform:translateY(0); }
+.reveal-delay-1, .reveal-delay-2, .reveal-delay-3 { transition-delay: .04s; }
+
+#earth-wrap {
+  border-radius: 50%;
+  overflow: hidden;
+}
+#earth-canvas {
+  width: 520px;
+  height: 520px;
+  display: block;
+}
+#earth-canvas .cesium-viewer,
+#earth-canvas .cesium-viewer-cesiumWidget,
+#earth-canvas .cesium-widget,
+#earth-canvas canvas {
+  width: 520px !important;
+  height: 520px !important;
+  border-radius: 0 !important;
+}
+#earth-canvas .cesium-viewer-bottom,
+#earth-canvas .cesium-credit-logoContainer,
+#earth-canvas .cesium-credit-textContainer {
+  display: none !important;
+}
+
+.earth-mode-row {
+  position: relative;
+  z-index: 9;
+  margin-top: -2px;
+  margin-bottom: 14px;
+}
+.earth-mode-toggle {
+  position: relative;
+  z-index: 12;
+  border: 1px solid rgba(122, 176, 216, 0.35);
+  background: transparent;
+  color: #d2e8ff;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 14px;
+  letter-spacing: 0.01em;
+  padding: 9px 14px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all .25s ease;
+}
+.earth-mode-toggle:hover { border-color: rgba(122, 176, 216, 0.7); color:#edf6ff; }
+.earth-mode-toggle.is-weather {
+  border-color: rgba(157, 206, 255, 0.75);
+  box-shadow: 0 0 16px rgba(122, 176, 216, 0.3);
+}
+.earth-mode-toggle.is-orbit {
+  border-color: rgba(116,170,255,.75);
+  box-shadow: 0 0 16px rgba(74,144,217,.28);
+  background: transparent;
+}
+
+@media (max-width: 980px) {
+  nav {
+    padding: 12px 16px;
+    align-items: center;
+    gap: 12px;
+  }
+  .nav-toggle { display: inline-flex; }
+  .nav-menu {
+    position: absolute;
+    right: 16px;
+    top: 58px;
+    border: 1px solid rgba(108, 162, 221, 0.42);
+    border-radius: 12px;
+    padding: 8px;
+    background: rgba(8, 16, 28, 0.94);
+    min-width: 210px;
+    display: none;
+  }
+  .nav-menu.open { display: block; }
+  .nav-links {
+    gap: 2px;
+    margin-right: 0;
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .nav-links a {
+    font-size: 13px;
+    letter-spacing: .02em;
+    padding: 8px 10px;
+  }
+  #hero { min-height: 86vh; }
+  .hero-headline { font-size: clamp(34px, 7vw, 54px); }
+  .hero-codeline-inline .hero-code-text { font-size: 15px; }
+  #earth-wrap { width: min(72vw, 420px) !important; height: min(72vw, 420px) !important; margin-bottom: 14px !important; }
+  #about { grid-template-columns:1fr; gap:44px; }
+  .about-visual { height:390px; }
+  .about-metrics { grid-template-columns:1fr 1fr; }
+  #startup-philosophy {
+    margin: 0;
+    border-radius: 0;
+    padding: 44px 22px;
+  }
+  .philosophy-grid { grid-template-columns: 1fr; }
+  .pillars-grid { grid-template-columns:1fr; gap:14px; }
+  #research, #use-cases, #contact, #stats {
+    margin: 0;
+    border-radius: 0;
+    padding: 44px 22px;
+  }
+  .use-cases-grid { grid-template-columns:1fr; }
+  .pillars-grid::before { display:none; }
+  .verification-strip { justify-content:flex-start; }
+  .verification-strip::before { display:none; }
+  .verification-strip { gap: 16px; flex-wrap: wrap; justify-content: center; }
+  .pillars-chain {
+    max-width: 100%;
+    overflow-x: auto;
+    padding: 10px 12px;
+  }
+  .pillars-chain-label { font-size: clamp(27px, 6.6vw, 34px); }
+  .pillars-chain-arrow {
+    width: 26px;
+    height: 26px;
+    font-size: 14px;
+    flex: 0 0 auto;
+  }
+}
+@media (max-width: 640px) {
+  section { padding: 72px 20px; }
+  .sis-logo-shell { transform: scale(.72); transform-origin: left top; }
+  .hero-headline { font-size: clamp(30px, 9vw, 42px); }
+  .hero-codeline-inline .hero-code-text { font-size: 14px; }
+  #earth-wrap { width: min(82vw, 330px) !important; height: min(82vw, 330px) !important; }
+  .hero-buttons { margin-top: 18px; }
+  .about-metrics { grid-template-columns:1fr; }
+  .philosophy-text { font-size: 19px; }
+  #contact .section-title { font-size: 34px; }
+}
+@media (max-width: 480px) {
+  section { padding: 64px 16px; }
+  .nav-links a { font-size: 13px; padding: 7px 8px; }
+  #earth-wrap { width: min(84vw, 290px) !important; height: min(84vw, 290px) !important; }
+}
+
+@media (min-width: 981px) {
+  .nav-links a {
+    border-color: rgba(110, 157, 209, 0.14);
+  }
+  #research,
+  #use-cases,
+  #contact {
+    background: rgba(8, 16, 28, 0.34);
+    border: 1px solid rgba(96, 150, 210, 0.16);
+  }
+  .tech-video,
+  .use-case-card,
+  .contact-form-wrap.open,
+  .about-metric,
+  .pillar,
+  .stat {
+    border-color: rgba(102, 154, 212, 0.22);
+  }
+  .stat {
+    background: rgba(8, 16, 28, 0.22);
+  }
+  .verification-strip,
+  .pillars-chain {
+    border-color: rgba(98, 150, 208, 0.24);
+    box-shadow: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav aria-label="Primary">
+  <div style="transform:scale(0.64);transform-origin:left center;width:575px;height:138px;pointer-events:none;flex-shrink:0;">
+    <div class="sis-logo-shell" style="padding:42px 46px 24px;">
+      <div class="sis-logo-mark">
+        <span class="sis-logo-s" style="font-size:122px;">S</span>
+        <span class="sis-logo-i" style="font-size:52px;" aria-hidden="true"></span>
+        <span class="sis-logo-s" style="font-size:122px;">S</span>
+      </div>
+      <div class="sis-logo-tagline" style="width:100%;text-align:center;margin-top:-12px;font-size:18px;">
+        Interpretable Simplicity
+      </div>
+    </div>
+  </div>
+  <button class="nav-toggle" id="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-menu">Menu</button>
+  <div class="nav-menu" id="nav-menu">
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#pillars">Research</a></li>
+      <li><a href="#research">Technology</a></li>
+      <li><a href="#use-cases">Use Cases</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<section id="hero">
+
+  <!-- Subtle background layer -->
+  <div class="stars stars-far" id="stars-far"></div>
+
+  <div class="hero-copy reveal">
+    <h1 class="hero-headline">Operational Space Safety</h1>
+    <div class="hero-codeline hero-codeline-inline">
+      <span class="hero-code-prefix">&gt;</span>
+      <span class="hero-code-text" id="hero-code-text"></span>
+      <span class="hero-code-caret" aria-hidden="true"></span>
+    </div>
+  </div>
+
+  <!-- Three.js Earth container -->
+  <div id="earth-wrap" style="position:relative;z-index:5;width:500px;height:500px;margin-bottom:20px;">
+    <canvas id="earth-canvas" style="width:100%;height:100%;" aria-label="3D Earth visualization"></canvas>
+  </div>
+  <div class="earth-mode-row">
+    <button id="earth-mode-toggle" class="earth-mode-toggle is-weather" type="button" aria-label="Toggle weather mode">Weather Mode</button>
+  </div>
+
+</section>
+
+<!-- ── ABOUT ── -->
+<section id="about">
+  <div class="reveal">
+    <p class="section-label">01 — The Problem</p>
+    <h2 class="section-title">Conjunction alerts are growing faster than operators can analyze them.</h2>
+    <p class="section-body">
+      Most alerts are false positives caused by miscalibrated orbital uncertainty. SiS solves this by calibrating uncertainty before Pc computation so teams can prioritize genuinely unsafe events.
+    </p>
+    <div class="about-metrics">
+      <div class="about-metric">
+        <div class="metric-value">12,000+</div>
+        <div class="metric-label">Active Satellites</div>
+      </div>
+      <div class="about-metric">
+        <div class="metric-value">36,500+</div>
+        <div class="metric-label">Tracked Debris &gt; 10cm</div>
+      </div>
+      <div class="about-metric">
+        <div class="metric-value">Millions</div>
+        <div class="metric-label">Debris Fragments &lt; 1cm</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="about-visual reveal reveal-delay-1">
+    <svg class="about-svg" viewBox="0 0 520 430">
+      <defs>
+        <radialGradient id="earthGrad" cx="50%" cy="44%" r="56%">
+          <stop offset="0%" stop-color="#28578f" stop-opacity="1"/>
+          <stop offset="100%" stop-color="#0a1b33" stop-opacity="1"/>
+        </radialGradient>
+        <radialGradient id="riskGlow" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#ff6e7c" stop-opacity=".25"/>
+          <stop offset="100%" stop-color="#ff6e7c" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+
+      <ellipse cx="260" cy="392" rx="214" ry="108" fill="url(#earthGrad)" opacity=".96"/>
+      <ellipse cx="260" cy="392" rx="216" ry="110" fill="none" stroke="#3f78ba" stroke-width=".8" opacity=".55"/>
+      <ellipse cx="260" cy="392" rx="222" ry="114" fill="none" stroke="#6eaee8" stroke-width=".6" opacity=".24"/>
+      <ellipse cx="260" cy="250" rx="212" ry="36" fill="none" stroke="#70afe8" stroke-width=".7" opacity=".35"/>
+      <ellipse cx="260" cy="238" rx="176" ry="30" fill="none" stroke="#5796d6" stroke-width=".7" opacity=".32" stroke-dasharray="4 4"/>
+      <ellipse cx="260" cy="224" rx="142" ry="24" fill="none" stroke="#447bb4" stroke-width=".6" opacity=".28" stroke-dasharray="3 5"/>
+
+      <g transform="translate(260 206)">
+        <g transform="scale(1 .34) rotate(8)">
+          <circle r="188" fill="none" stroke="#6cb2f1" stroke-width="1.2" opacity=".64"/>
+          <g><circle cx="188" cy="0" r="4.1" fill="#bfe0ff"/><circle cx="188" cy="0" r="8.4" fill="none" stroke="#9ccfff" stroke-width=".7" opacity=".45"/><animateTransform attributeName="transform" type="rotate" from="0 0 0" to="360 0 0" dur="8.6s" repeatCount="indefinite"/></g>
+          <g><circle cx="-188" cy="0" r="3.2" fill="#93c7ff"/><animateTransform attributeName="transform" type="rotate" from="80 0 0" to="440 0 0" dur="10.8s" repeatCount="indefinite"/></g>
+        </g>
+        <g transform="scale(1 .38) rotate(-22)">
+          <circle r="154" fill="none" stroke="#87c4ff" stroke-width="1.0" opacity=".58" stroke-dasharray="6 4"/>
+          <g><circle cx="154" cy="0" r="3.8" fill="#d1ebff"/><animateTransform attributeName="transform" type="rotate" from="220 0 0" to="-140 0 0" dur="7.4s" repeatCount="indefinite"/></g>
+          <g><circle cx="-154" cy="0" r="3.4" fill="#9fd0ff"/><animateTransform attributeName="transform" type="rotate" from="-10 0 0" to="-370 0 0" dur="9.1s" repeatCount="indefinite"/></g>
+        </g>
+        <g transform="scale(1 .42) rotate(40)">
+          <circle r="124" fill="none" stroke="#5f97d0" stroke-width=".9" opacity=".50" stroke-dasharray="4 6"/>
+          <g><circle cx="124" cy="0" r="3.1" fill="#8ac1ff"/><animateTransform attributeName="transform" type="rotate" from="40 0 0" to="400 0 0" dur="6.2s" repeatCount="indefinite"/></g>
+        </g>
+      </g>
+
+      <circle cx="298" cy="174" r="34" fill="url(#riskGlow)"/>
+      <circle cx="298" cy="174" r="8.2" fill="#ff6e7c"/>
+      <circle cx="298" cy="174" r="16" fill="none" stroke="#ff8e99" stroke-width=".9" opacity=".72">
+        <animate attributeName="r" values="16;30;16" dur="2.4s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values=".72;0;.72" dur="2.4s" repeatCount="indefinite"/>
+      </circle>
+      <text x="96" y="214" font-family="DM Mono,monospace" font-size="8" fill="#84b4df" letter-spacing="1.2">LEO</text>
+      <text x="124" y="250" font-family="DM Mono,monospace" font-size="8" fill="#6d9ac3" letter-spacing="1.2">MEO</text>
+      <text x="156" y="286" font-family="DM Mono,monospace" font-size="8" fill="#5a82a8" letter-spacing="1.2">GEO</text>
+      <text x="306" y="170" font-family="DM Mono,monospace" font-size="7" fill="#ff95a0" letter-spacing="1.1">TCA</text>
+    </svg>
+  </div>
+</section>
+
+<!-- ── STARTUP PHILOSOPHY ── -->
+<section id="startup-philosophy">
+  <div class="philosophy-header reveal">
+    <p class="section-label">Startup Philosophy</p>
+    <h2 class="section-title">Simple. Interpretable. Safe.</h2>
+    <p class="section-body">
+      We design systems that stay understandable at scale. Simplicity drives interpretability, and interpretability enables operational safety.
+    </p>
+  </div>
+  <div class="philosophy-grid">
+    <article class="philosophy-card reveal">
+      <p class="philosophy-kicker">01</p>
+      <h3 class="philosophy-title">Simple</h3>
+      <p class="philosophy-text">Keep models constrained, clear, and easy to audit.</p>
+    </article>
+    <article class="philosophy-card reveal reveal-delay-1">
+      <p class="philosophy-kicker">02</p>
+      <h3 class="philosophy-title">Interpretable</h3>
+      <p class="philosophy-text">Every output should be explainable to operators and engineers.</p>
+    </article>
+    <article class="philosophy-card reveal reveal-delay-2">
+      <p class="philosophy-kicker">03</p>
+      <h3 class="philosophy-title">Safe</h3>
+      <p class="philosophy-text">Operational decisions should be grounded in calibrated risk.</p>
+    </article>
+  </div>
+</section>
+
+<!-- ── PILLARS ── -->
+<section id="pillars">
+  <div class="pillars-header reveal">
+    <p class="section-label">02 — What We Build</p>
+    <h2 class="section-title">
+      <span class="pillars-chain" aria-label="Simple to Interpretable to Safe chain">
+        <span class="pillars-chain-label">Simple</span>
+        <span class="pillars-chain-arrow">→</span>
+        <span class="pillars-chain-label">Interpretable</span>
+        <span class="pillars-chain-arrow">→</span>
+        <span class="pillars-chain-label">Safe</span>
+      </span>
+    </h2>
+    <p class="pillars-thesis">
+      <strong>Safety comes from interpretability, and interpretability comes from simplicity.</strong>
+      We build verifiable, physics-based ML for safety-critical systems — where every output can be audited, traced, and trusted.
+    </p>
+  </div>
+
+  <div class="pillars-grid">
+
+    <!-- 01 — Simple -->
+    <div class="pillar reveal">
+      <span class="pillar-bg-num">01</span>
+      <span class="pillar-num">01 / Simple</span>
+
+      <!-- Icon: constrained architecture (three nodes + bounding box) -->
+      <svg class="pillar-icon" width="44" height="44" viewBox="0 0 44 44" fill="none">
+        <rect x="3" y="3" width="38" height="38" rx="5" stroke="#4a90d9" stroke-width="1" stroke-dasharray="4 3" opacity=".35"/>
+        <circle cx="12" cy="22" r="3.5" fill="#4a90d9" opacity=".9"/>
+        <circle cx="22" cy="12" r="3.5" fill="#4a90d9" opacity=".75"/>
+        <circle cx="32" cy="22" r="3.5" fill="#4a90d9" opacity=".75"/>
+        <circle cx="22" cy="32" r="3.5" fill="#4a90d9" opacity=".6"/>
+        <line x1="15.5" y1="22" x2="18.5" y2="22" stroke="#4a90d9" stroke-width="1" opacity=".5"/>
+        <line x1="22" y1="15.5" x2="22" y2="18.5" stroke="#4a90d9" stroke-width="1" opacity=".5"/>
+        <line x1="25.5" y1="22" x2="28.5" y2="22" stroke="#4a90d9" stroke-width="1" opacity=".5"/>
+        <line x1="22" y1="25.5" x2="22" y2="28.5" stroke="#4a90d9" stroke-width="1" opacity=".5"/>
+        <circle cx="22" cy="22" r="2" fill="#4a90d9" opacity=".5"/>
+      </svg>
+
+      <h3 class="pillar-title">Simple</h3>
+      <p class="pillar-text">
+        Constrained models and physics priors keep behavior bounded and auditable.
+      </p>
+      <div class="pillar-tags">
+        <span class="pillar-tag">Physics priors</span>
+        <span class="pillar-tag">Bounded models</span>
+        <span class="pillar-tag">Auditable</span>
+      </div>
+    </div>
+
+    <!-- 02 — Interpretable -->
+    <div class="pillar reveal reveal-delay-1">
+      <span class="pillar-bg-num">02</span>
+      <span class="pillar-num">02 / Interpretable</span>
+
+      <!-- Icon: probability distribution curve with uncertainty band -->
+      <svg class="pillar-icon" width="44" height="44" viewBox="0 0 44 44" fill="none">
+        <path d="M 4,36 C 8,36 13,8 22,6 C 31,8 36,36 40,36" stroke="#60c2f0" stroke-width="1.5" opacity=".9"/>
+        <path d="M 4,36 C 8,36 11,12 22,10 C 33,12 36,36 40,36 C 36,38 33,40 22,42 C 11,40 8,38 4,36Z" fill="#60c2f0" opacity=".07"/>
+        <line x1="22" y1="6" x2="22" y2="38" stroke="#60c2f0" stroke-width=".9" stroke-dasharray="3 2" opacity=".55"/>
+        <line x1="13" y1="22" x2="31" y2="22" stroke="#60c2f0" stroke-width=".7" opacity=".30"/>
+        <circle cx="22" cy="6" r="2.5" fill="#60c2f0" opacity=".95"/>
+        <circle cx="13" cy="24" r="1.5" fill="#60c2f0" opacity=".5"/>
+        <circle cx="31" cy="24" r="1.5" fill="#60c2f0" opacity=".5"/>
+      </svg>
+
+      <h3 class="pillar-title">Interpretable</h3>
+      <p class="pillar-text">
+        Calibrated uncertainty and traceable predictions make risk outputs inspectable by operators.
+      </p>
+      <div class="pillar-tags">
+        <span class="pillar-tag">Uncertainty bands</span>
+        <span class="pillar-tag">Calibrated outputs</span>
+        <span class="pillar-tag">Traceable</span>
+      </div>
+    </div>
+
+    <!-- 03 — Safe -->
+    <div class="pillar reveal reveal-delay-2">
+      <span class="pillar-bg-num">03</span>
+      <span class="pillar-num">03 / Safe</span>
+
+      <!-- Icon: shield with orbit arc + checkmark -->
+      <svg class="pillar-icon" width="44" height="44" viewBox="0 0 44 44" fill="none">
+        <path d="M 22,4 L 7,10 L 7,22 C 7,31 13,38 22,42 C 31,38 37,31 37,22 L 37,10 Z"
+          stroke="#38c9a8" stroke-width="1.2" opacity=".85"/>
+        <path d="M 14,22 L 19.5,28 L 30,16"
+          stroke="#38c9a8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" opacity=".95"/>
+        <path d="M 8,38 A 22 22 0 0 1 36,38" stroke="#38c9a8" stroke-width=".8" stroke-dasharray="3 3" opacity=".35"/>
+      </svg>
+
+      <h3 class="pillar-title">Safe</h3>
+      <p class="pillar-text">
+        Operational guardrails and verified risk thresholds support safer maneuver decisions.
+      </p>
+      <div class="pillar-tags">
+        <span class="pillar-tag">PAC-Bayes bounds</span>
+        <span class="pillar-tag">Low false negatives</span>
+        <span class="pillar-tag">Verified</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Verification timeline -->
+  <div class="verification-strip reveal">
+    <div class="verify-node">
+      <div class="verify-dot" style="--dot-color:#4a90d9;"></div>
+      <div class="verify-label">Model Constraints</div>
+    </div>
+    <div class="verify-node">
+      <div class="verify-dot" style="--dot-color:#54aae0;"></div>
+      <div class="verify-label">Uncertainty Calibration</div>
+    </div>
+    <div class="verify-node">
+      <div class="verify-dot" style="--dot-color:#60c2f0;"></div>
+      <div class="verify-label">Scenario Stress Tests</div>
+    </div>
+    <div class="verify-node">
+      <div class="verify-dot" style="--dot-color:#38c9a8;"></div>
+      <div class="verify-label">Operational Guardrails</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── RESEARCH ── -->
+<section id="research">
+  <div class="reveal">
+    <p class="section-label">03 — Technology</p>
+    <h2 class="section-title">Technology</h2>
+    <p class="section-body">
+      CTPC system overview
+    </p>
+  </div>
+  <div class="tech-video reveal reveal-delay-1">
+    <video controls playsinline preload="metadata" aria-label="CTPC Traffic Control for Space video">
+      <source src="CTPC__Traffic_Control_for_Space.mp4" type="video/mp4">
+      Your browser does not support HTML5 video.
+    </video>
+    <p class="tech-caption">CTPC__Traffic_Control_for_Space: operational walkthrough of predictor-corrector flow and risk decision interface.</p>
+  </div>
+  <div class="tech-actions reveal reveal-delay-1">
+    <a href="#contact" class="btn-primary">Request a Demo</a>
+    <a href="#use-cases" class="btn-ghost">Watch Use Cases</a>
+  </div>
+</section>
+
+<!-- ── STATS ── -->
+<section id="stats">
+  <div class="stat reveal">
+    <div class="stat-num">10x fewer</div>
+    <div class="stat-label">Compared to deterministic covariance propagation on ESA CDM replay scenarios</div>
+    <div class="stat-meta">Benchmark context: ESA CDM replay</div>
+  </div>
+  <div class="stat reveal reveal-delay-1">
+    <div class="stat-num">48-hour</div>
+    <div class="stat-label">Mahalanobis consistency within chi-square bounds on LEO propagation benchmarks</div>
+    <div class="stat-meta">Metric: chi-square consistency</div>
+  </div>
+  <div class="stat reveal reveal-delay-2">
+    <div class="stat-num">Full Pc</div>
+    <div class="stat-label">Collision risk represented as a calibrated distribution rather than a single point estimate</div>
+    <div class="stat-meta">Output type: calibrated distribution</div>
+  </div>
+  <div class="stat reveal reveal-delay-3">
+    <div class="stat-num">Catalog-scale</div>
+    <div class="stat-label">Tested on screening cycles of 10k+ object pairs</div>
+    <div class="stat-meta">Throughput: 10,000+ pairs per cycle</div>
+  </div>
+</section>
+
+<!-- ── USE CASES ── -->
+<section id="use-cases">
+  <p class="section-label reveal">04 — Use Cases</p>
+  <h2 class="section-title reveal">Where SiS creates operational value.</h2>
+  <p class="section-body reveal">
+    SiS translates calibrated uncertainty science into day-to-day screening and decision workflows.
+  </p>
+  <div class="use-cases-grid reveal reveal-delay-1">
+    <article class="use-case-card">
+      <h3 class="use-case-title">Satellite Operators</h3>
+      <p class="use-case-text">Reduce false conjunction alerts while maintaining safety margins for maneuver decisions.</p>
+    </article>
+    <article class="use-case-card">
+      <h3 class="use-case-title">Constellation Operators</h3>
+      <p class="use-case-text">Improve screening scalability across large fleets and high-frequency conjunction updates.</p>
+    </article>
+    <article class="use-case-card">
+      <h3 class="use-case-title">Space Agencies</h3>
+      <p class="use-case-text">Provide calibrated uncertainty inputs for national space traffic and conjunction assessment systems.</p>
+    </article>
+    <article class="use-case-card">
+      <h3 class="use-case-title">STM Organizations</h3>
+      <p class="use-case-text">Prioritize high-risk events with interpretable risk signals and explicit operational guardrails.</p>
+    </article>
+  </div>
+</section>
+
+<!-- ── CONTACT ── -->
+<section id="contact">
+  <p class="section-label reveal">05 — Get Involved</p>
+  <h2 class="section-title reveal">Want to reduce conjunction alerts without increasing risk?</h2>
+  <p class="section-body reveal">
+    We work with space agencies, satellite operators, and research institutions. If you're building the future of space traffic management, we should talk.
+  </p>
+  <div class="hero-buttons reveal">
+    <button type="button" class="btn-primary" id="request-demo-toggle" aria-expanded="false" aria-controls="contact-form-wrap">Request a Demo</button>
+    <button type="button" class="btn-ghost" id="contact-form-toggle" aria-expanded="false" aria-controls="contact-form-wrap">Talk to Us</button>
+    <a href="#use-cases" class="btn-ghost">Explore Operational Use Cases</a>
+  </div>
+  <div class="contact-form-wrap reveal" id="contact-form-wrap">
+    <form class="contact-form" id="contact-form" action="#" method="post" aria-label="Contact form">
+      <label for="contact-name">Name
+        <input id="contact-name" name="name" type="text" autocomplete="name" required>
+      </label>
+      <label for="contact-email">Email
+        <input id="contact-email" name="email" type="email" autocomplete="email" required>
+      </label>
+      <label for="contact-message">Message
+        <textarea id="contact-message" name="message" required></textarea>
+      </label>
+      <button type="submit" class="btn-primary">Send Message</button>
+      <p class="contact-form-note">Form UI added. Wire to backend/email service when ready.</p>
+    </form>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-copy">© 2025 SiS · All rights reserved</div>
+  <div class="footer-tagline">Safe · Interpretable · Simple</div>
+  <div class="sis-logo-mark" style="transform:scale(.75);transform-origin:right center;">
+    <span class="sis-logo-s" style="font-size:32px;">S</span>
+    <span class="sis-logo-i" style="font-size:14px;" aria-hidden="true"></span>
+    <span class="sis-logo-s" style="font-size:32px;">S</span>
+  </div>
+</footer>
+
+<!-- Three.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+// ── KaTeX renders ──
+document.querySelectorAll('.sis-logo-i').forEach(el => {
+  katex.render('i', el, { displayMode: false, throwOnError: false });
+  el.querySelectorAll('span').forEach(s => { s.style.color = '#56B4FF'; });
+});
+
+// ── Mobile nav toggle + aria current ──
+(function() {
+  const toggle = document.getElementById('nav-toggle');
+  const menu = document.getElementById('nav-menu');
+  const links = Array.from(document.querySelectorAll('.nav-links a[href^="#"]'));
+
+  if (toggle && menu) {
+    toggle.addEventListener('click', () => {
+      const open = menu.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+  }
+
+  links.forEach(link => {
+    link.addEventListener('click', () => {
+      if (menu) menu.classList.remove('open');
+      if (toggle) toggle.setAttribute('aria-expanded', 'false');
+    });
+  });
+
+  const sections = links
+    .map(link => document.querySelector(link.getAttribute('href')))
+    .filter(Boolean);
+
+  if (!sections.length) return;
+  const obs = new IntersectionObserver((entries) => {
+    const top = entries
+      .filter(e => e.isIntersecting)
+      .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+    if (!top) return;
+    const active = `#${top.target.id}`;
+    links.forEach(link => {
+      if (link.getAttribute('href') === active) link.setAttribute('aria-current', 'page');
+      else link.removeAttribute('aria-current');
+    });
+  }, { rootMargin: '-30% 0px -55% 0px', threshold: [0.2, 0.4, 0.6] });
+
+  sections.forEach(section => obs.observe(section));
+})();
+
+// ── Contact form reveal ──
+(function() {
+  const toggles = [
+    document.getElementById('request-demo-toggle'),
+    document.getElementById('contact-form-toggle')
+  ].filter(Boolean);
+  const wrap = document.getElementById('contact-form-wrap');
+  const form = document.getElementById('contact-form');
+  if (!toggles.length || !wrap) return;
+
+  toggles.forEach(toggle => toggle.addEventListener('click', () => {
+    const open = true;
+    wrap.classList.add('open');
+    toggles.forEach(btn => btn.setAttribute('aria-expanded', open ? 'true' : 'false'));
+    if (open) {
+      const firstInput = wrap.querySelector('input, textarea');
+      if (firstInput) firstInput.focus();
+    }
+  }));
+
+  if (form) {
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+    });
+  }
+})();
+
+// ── Stars (depth layers + color temperature) ──
+function starColor(temp) {
+  if (temp === 'warm') return 'radial-gradient(circle at 35% 35%, #fff7e9 0%, #ffd9b3 58%, rgba(255,190,130,0.26) 100%)';
+  if (temp === 'blue') return 'radial-gradient(circle at 35% 35%, #f4f9ff 0%, #cde4ff 58%, rgba(161,204,255,0.24) 100%)';
+  return 'radial-gradient(circle at 35% 35%, #ffffff 0%, #d8eaff 60%, rgba(190,220,255,0.25) 100%)';
+}
+function populateStars(el, count, cfg) {
+  if (!el) return;
+  for (let i = 0; i < count; i++) {
+    const s = document.createElement('div');
+    s.className = 'star';
+    const sz = cfg.min + Math.random() * (cfg.max - cfg.min);
+    const r = Math.random();
+    const temp = r < cfg.warmRatio ? 'warm' : (r < cfg.warmRatio + cfg.blueRatio ? 'blue' : 'white');
+    const dx = (Math.random() * 10 - 5).toFixed(1);
+    const dy = (Math.random() * 10 - 5).toFixed(1);
+    s.style.cssText = [
+      `width:${sz.toFixed(2)}px`,
+      `height:${sz.toFixed(2)}px`,
+      `left:${(Math.random()*100).toFixed(2)}%`,
+      `top:${(Math.random()*100).toFixed(2)}%`,
+      `--dur:${(cfg.twinkleMin + Math.random()*(cfg.twinkleMax-cfg.twinkleMin)).toFixed(2)}s`,
+      `--del:${(Math.random()*7).toFixed(2)}s`,
+      `--op:${(cfg.opacityMin + Math.random()*(cfg.opacityMax-cfg.opacityMin)).toFixed(2)}`,
+      `--drift:${(cfg.driftMin + Math.random()*(cfg.driftMax-cfg.driftMin)).toFixed(2)}s`,
+      `--dx:${dx}px`,
+      `--dy:${dy}px`,
+      `background:${starColor(temp)}`
+    ].join(';');
+    el.appendChild(s);
+  }
+}
+populateStars(document.getElementById('stars-far'), 180, {
+  min: 0.45, max: 1.1, twinkleMin: 5.5, twinkleMax: 11.0, opacityMin: 0.24, opacityMax: 0.58,
+  driftMin: 38, driftMax: 72, warmRatio: 0.07, blueRatio: 0.34
+});
+populateStars(document.getElementById('stars-mid'), 120, {
+  min: 0.8, max: 1.8, twinkleMin: 4.0, twinkleMax: 8.2, opacityMin: 0.30, opacityMax: 0.75,
+  driftMin: 26, driftMax: 52, warmRatio: 0.10, blueRatio: 0.38
+});
+populateStars(document.getElementById('stars-near'), 52, {
+  min: 1.4, max: 2.8, twinkleMin: 2.8, twinkleMax: 6.0, opacityMin: 0.42, opacityMax: 0.92,
+  driftMin: 16, driftMax: 34, warmRatio: 0.14, blueRatio: 0.34
+});
+
+// ── Subtle parallax + slow field rotation + occasional meteors ──
+(function() {
+  const hero = document.getElementById('hero');
+  const meteorLayer = document.getElementById('meteors');
+  const layers = [
+    { el: document.getElementById('stars-far'), factor: 2.5 },
+    { el: document.getElementById('stars-mid'), factor: 5.0 },
+    { el: document.getElementById('stars-near'), factor: 8.0 },
+    { el: document.getElementById('milkyway'), factor: 10.0 },
+    { el: document.getElementById('dust-lanes'), factor: 12.0 },
+    { el: document.getElementById('focal-star'), factor: 6.0 }
+  ].filter(l => l.el);
+  if (!hero || layers.length < 2) return;
+
+  let targetX = 0, targetY = 0, currentX = 0, currentY = 0, rot = 0;
+  hero.addEventListener('mousemove', (e) => {
+    const rect = hero.getBoundingClientRect();
+    const nx = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+    const ny = ((e.clientY - rect.top) / rect.height) * 2 - 1;
+    targetX = nx; targetY = ny;
+  });
+  hero.addEventListener('mouseleave', () => { targetX = 0; targetY = 0; });
+
+  function spawnMeteor() {
+    if (!meteorLayer) return;
+    const m = document.createElement('div');
+    m.className = 'meteor';
+    m.style.left = `${(62 + Math.random()*34).toFixed(2)}%`;
+    m.style.top = `${(8 + Math.random()*34).toFixed(2)}%`;
+    m.style.setProperty('--len', `${(80 + Math.random()*120).toFixed(0)}px`);
+    m.style.setProperty('--dur', `${(1.0 + Math.random()*0.8).toFixed(2)}s`);
+    m.style.setProperty('--ang', `${(-18 - Math.random()*16).toFixed(1)}deg`);
+    meteorLayer.appendChild(m);
+    window.setTimeout(() => m.remove(), 2200);
+  }
+  function queueMeteor() {
+    const wait = 20000 + Math.random() * 15000;
+    window.setTimeout(() => { spawnMeteor(); queueMeteor(); }, wait);
+  }
+  queueMeteor();
+
+  function tick() {
+    currentX += (targetX - currentX) * 0.06;
+    currentY += (targetY - currentY) * 0.06;
+    rot += 0.00035;
+    layers.forEach(({el, factor}) => {
+      const x = (-currentX * factor).toFixed(2);
+      const y = (-currentY * factor).toFixed(2);
+      const r = (rot * factor * 0.045).toFixed(4);
+      el.style.setProperty('--px', `${x}px`);
+      el.style.setProperty('--py', `${y}px`);
+      el.style.setProperty('--space-rot', `${r}deg`);
+    });
+    requestAnimationFrame(tick);
+  }
+  tick();
+})();
+
+// ── Scroll reveal ──
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.12 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// ── Code-like rotating taglines above Earth ──
+(function() {
+  const target = document.getElementById('hero-code-text');
+  if (!target) return;
+  const taglines = [
+    'towards safer space'
+  ];
+  let lineIndex = 0;
+  let wordIndex = 0;
+  let phase = 'typing';
+
+  function render() {
+    const words = taglines[lineIndex].split(' ');
+    target.textContent = words.slice(0, wordIndex).join(' ');
+  }
+  function step() {
+    const words = taglines[lineIndex].split(' ');
+    if (phase === 'typing') {
+      wordIndex = Math.min(wordIndex + 1, words.length);
+      render();
+      if (wordIndex >= words.length) {
+        phase = 'erasing';
+        window.setTimeout(step, 1500);
+      } else {
+        window.setTimeout(step, 250 + Math.random() * 110);
+      }
+      return;
+    }
+    wordIndex = Math.max(wordIndex - 1, 0);
+    render();
+    if (wordIndex <= 0) {
+      lineIndex = (lineIndex + 1) % taglines.length;
+      phase = 'typing';
+      window.setTimeout(step, 280);
+    } else {
+      window.setTimeout(step, 120 + Math.random() * 60);
+    }
+  }
+  render();
+  window.setTimeout(step, 380);
+})();
+
+// ── THREE.JS EARTH with real NASA textures ──
+let earthInitialized = false;
+function initEarth() {
+  if (earthInitialized) return;
+  earthInitialized = true;
+  const canvas = document.getElementById('earth-canvas');
+  let modeToggle = document.getElementById('earth-mode-toggle');
+  if (!modeToggle) {
+    const row = document.createElement('div');
+    row.className = 'earth-mode-row';
+    modeToggle = document.createElement('button');
+    modeToggle.id = 'earth-mode-toggle';
+    modeToggle.className = 'earth-mode-toggle is-weather';
+    modeToggle.type = 'button';
+    modeToggle.textContent = 'Weather Mode';
+    row.appendChild(modeToggle);
+    const wrap = document.getElementById('earth-wrap');
+    if (wrap && wrap.parentNode) wrap.parentNode.insertBefore(row, wrap.nextSibling);
+  }
+  const SIZE = 500;
+
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+  renderer.setPixelRatio(window.devicePixelRatio);
+  renderer.setSize(SIZE, SIZE);
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.15;
+
+  const scene  = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(40, 1, 0.1, 100);
+  camera.position.set(0, 0.3, 3.2);
+  camera.lookAt(0, 0, 0);
+
+  const loader = new THREE.TextureLoader();
+  loader.crossOrigin = 'anonymous';
+
+  // NASA Blue Marble + night lights + clouds + specular — all public domain
+  const EARTH_DAY   = 'https://eoimages.gsfc.nasa.gov/images/imagerecords/74000/74117/world.200408.3x5400x2700.jpg';
+  const EARTH_NIGHT = 'https://eoimages.gsfc.nasa.gov/images/imagerecords/79000/79765/dnb_land_ocean_ice.2012.3600x1800.jpg';
+  const EARTH_CLOUD = 'https://eoimages.gsfc.nasa.gov/images/imagerecords/57000/57747/cloud_combined_2048.jpg';
+  const EARTH_SPEC  = 'https://eoimages.gsfc.nasa.gov/images/imagerecords/73000/73909/world.200412.3x5400x2700.jpg';
+  const EARTH_BUMP  = 'https://eoimages.gsfc.nasa.gov/images/imagerecords/73000/73934/gebco_08_rev_elev_21600x10800.png';
+
+  // Fallback: use lower-res versions if high-res fails
+  const EARTH_DAY_LO  = 'https://raw.githubusercontent.com/turban/webgl-earth/master/images/2_no_clouds_4k.jpg';
+  const EARTH_CLOUD_LO = 'https://raw.githubusercontent.com/turban/webgl-earth/master/images/fair_clouds_4k.png';
+  const EARTH_SPEC_LO  = 'https://raw.githubusercontent.com/turban/webgl-earth/master/images/water_4k.png';
+  const EARTH_BUMP_LO  = 'https://raw.githubusercontent.com/turban/webgl-earth/master/images/elev_bump_4k.jpg';
+
+  let earth, clouds;
+
+  function buildEarth(dayTex, specTex, bumpTex) {
+    const geo = new THREE.SphereGeometry(1, 72, 72);
+    const mat = new THREE.MeshPhongMaterial({
+      map:       dayTex,
+      specularMap: specTex,
+      specular:  new THREE.Color(0x4488bb),
+      shininess: 28,
+      bumpMap:   bumpTex,
+      bumpScale: 0.05,
+    });
+    earth = new THREE.Mesh(geo, mat);
+    earth.rotation.z = 0.41;
+    scene.add(earth);
+  }
+
+  function buildClouds(cloudTex) {
+    const geo = new THREE.SphereGeometry(1.01, 72, 72);
+    const mat = new THREE.MeshPhongMaterial({
+      map: cloudTex, transparent: true,
+      opacity: 0.7, depthWrite: false,
+      alphaMap: cloudTex,
+    });
+    clouds = new THREE.Mesh(geo, mat);
+    scene.add(clouds);
+  }
+
+  // Try loading real textures, fall back to lower-res GitHub mirrors
+  function loadTex(url, fallback) {
+    return new Promise(resolve => {
+      loader.load(url, resolve, undefined, () => {
+        if (fallback) loader.load(fallback, resolve, undefined, () => resolve(null));
+        else resolve(null);
+      });
+    });
+  }
+
+  Promise.all([
+    loadTex(EARTH_DAY_LO),
+    loadTex(EARTH_SPEC_LO),
+    loadTex(EARTH_BUMP_LO),
+    loadTex(EARTH_CLOUD_LO),
+  ]).then(([dayTex, specTex, bumpTex, cloudTex]) => {
+    if (dayTex)   buildEarth(dayTex, specTex, bumpTex);
+    if (cloudTex) buildClouds(cloudTex);
+  });
+
+  // Atmosphere glow
+  const atmGeo = new THREE.SphereGeometry(1.08, 64, 64);
+  const atmMat = new THREE.MeshPhongMaterial({
+    color: 0x1a60dd, transparent: true, opacity: 0.10, side: THREE.BackSide
+  });
+  scene.add(new THREE.Mesh(atmGeo, atmMat));
+
+  // Inner atmosphere rim
+  const rimGeo = new THREE.SphereGeometry(1.02, 64, 64);
+  const rimMat = new THREE.MeshPhongMaterial({
+    color: 0x3388ff, transparent: true, opacity: 0.04, side: THREE.FrontSide
+  });
+  scene.add(new THREE.Mesh(rimGeo, rimMat));
+
+  function makeAtmosphereShell(radius, cfg) {
+    const mat = new THREE.ShaderMaterial({
+      uniforms: {
+        dayColor: { value: new THREE.Color(cfg.dayColor) },
+        nightColor: { value: new THREE.Color(cfg.nightColor) },
+        sunDirection: { value: new THREE.Vector3(-1, 0.35, 0.8).normalize() },
+        atmosphereStrength: { value: cfg.strength },
+        fresnelPower: { value: cfg.fresnelPower }
+      },
+      vertexShader: `
+        varying vec3 vWorldNormal;
+        varying vec3 vViewDir;
+        void main() {
+          vec4 worldPos = modelMatrix * vec4(position, 1.0);
+          vWorldNormal = normalize(mat3(modelMatrix) * normal);
+          vViewDir = normalize(cameraPosition - worldPos.xyz);
+          gl_Position = projectionMatrix * viewMatrix * worldPos;
+        }`,
+      fragmentShader: `
+        uniform vec3 dayColor;
+        uniform vec3 nightColor;
+        uniform vec3 sunDirection;
+        uniform float atmosphereStrength;
+        uniform float fresnelPower;
+        varying vec3 vWorldNormal;
+        varying vec3 vViewDir;
+        void main() {
+          vec3 n = normalize(vWorldNormal);
+          vec3 v = normalize(vViewDir);
+          float ndv = max(dot(n, v), 0.0);
+          float fresnel = pow(1.0 - ndv, fresnelPower);
+          float day = clamp(dot(n, normalize(sunDirection)) * 0.5 + 0.5, 0.0, 1.0);
+          float twilight = smoothstep(0.25, 0.75, day);
+          vec3 scatter = mix(nightColor, dayColor, twilight);
+          float alpha = fresnel * atmosphereStrength * (0.45 + 0.75 * day);
+          gl_FragColor = vec4(scatter, alpha);
+        }`,
+      transparent: true,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false,
+      side: THREE.BackSide
+    });
+    const mesh = new THREE.Mesh(new THREE.SphereGeometry(radius, 72, 72), mat);
+    scene.add(mesh);
+    return mesh;
+  }
+  const atmosphereBands = {
+    lower: makeAtmosphereShell(1.028, { dayColor: 0xa9dcff, nightColor: 0x2f5e9b, strength: 0.24, fresnelPower: 2.2 }),
+    middle: makeAtmosphereShell(1.070, { dayColor: 0x7fbeff, nightColor: 0x24497e, strength: 0.20, fresnelPower: 2.6 }),
+    upper: makeAtmosphereShell(1.140, { dayColor: 0x5ca8ef, nightColor: 0x1b3e70, strength: 0.14, fresnelPower: 3.0 }),
+    exo: makeAtmosphereShell(1.300, { dayColor: 0x93cfff, nightColor: 0x17345d, strength: 0.08, fresnelPower: 3.4 })
+  };
+
+  // ── Lights ──
+  const sun = new THREE.DirectionalLight(0xfff5e8, 2.0);
+  sun.position.set(-2.5, 1.2, 2.0);
+  scene.add(sun);
+  scene.add(new THREE.AmbientLight(0x08101e, 0.8));
+  const fill = new THREE.DirectionalLight(0x1a3060, 0.2);
+  fill.position.set(3, -2, -2);
+  scene.add(fill);
+
+  // ── Orbital rings ──
+  function makeOrbitRing(radius, tiltX, tiltY, color, opacity) {
+    const pts = [];
+    for (let i=0; i<=180; i++) {
+      const a = (i/180)*Math.PI*2;
+      pts.push(new THREE.Vector3(Math.cos(a)*radius, Math.sin(a)*radius, 0));
+    }
+    const geo = new THREE.BufferGeometry().setFromPoints(pts);
+    const mat = new THREE.LineBasicMaterial({ color, transparent: true, opacity });
+    const ring = new THREE.LineLoop(geo, mat);
+    ring.rotation.x = tiltX;
+    ring.rotation.y = tiltY;
+    scene.add(ring);
+    return ring;
+  }
+
+  const leoRing1 = makeOrbitRing(1.14, Math.PI*0.16, Math.PI*0.06, 0x8fd0ff, 0.78);
+  const leoRing2 = makeOrbitRing(1.20, Math.PI*0.38, Math.PI*0.22, 0x79beff, 0.64);
+  const leoRing3 = makeOrbitRing(1.28, Math.PI*0.08, Math.PI*0.48, 0x64a8ec, 0.50);
+  const ring1 = makeOrbitRing(1.62, Math.PI*0.18, Math.PI*0.08,  0x5aa7f0, 0.76);
+  const ring2 = makeOrbitRing(1.98, Math.PI*0.44, Math.PI*0.32,  0x7ec2ff, 0.58);
+  const ring3 = makeOrbitRing(2.40, Math.PI*0.10, Math.PI*0.60,  0x3f78b5, 0.42);
+  const ring4 = makeOrbitRing(2.12, 0, Math.PI * 0.04, 0x9bcfff, 0.46);
+  const leoRings = [leoRing1, leoRing2, leoRing3];
+  const highRings = [ring1, ring2, ring3, ring4];
+  [...leoRings, ...highRings].forEach(r => { r.userData.baseOpacity = r.material.opacity; });
+
+  function makeMovingDot(color, size) {
+    const dot = new THREE.Group();
+    const core = new THREE.Mesh(
+      new THREE.SphereGeometry(size, 10, 10),
+      new THREE.MeshBasicMaterial({ color, transparent: true, opacity: 1.0 })
+    );
+    const halo = new THREE.Mesh(
+      new THREE.SphereGeometry(size * 2.1, 10, 10),
+      new THREE.MeshBasicMaterial({ color, transparent: true, opacity: 0.24, depthWrite: false })
+    );
+    dot.add(core); dot.add(halo);
+    dot.userData.baseCoreOpacity = 1.0;
+    dot.userData.baseHaloOpacity = 0.24;
+    scene.add(dot);
+    return dot;
+  }
+  const movers = [
+    { band: 'leo', dot: makeMovingDot(0xd9eeff, 0.016), ring: leoRing1, r: 1.14, speed: 0.0170, phase: 0.6  },
+    { band: 'leo', dot: makeMovingDot(0xbadfff, 0.014), ring: leoRing1, r: 1.14, speed: 0.0155, phase: 2.8  },
+    { band: 'leo', dot: makeMovingDot(0xd2ebff, 0.013), ring: leoRing1, r: 1.14, speed: 0.0163, phase: 4.9  },
+    { band: 'leo', dot: makeMovingDot(0xb3dcff, 0.014), ring: leoRing2, r: 1.20, speed: 0.0138, phase: 1.3  },
+    { band: 'leo', dot: makeMovingDot(0xa8d6ff, 0.013), ring: leoRing2, r: 1.20, speed: 0.0127, phase: 3.6  },
+    { band: 'leo', dot: makeMovingDot(0xa2d2ff, 0.013), ring: leoRing3, r: 1.28, speed: 0.0115, phase: 0.1  },
+    { band: 'leo', dot: makeMovingDot(0xb8e0ff, 0.012), ring: leoRing3, r: 1.28, speed: 0.0108, phase: 2.2  },
+    { band: 'leo', dot: makeMovingDot(0x9ecfff, 0.012), ring: leoRing3, r: 1.28, speed: 0.0112, phase: 4.4  },
+    { band: 'high', dot: makeMovingDot(0x90d0ff, 0.026), ring: ring1, r: 1.62, speed: 0.0130, phase: 0.2  },
+    { band: 'high', dot: makeMovingDot(0x7fc3ff, 0.021), ring: ring2, r: 1.98, speed: 0.0076, phase: 2.8  },
+    { band: 'high', dot: makeMovingDot(0x75b4ef, 0.017), ring: ring3, r: 2.40, speed: 0.0061, phase: 2.6  },
+    { band: 'high', dot: makeMovingDot(0xd5ecff, 0.021), ring: ring4, r: 2.12, speed: 0.0044, phase: 1.2  }
+  ];
+
+  function placeMover(obj, ring, t, r) {
+    const v = new THREE.Vector3(Math.cos(t)*r, Math.sin(t)*r, 0);
+    v.applyEuler(ring.rotation);
+    obj.position.copy(v);
+  }
+
+  let weatherMode = true;
+  let weatherBlend = 1.0;
+  if (modeToggle) {
+    modeToggle.addEventListener('click', () => {
+      weatherMode = !weatherMode;
+      modeToggle.classList.toggle('is-weather', weatherMode);
+      modeToggle.classList.toggle('is-orbit', !weatherMode);
+      modeToggle.textContent = weatherMode ? 'Weather Mode' : 'Orbit Mode';
+      weatherBlend = weatherMode ? 1 : 0;
+    });
+  }
+
+  // ── Animate ──
+  let frame = 0;
+  function animate() {
+    requestAnimationFrame(animate);
+    frame++;
+    if (earth)  earth.rotation.y  += 0.0012;
+    if (clouds) clouds.rotation.y += 0.0014;
+
+    weatherBlend += ((weatherMode ? 1 : 0) - weatherBlend) * 0.08;
+    const sunDir = sun.position.clone().normalize();
+    const atmK = 0.35 + weatherBlend * 0.95;
+    Object.values(atmosphereBands).forEach(b => b.material.uniforms.sunDirection.value.copy(sunDir));
+    atmosphereBands.lower.material.uniforms.atmosphereStrength.value = (0.20 + Math.sin(frame * 0.004) * 0.015) * atmK;
+    atmosphereBands.middle.material.uniforms.atmosphereStrength.value = (0.17 + Math.sin(frame * 0.003 + 0.8) * 0.012) * atmK;
+    atmosphereBands.upper.material.uniforms.atmosphereStrength.value = (0.12 + Math.sin(frame * 0.0025 + 1.4) * 0.010) * atmK;
+    atmosphereBands.exo.material.uniforms.atmosphereStrength.value = (0.06 + Math.sin(frame * 0.002 + 2.0) * 0.008) * (0.2 + weatherBlend);
+
+    leoRing1.rotation.y += 0.00028;
+    leoRing2.rotation.y += 0.00023;
+    leoRing3.rotation.y += 0.00018;
+    ring1.rotation.y += 0.00016;
+    ring2.rotation.y += 0.00011;
+    ring3.rotation.y += 0.00007;
+    ring4.rotation.y += 0.00005;
+
+    leoRings.forEach(r => {
+      const target = r.userData.baseOpacity * (0.18 + weatherBlend * 1.05);
+      r.material.opacity += (target - r.material.opacity) * 0.08;
+    });
+    highRings.forEach(r => {
+      const target = r.userData.baseOpacity * (0.08 + (1.0 - weatherBlend) * 0.92);
+      r.material.opacity += (target - r.material.opacity) * 0.08;
+    });
+
+    movers.forEach(m => {
+      placeMover(m.dot, m.ring, frame * m.speed + m.phase, m.r);
+      const k = m.band === 'leo'
+        ? (0.20 + weatherBlend * 0.95)
+        : (0.06 + (1.0 - weatherBlend) * 0.94);
+      m.dot.children[0].material.opacity = m.dot.userData.baseCoreOpacity * k;
+      m.dot.children[1].material.opacity = m.dot.userData.baseHaloOpacity * k;
+    });
+
+    renderer.render(scene, camera);
+  }
+  animate();
+}
+
+// Lazy-load Earth scene for better first paint performance
+(function() {
+  const wrap = document.getElementById('earth-wrap');
+  if (!wrap) return;
+
+  const load = () => initEarth();
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver((entries, observer) => {
+      if (entries.some(e => e.isIntersecting)) {
+        load();
+        observer.disconnect();
+      }
+    }, { rootMargin: '120px 0px' });
+    io.observe(wrap);
+  } else if ('requestIdleCallback' in window) {
+    window.requestIdleCallback(load, { timeout: 1200 });
+  } else {
+    window.setTimeout(load, 250);
+  }
+})();
+</script>

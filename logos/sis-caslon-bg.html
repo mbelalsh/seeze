@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>S𝑖S — Libre Caslon Refinements</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400&family=Libre+Caslon+Display&family=Cormorant+Garamond:ital,wght@0,300;1,300&display=swap" rel="stylesheet">
+<style>
+
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  background: #0a0d14;
+  color: #eef2ff;
+  font-family: 'DM Mono', monospace;
+  padding: 52px 24px 90px;
+}
+
+.katex, .katex * { color: inherit !important; }
+
+/* Core lockup */
+.sis  { display:inline-flex; align-items:baseline; line-height:1; }
+.sis-i { display:inline; vertical-align:baseline; line-height:1; margin:0 -0.04em; }
+.sis-i .katex { vertical-align:baseline; }
+
+/* orbit arc */
+.arc-wrap { position:relative; display:inline-flex; align-items:baseline; }
+.arc-svg  { position:absolute; inset:0; width:100%; height:100%; pointer-events:none; overflow:visible; }
+
+/* mark stack */
+.mark { display:flex; flex-direction:column; align-items:center; gap:5px; }
+.tg   { font-family:'Cormorant Garamond',serif; font-weight:300; font-style:italic; font-size:12px; letter-spacing:.18em; }
+
+.wrap { max-width:1020px; margin:0 auto; }
+.slbl {
+  font-size:8px; letter-spacing:.32em; color:#4a6080;
+  text-transform:uppercase; text-align:center; padding:32px 0 12px;
+}
+.row3 { display:grid; grid-template-columns:repeat(3,1fr); gap:3px; margin-bottom:3px; }
+.row4 { display:grid; grid-template-columns:repeat(4,1fr); gap:3px; margin-bottom:3px; }
+
+/* each card is self-contained with its own bg */
+.card {
+  padding: 44px 18px 26px;
+  display: flex; flex-direction: column; align-items: center;
+  position: relative; overflow: hidden;
+  border: 1px solid transparent;
+}
+.num { position:absolute; top:11px; left:13px; font-size:8px; opacity:.35; font-family:'DM Mono',monospace; }
+.lbl { position:absolute; top:11px; right:13px; font-size:7px; opacity:.35; text-transform:uppercase; letter-spacing:.1em; font-family:'DM Mono',monospace; }
+.note {
+  font-size:8px; line-height:1.85; text-align:center;
+  border-top:1px solid rgba(255,255,255,.06); padding-top:11px;
+  width:100%; margin-top:18px; opacity:.7;
+}
+.note b { opacity:1; font-weight:500; }
+.note-dark  { border-top-color:rgba(255,255,255,.06) !important; color:#6a80a0; }
+.note-light { border-top-color:rgba(0,0,0,.08) !important; color:#7a7860; }
+
+/* rule variants */
+.rule { width:155px; height:1px; }
+.rule-fade-dark  { background:linear-gradient(90deg,transparent,rgba(24,36,58,.9),transparent); }
+.rule-fade-light { background:linear-gradient(90deg,transparent,rgba(0,0,0,.12),transparent); }
+.rule-blue       { background:linear-gradient(90deg,transparent,rgba(79,143,242,.5),transparent); }
+.rule-gold       { background:linear-gradient(90deg,transparent,rgba(200,168,78,.4),transparent); }
+
+@keyframes fadeUp  { from{opacity:0;transform:translateY(5px)} to{opacity:1;transform:none} }
+@keyframes twinkle { 0%,100%{opacity:.06} 50%{opacity:.55} }
+.card { animation:fadeUp .35s ease both; }
+</style>
+</head>
+<body>
+
+<!-- ═══ HEADER ═══ -->
+<div style="text-align:center;margin-bottom:52px">
+  <div style="font-size:8px;letter-spacing:.36em;color:#2e3d58;text-transform:uppercase;margin-bottom:22px">
+    Libre Caslon Display · Background Study
+  </div>
+  <!-- reference mark -->
+  <div class="mark" style="gap:5px">
+    <div class="arc-wrap">
+      <svg class="arc-svg" viewBox="0 0 240 118" style="opacity:.09" preserveAspectRatio="xMidYMid meet">
+        <ellipse cx="120" cy="96" rx="110" ry="25" stroke="#4f8ff2" stroke-width="1.1" stroke-dasharray="4.5 3" fill="none"/>
+        <circle cx="230" cy="96" r="3" fill="#4f8ff2"/>
+      </svg>
+      <div class="sis" style="position:relative;z-index:1">
+        <span style="font-family:'Libre Caslon Display',serif;font-size:76px;color:#eef2ff;line-height:1">S</span>
+        <span class="sis-i mi" id="hdr_i" style="color:#4f8ff2;font-size:33px"></span>
+        <span style="font-family:'Libre Caslon Display',serif;font-size:76px;color:#eef2ff;line-height:1">S</span>
+      </div>
+    </div>
+    <div class="tg" style="color:#4a6080">Safe · Interpretable · Simple</div>
+  </div>
+</div>
+
+<div class="wrap">
+
+<!-- ══════════════════════════════════════
+     ROW 1 — DARK BACKGROUNDS (navy family)
+══════════════════════════════════════ -->
+<div class="slbl">Dark — navy family</div>
+<div class="row4">
+
+  <!-- 01: deep near-black navy (reference bg) -->
+  <div class="card" style="background:#04060c;border-color:#0f1826">
+    <span class="num" style="color:#4a6080">01</span>
+    <span class="lbl" style="color:#4f8ff2">#04060c · ref</span>
+    <div class="mark">
+      <div class="arc-wrap">
+        <svg class="arc-svg" viewBox="0 0 250 120" style="opacity:.09" preserveAspectRatio="xMidYMid meet">
+          <ellipse cx="125" cy="97" rx="113" ry="26" stroke="#4f8ff2" stroke-width="1.2" stroke-dasharray="5 3.5" fill="none"/>
+          <circle cx="238" cy="97" r="3.5" fill="#4f8ff2"/>
+        </svg>
+        <div class="sis" style="position:relative;z-index:1">
+          <span style="font-family:'Libre Caslon Display',serif;font-size:106px;color:#eef2ff;line-height:1">S</span>
+          <span class="sis-i mi" style="color:#4f8ff2;font-size:46px"></span>
+          <span style="font-family:'Libre Caslon Display',serif;font-size:106px;color:#eef2ff;line-height:1">S</span>
+        </div>
+      </div>
+      <div class="rule rule-fade-dark"></div>
+      <div class="tg" style="color:#4a6080">Safe · Interpretable · Simple</div>
+    </div>
+    <div class="note note-dark"><b>Deep near-black navy.</b> The current reference bg — #04060c. Rich, absorbs light. The Caslon S hairlines are visible but fine against the absolute dark. Focused and cinematic.</div>
+  </div>
+
+  <!-- 02: dark navy #0a0d1a -->
+  <div class="card" style="background:#0a0d1a;border-color:#141c2e">
+    <span class="num" style="color:#4a6080">02</span>
+    <span class="lbl" style="color:#4f8ff2">#0a0d1a</span>
+    <div class="mark">
+      <div class="arc-wrap">
+        <svg class="arc-svg" viewBox="0 0 250 120" style="opacity:.1" preserveAspectRatio="xMidYMid meet">
+          <ellipse cx="125" cy="97" rx="113" ry="26" stroke="#4f8ff2" stroke-width="1.2" stroke-dasharray="5 3.5" fill="none"/>
+          <circle cx="238" cy="97" r="3.5" fill="#4f8ff2"/>
+        </svg>
+        <div class="sis" style="position:relative;z-index:1">
+          <span style="font-family:'Libre Caslon Display',serif;font-size:106px;color:#eef2ff;line-height:1">S</span>
+          <span class="sis-i mi" style="color:#4f8ff2;font-size:46px"></span>
+          <span style="font-family:'Libre Caslon Display',serif;font-size:106px;color:#eef2ff;line-height:1">S</span>
+        </div>
+      </div>
+      <div class="rule rule-fade-dark"></div>
+      <div class="tg" style="color:#4a6080">Safe · Interpretable · Simple</div>
+    </div>
+    <div class="note note-dark"><b>#0a0d1a.</b> One step lighter — the dark lifts slightly and the card border reads. The mark pops a little more. A good middle ground between absolute black and a visible navy.</div>
+  </div>
+
+  <!-- 03: slate-blue #0f172a -->
+  <div class="card" style="background:#0f172a;border-color:#1a2840">
+    <span class="num" style="color:#4a6080">03</span>
+    <span class="lbl" style="color:#4f8ff2">#0f172a slate</span>
+    <div class="mark">
+      <div class="arc-wrap">
+        <svg class="arc-svg" viewBox="0 0 250 120" style="opacity:.11" preserveAspectRatio="xMidYMid meet">
+          <ellipse cx="125" cy="97" rx="113" ry="26" stroke="#4f8ff2" stroke-width="1.2" stroke-dasharray="5 3.5" fill="none"/>
+          <circle cx="238" cy="97" r="3.5" fill="#4f8ff2"/>
+        </svg>
+        <div class="sis" style="position:relative;z-index:1">
+          <span style="font-family:'Libre Caslon Display',serif;font-size:106px;color:#eef2ff;line-height:1">S</span>
+          <span class="sis-i mi" style="color:#4f8ff2;font-size:46px"></span>
+          <span style="font-family:'Libre Caslon Display',serif;font-size:106px;color:#eef2ff;line-height:1">S</span>
+        </div>
+      </div>
+      <div class="rule rule-fade-dark"></div>
+      <div class="tg" style="color:#4a6080">Safe · Interpretable · Simple</div>
+    </div>
+    <div class="note note-dark"><b>#0f172a slate-blue.</b> The blue starts to read in the background itself — more atmospheric. The mark glows against it. The orbit arc becomes more visible. Feels like deep night sky.</div>
+  </div>
+
+  <!-- 04: deep teal-navy #1e2a3a -->
+  <div class="card" style="background:#1e2a3a;border-color:#253548">
+    <span class="num" style="color:#4a7090">04</span>
+    <span class="lbl" style="color:#4f8ff2">#1e2a3a teal-navy</span>
+    <div class="mark">
+      <div class="arc-wrap">
+        <svg class="arc-svg" viewBox="0 0 250 120" style="opacity:.12" preserveAspectRatio="xMidYMid meet">
+          <ellipse cx="125" cy="97" rx="113" ry="26" stroke="#7ab3f5" stroke-width="1.2" stroke-dasharray="5 3.5" fill="none"/>
+          <circle cx="238" cy="97" r="3.5" fill="#7ab3f5"/>
+        </svg>
+        <div class="sis" style="position:relative;z-index:1">
+          <span style="font-family:'Libre Caslon Display',serif;font-size:106px;color:#eef2ff;line-height:1">S</span>
+          <span class="sis-i mi" style="color:#7ab3f5;font-size:46px"></span>
+          <span style="font-family:'Libre Caslon Display',serif;font-size:106px;color:#eef2ff;line-height:1">S</span>
+        </div>
+      </div>
+      <div style="width:155px;height:1px;background:linear-gradient(90deg,transparent,rgba(40,60,80,.9),transparent)"></div>
+      <div class="tg" style="color:#4a7090">Safe · Interpretable · Simple</div>
+    </div>
+    <div class="note note-dark"><b>#1e2a3a teal-navy.</b> Distinctly blue background — mid-dark. The mark is surrounded by colour rather than void. Sky 𝑖 rather than full blue. The orbit arc is more present. Atmospheric and spacious.</div>
+  </div>
+
+</div>
+
+<!-- ══════════════════════════════════════
+     ROW 2 — WARM DARKS & PURE BLACK
+══════════════════════════════════════ -->
+<div class="slbl">Warm darks & neutrals</div>
+<div class="row4">
+
+  <!-- 05: pure black -->
+  <div class="card" style="background:#000000;border-color:#111">
+    <span class="num" style="color:#3a5070">05</span>
+    <span class="lbl" style="color:#4f8ff2">#000 pure black</span>
+    <div class="mark">
+      <div class="arc-wrap">
+        <svg class="arc-svg" viewBox="0 0 250 120" style="opacity:.08" preserveAspectRatio="xMidYMid meet">
+          <ellipse cx="125" cy="97" rx="113" ry="26" stroke="#4f8ff2" stroke-width="1.2" stroke-dasharray="5 3.5" fill="none"/>
+          <circle cx="238" cy="97" r="3.5" fill="#4f8ff2"/>
+        </svg>
+        <div class="sis" style="position:relative;z-index:1">
+          <span style="font-family:'Libre Caslon Display',serif;font-size:106px;color:#eef2ff;line-height:1">S</span>
+          <span class="sis-i mi" style="color:#4f8ff2;font-size:46px"></span>
+          <span style="font-family:'Libre Caslon Display',serif;font-size:106px;color:#eef2ff;line-height:1">S</span>
+        </div>
+      </div>
+      <div class="rule rule-fade-dark"></div>
+      <div class="tg" style="color:#3a5070">Safe · Interpretable · Simple</div>
+    </div>
+    <div class="note note-dark"><b>Pure black.</b> Maximum contrast — the Caslon hairlines are at their sharpest. The S has extraordinary presence. Very dramatic but less livable. Best for hero moments, not UI backgrounds.</div>
+  </div>
+
+  <!-- 06: near-black warm #12100e -->
+  <div class="card" style="background:#12100e;border-color:#1e1a14">
+    <span class="num" style="color:#7a6535">06</span>
+    <span class="lbl" style="color:#c8a84e">warm dark · gold</span>
+    <div class="mark">
+      <div class="arc-wrap">
+        <svg class="arc-svg" viewBox="0 0 250 120" style="opacity:.09" preserveAspectRatio="xMidYMid meet">
+          <ellipse cx="125" cy="97" rx="113" ry="26" stroke="#c8a84e" stroke-width="1.2" stroke-dasharray="5 3.5" fill="none"/>
+          <circle cx="238" cy="97" r="3.5" fill="#c8a84e"/>
+        </svg>
+        <div class="sis" style="position:relative;z-index:1">
+          <span style="font-family:'Libre Caslon Display',serif;font-size:106px;color:#f0ead8;line-height:1">S</span>
+          <span class="sis-i mi" style="color:#c8a84e;font-size:46px"></span>
+          <span style="font-family:'Libre Caslon Display',serif;font-size:106px;color:#f0ead8;line-height:1">S</span>
+        </div>
+      </div>
+      <div style="width:155px;height:1px;background:linear-gradient(90deg,transparent,rgba(60,50,30,.7),transparent)"></div>
+      <div class="tg" style="color:#7a6535">Safe · Interpretable · Simple</div>
+    </div>
+    <div class="note note-dark"><b>Warm near-black · gold 𝑖.</b> Near-black with a warm brown undertone — paper, leather, antiquity. The S in warm white (not cold), gold 𝑖. The whole mark feels archival. Unusual and characterful.</div>
+  </div>
+
+  <!-- 07: dark warm brown #1a1510 -->
+  <div class="card" style="background:#1a1510;border-color:#26201a">
+    <span class="num" style="color:#8a7040">07</span>
+    <span class="lbl" style="color:#d4913a">dark brown · amber</span>
+    <div class="mark">
+      <div class="arc-wrap">
+        <svg class="arc-svg" viewBox="0 0 250 120" style="opacity:.09" preserveAspectRatio="xMidYMid meet">
+          <ellipse cx="125" cy="97" rx="113" ry="26" stroke="#d4913a" stroke-width="1.2" stroke-dasharray="5 3.5" fill="none"/>
+          <circle cx="238" cy="97" r="3.5" fill="#d4913a"/>
+        </svg>
+        <div class="sis" style="position:relative;z-index:1">
+          <span style="font-family:'Libre Caslon Display',serif;font-size:106px;color:#f0ead8;line-height:1">S</span>
+          <span class="sis-i mi" style="color:#d4913a;font-size:46px"></span>
+          <span style="font-family:'Libre Caslon Display',serif;font-size:106px;color:#f0ead8;line-height:1">S</span>
+        </div>
+      </div>
+      <div style="width:155px;height:1px;background:linear-gradient(90deg,transparent,rgba(70,55,30,.7),transparent)"></div>
+      <div class="tg" style="color:#8a7040">Safe · Interpretable · Simple</div>
+    </div>
+    <div class="note note-dark"><b>Dark warm brown · amber 𝑖.</b> Darker and more saturated warm background. The amber 𝑖 glows like a light source. Feels like candlelight on wood panelling — old science meets new precision.</div>
+  </div>
+
+  <!-- 08: deep ocean #1e3040 -->
+  <div class="card" style="background:#1e3040;border-color:#253d50">
+    <span class="num" style="color:#4a9abb">08</span>
+    <span class="lbl" style="color:#38bdf8">ocean · cyan</span>
+    <div class="mark">
+      <div class="arc-wrap">
+        <svg class="arc-svg" viewBox="0 0 250 120" style="opacity:.12" preserveAspectRatio="xMidYMid meet">
+          <ellipse cx="125" cy="97" rx="113" ry="26" stroke="#38bdf8" stroke-width="1.2" stroke-dasharray="5 3.5" fill="none"/>
+          <circle cx="238" cy="97" r="3.5" fill="#38bdf8"/>
+        </svg>
+        <div class="sis" style="position:relative;z-index:1">
+          <span style="font-family:'Libre Caslon Display',serif;font-size:106px;color:#eef2ff;line-height:1">S</span>
+          <span class="sis-i mi" style="color:#38bdf8;font-size:46px"></span>
+          <span style="font-family:'Libre Caslon Display',serif;font-size:106px;color:#eef2ff;line-height:1">S</span>
+        </div>
+      </div>
+      <div style="width:155px;height:1px;background:linear-gradient(90deg,transparent,rgba(20,55,75,.9),transparent)"></div>
+      <div class="tg" style="color:#4a9abb">Safe · Interpretable · Simple</div>
+    </div>
+    <div class="note note-dark"><b>Deep ocean · cyan 𝑖.</b> Saturated dark teal — the background has strong colour, the 𝑖 in electric cyan. Digital, real-time data, telemetry. The S stands in white as pure structure against the coloured field.</div>
+  </div>
+
+</div>
+
+<!-- ══════════════════════════════════════
+     ROW 3 — LIGHT BACKGROUNDS
+══════════════════════════════════════ -->
+<div class="slbl">Light — ivory, white, paper</div>
+<div class="row3">
+
+  <!-- 09: warm ivory #f5f0e8 -->
+  <div class="card" style="background:#f5f0e8;border-color:#ddd8cc">
+    <span class="num" style="color:#9a9080">09</span>
+    <span class="lbl" style="color:#6060a0;opacity:.6">warm ivory ★</span>
+    <div class="mark">
+      <div class="arc-wrap">
+        <svg class="arc-svg" viewBox="0 0 250 120" style="opacity:.06" preserveAspectRatio="xMidYMid meet">
+          <ellipse cx="125" cy="97" rx="113" ry="26" stroke="#1a2a48" stroke-width="1.2" stroke-dasharray="5 3.5" fill="none"/>
+          <circle cx="238" cy="97" r="3.5" fill="#1a2a48"/>
+        </svg>
+        <div class="sis" style="position:relative;z-index:1">
+          <span style="font-family:'Libre Caslon Display',serif;font-size:106px;color:#1a2040;line-height:1">S</span>
+          <span class="sis-i mi" style="color:#2a58c0;font-size:46px"></span>
+          <span style="font-family:'Libre Caslon Display',serif;font-size:106px;color:#1a2040;line-height:1">S</span>
+        </div>
+      </div>
+      <div class="rule rule-fade-light"></div>
+      <div class="tg" style="color:#7a7060">Safe · Interpretable · Simple</div>
+    </div>
+    <div class="note note-light"><b>Warm ivory ★.</b> #f5f0e8 — the most beautiful light option. The Caslon S in near-black ink on warm paper. Letterhead, proposals, printed materials. The 𝑖 in navy blue. Classical, timeless, trustworthy.</div>
+  </div>
+
+  <!-- 10: pure white #ffffff -->
+  <div class="card" style="background:#ffffff;border-color:#e0ddd8">
+    <span class="num" style="color:#9a9090">10</span>
+    <span class="lbl" style="color:#6060a0;opacity:.6">pure white</span>
+    <div class="mark">
+      <div class="arc-wrap">
+        <svg class="arc-svg" viewBox="0 0 250 120" style="opacity:.05" preserveAspectRatio="xMidYMid meet">
+          <ellipse cx="125" cy="97" rx="113" ry="26" stroke="#1a2a48" stroke-width="1.2" stroke-dasharray="5 3.5" fill="none"/>
+          <circle cx="238" cy="97" r="3.5" fill="#1a2a48"/>
+        </svg>
+        <div class="sis" style="position:relative;z-index:1">
+          <span style="font-family:'Libre Caslon Display',serif;font-size:106px;color:#1a2040;line-height:1">S</span>
+          <span class="sis-i mi" style="color:#2a58c0;font-size:46px"></span>
+          <span style="font-family:'Libre Caslon Display',serif;font-size:106px;color:#1a2040;line-height:1">S</span>
+        </div>
+      </div>
+      <div class="rule rule-fade-light"></div>
+      <div class="tg" style="color:#8a8880">Safe · Interpretable · Simple</div>
+    </div>
+    <div class="note note-light"><b>Pure white.</b> Crisp and clinical — the Caslon S is at full contrast. Clean, modern, digital-first. The ink-blue 𝑖 pops sharply. Best for websites, slide decks, and digital-first contexts.</div>
+  </div>
+
+  <!-- 11: cool white #f0f4ff -->
+  <div class="card" style="background:#f0f4ff;border-color:#d8dff0">
+    <span class="num" style="color:#9090a8">11</span>
+    <span class="lbl" style="color:#6060a0;opacity:.6">cool white</span>
+    <div class="mark">
+      <div class="arc-wrap">
+        <svg class="arc-svg" viewBox="0 0 250 120" style="opacity:.05" preserveAspectRatio="xMidYMid meet">
+          <ellipse cx="125" cy="97" rx="113" ry="26" stroke="#1a2a48" stroke-width="1.2" stroke-dasharray="5 3.5" fill="none"/>
+          <circle cx="238" cy="97" r="3.5" fill="#1a2a48"/>
+        </svg>
+        <div class="sis" style="position:relative;z-index:1">
+          <span style="font-family:'Libre Caslon Display',serif;font-size:106px;color:#1a2040;line-height:1">S</span>
+          <span class="sis-i mi" style="color:#4f8ff2;font-size:46px"></span>
+          <span style="font-family:'Libre Caslon Display',serif;font-size:106px;color:#1a2040;line-height:1">S</span>
+        </div>
+      </div>
+      <div class="rule rule-fade-light"></div>
+      <div class="tg" style="color:#6a80aa">Safe · Interpretable · Simple</div>
+    </div>
+    <div class="note note-light"><b>Cool white.</b> Slightly blue-tinted white — the background picks up the brand colour subtly. The 𝑖 in the same blue #4f8ff2 as the dark-mode version, maintaining consistency. The whole mark feels airy and technical.</div>
+  </div>
+
+</div>
+
+<!-- ══════════════════════════════════════
+     ROW 4 — COLOUR + BOTH MODES LOCKUPS
+══════════════════════════════════════ -->
+<div class="slbl">Complete lockups — selected best combinations</div>
+<div class="row3">
+
+  <!-- 12: dark with stars — full lockup -->
+  <div class="card" style="background:#04060c;border-color:#0f1826">
+    <span class="num" style="color:#4a6080">12</span>
+    <span class="lbl" style="color:#4f8ff2">dark · full lockup</span>
+    <div class="mark" style="gap:4px">
+      <div class="arc-wrap">
+        <svg class="arc-svg" viewBox="0 0 250 120" style="opacity:.09" preserveAspectRatio="xMidYMid meet">
+          <ellipse cx="125" cy="97" rx="113" ry="26" stroke="#4f8ff2" stroke-width="1.2" stroke-dasharray="5 3.5" fill="none"/>
+          <circle cx="238" cy="97" r="3.5" fill="#4f8ff2"/>
+        </svg>
+        <div class="sis" style="position:relative;z-index:1">
+          <span style="font-family:'Libre Caslon Display',serif;font-size:106px;color:#eef2ff;line-height:1">S</span>
+          <span class="sis-i mi" style="color:#4f8ff2;font-size:46px"></span>
+          <span style="font-family:'Libre Caslon Display',serif;font-size:106px;color:#eef2ff;line-height:1">S</span>
+        </div>
+      </div>
+      <div style="width:155px;height:1px;background:linear-gradient(90deg,transparent,rgba(24,36,58,.9),transparent)"></div>
+      <div class="tg" style="color:#4a6080">Safe · Interpretable · Simple</div>
+      <div style="font-family:'DM Mono',monospace;font-size:7px;letter-spacing:.28em;color:#2e3d58;text-transform:uppercase">Space · Aviation · Systems</div>
+    </div>
+    <div class="note note-dark"><b>Dark, full lockup.</b> Mark → rule → tagline → domain. All four elements in a tight stack. The Caslon display S with the full caption block below. Deep navy background.</div>
+  </div>
+
+  <!-- 13: warm ivory full lockup -->
+  <div class="card" style="background:#f5f0e8;border-color:#ddd8cc">
+    <span class="num" style="color:#9a9080">13</span>
+    <span class="lbl" style="color:#6060a0;opacity:.6">ivory · full lockup ★</span>
+    <div class="mark" style="gap:4px">
+      <div class="arc-wrap">
+        <svg class="arc-svg" viewBox="0 0 250 120" style="opacity:.06" preserveAspectRatio="xMidYMid meet">
+          <ellipse cx="125" cy="97" rx="113" ry="26" stroke="#1a2a48" stroke-width="1.2" stroke-dasharray="5 3.5" fill="none"/>
+          <circle cx="238" cy="97" r="3.5" fill="#1a2a48"/>
+        </svg>
+        <div class="sis" style="position:relative;z-index:1">
+          <span style="font-family:'Libre Caslon Display',serif;font-size:106px;color:#1a2040;line-height:1">S</span>
+          <span class="sis-i mi" style="color:#2a58c0;font-size:46px"></span>
+          <span style="font-family:'Libre Caslon Display',serif;font-size:106px;color:#1a2040;line-height:1">S</span>
+        </div>
+      </div>
+      <div style="width:155px;height:1px;background:linear-gradient(90deg,transparent,rgba(0,0,0,.1),transparent)"></div>
+      <div class="tg" style="color:#7a7060">Safe · Interpretable · Simple</div>
+      <div style="font-family:'DM Mono',monospace;font-size:7px;letter-spacing:.28em;color:#9a9080;text-transform:uppercase">Space · Aviation · Systems</div>
+    </div>
+    <div class="note note-light"><b>Ivory, full lockup ★.</b> The warmest and most printable version. Ink on paper — letterhead, cover page of an AFRL white paper. The entire mark system works flawlessly at any print size.</div>
+  </div>
+
+  <!-- 14: dark gold variant — full lockup -->
+  <div class="card" style="background:#12100e;border-color:#1e1a14">
+    <span class="num" style="color:#7a6535">14</span>
+    <span class="lbl" style="color:#c8a84e">warm dark · full lockup</span>
+    <div class="mark" style="gap:4px">
+      <div class="arc-wrap">
+        <svg class="arc-svg" viewBox="0 0 250 120" style="opacity:.09" preserveAspectRatio="xMidYMid meet">
+          <ellipse cx="125" cy="97" rx="113" ry="26" stroke="#c8a84e" stroke-width="1.2" stroke-dasharray="5 3.5" fill="none"/>
+          <circle cx="238" cy="97" r="3.5" fill="#c8a84e"/>
+        </svg>
+        <div class="sis" style="position:relative;z-index:1">
+          <span style="font-family:'Libre Caslon Display',serif;font-size:106px;color:#f0ead8;line-height:1">S</span>
+          <span class="sis-i mi" style="color:#c8a84e;font-size:46px"></span>
+          <span style="font-family:'Libre Caslon Display',serif;font-size:106px;color:#f0ead8;line-height:1">S</span>
+        </div>
+      </div>
+      <div style="width:155px;height:1px;background:linear-gradient(90deg,transparent,rgba(200,168,78,.2),transparent)"></div>
+      <div class="tg" style="color:#7a6535">Safe · Interpretable · Simple</div>
+      <div style="font-family:'DM Mono',monospace;font-size:7px;letter-spacing:.28em;color:#4a3820;text-transform:uppercase">Space · Aviation · Systems</div>
+    </div>
+    <div class="note note-dark"><b>Warm dark, full lockup.</b> The archival version — near-black warm background, cream S, gold 𝑖. Feels like an award plaque, a mission patch, or a cover of a government technical report. The most prestigious.</div>
+  </div>
+
+</div>
+
+</div><!-- /wrap -->
+
+<!-- ═══════════════════
+     TWIN HEROES
+     dark + light side by side
+═══════════════════ -->
+<div style="max-width:1020px;margin:32px auto 0">
+  <div style="font-size:8px;letter-spacing:.32em;color:#4a6080;text-transform:uppercase;text-align:center;padding:24px 0 14px">
+    ★ Twin heroes — dark mode · light mode
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:3px">
+
+    <!-- DARK HERO -->
+    <div style="background:#04060c;border:1px solid #0f1826;padding:60px 32px 48px;display:flex;flex-direction:column;align-items:center;position:relative;overflow:hidden">
+      <div style="position:absolute;inset:0;background:radial-gradient(ellipse 55% 55% at 50% 48%,rgba(79,143,242,.038),transparent 70%);pointer-events:none"></div>
+      <!-- stars -->
+      <svg style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none" viewBox="0 0 450 280">
+        <circle cx="36"  cy="22"  r=".6" fill="white" style="animation:twinkle 3.4s ease-in-out infinite"/>
+        <circle cx="108" cy="58"  r=".5" fill="white" style="animation:twinkle 4.1s .5s ease-in-out infinite"/>
+        <circle cx="185" cy="14"  r=".7" fill="white" style="animation:twinkle 2.9s .2s ease-in-out infinite"/>
+        <circle cx="265" cy="44"  r=".4" fill="#4f8ff2" style="animation:twinkle 5.2s .8s ease-in-out infinite"/>
+        <circle cx="340" cy="20"  r=".6" fill="white" style="animation:twinkle 3.7s .4s ease-in-out infinite"/>
+        <circle cx="420" cy="50"  r=".5" fill="white" style="animation:twinkle 4.6s .1s ease-in-out infinite"/>
+        <circle cx="82"  cy="210" r=".5" fill="white" style="animation:twinkle 3.0s .9s ease-in-out infinite"/>
+        <circle cx="248" cy="236" r=".5" fill="#38bdf8" style="animation:twinkle 4.9s .3s ease-in-out infinite"/>
+        <circle cx="386" cy="205" r=".4" fill="white" style="animation:twinkle 5.4s .6s ease-in-out infinite"/>
+      </svg>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:6px;position:relative;z-index:1">
+        <div class="arc-wrap">
+          <svg class="arc-svg" viewBox="0 0 310 148" style="opacity:.09" preserveAspectRatio="xMidYMid meet">
+            <ellipse cx="155" cy="118" rx="142" ry="30" stroke="#4f8ff2" stroke-width="1.2" stroke-dasharray="5 3.5" fill="none"/>
+            <circle cx="297" cy="118" r="4" fill="#4f8ff2"/>
+          </svg>
+          <div class="sis" style="position:relative;z-index:1">
+            <span style="font-family:'Libre Caslon Display',serif;font-size:130px;color:#eef2ff;line-height:1">S</span>
+            <span id="hero_dark" class="sis-i" style="color:#4f8ff2;font-size:57px"></span>
+            <span style="font-family:'Libre Caslon Display',serif;font-size:130px;color:#eef2ff;line-height:1">S</span>
+          </div>
+        </div>
+        <div style="width:180px;height:1px;background:linear-gradient(90deg,transparent,rgba(24,36,58,.95),transparent)"></div>
+        <div style="font-family:'Cormorant Garamond',serif;font-weight:300;font-style:italic;font-size:13px;letter-spacing:.2em;color:#4a6080">Safe · Interpretable · Simple</div>
+        <div style="font-family:'DM Mono',monospace;font-size:7px;letter-spacing:.3em;color:#2e3d58;text-transform:uppercase">Space · Aviation · Uncertainty-Aware Systems</div>
+      </div>
+      <div style="font-size:7.5px;line-height:1.9;color:#3a5070;text-align:center;border-top:1px solid #0f1826;padding-top:14px;width:100%;margin-top:32px">
+        <b style="color:#eef2ff">Dark mode</b> · #04060c · white S · blue 𝑖 · Caslon Display
+      </div>
+    </div>
+
+    <!-- LIGHT HERO -->
+    <div style="background:#f5f0e8;border:1px solid #ddd8cc;padding:60px 32px 48px;display:flex;flex-direction:column;align-items:center;position:relative;overflow:hidden">
+      <div style="display:flex;flex-direction:column;align-items:center;gap:6px">
+        <div class="arc-wrap">
+          <svg class="arc-svg" viewBox="0 0 310 148" style="opacity:.055" preserveAspectRatio="xMidYMid meet">
+            <ellipse cx="155" cy="118" rx="142" ry="30" stroke="#1a2a48" stroke-width="1.2" stroke-dasharray="5 3.5" fill="none"/>
+            <circle cx="297" cy="118" r="4" fill="#1a2a48"/>
+          </svg>
+          <div class="sis" style="position:relative;z-index:1">
+            <span style="font-family:'Libre Caslon Display',serif;font-size:130px;color:#1a2040;line-height:1">S</span>
+            <span id="hero_light" class="sis-i" style="color:#2a58c0;font-size:57px"></span>
+            <span style="font-family:'Libre Caslon Display',serif;font-size:130px;color:#1a2040;line-height:1">S</span>
+          </div>
+        </div>
+        <div style="width:180px;height:1px;background:linear-gradient(90deg,transparent,rgba(0,0,0,.1),transparent)"></div>
+        <div style="font-family:'Cormorant Garamond',serif;font-weight:300;font-style:italic;font-size:13px;letter-spacing:.2em;color:#7a7060">Safe · Interpretable · Simple</div>
+        <div style="font-family:'DM Mono',monospace;font-size:7px;letter-spacing:.3em;color:#9a9080;text-transform:uppercase">Space · Aviation · Uncertainty-Aware Systems</div>
+      </div>
+      <div style="font-size:7.5px;line-height:1.9;color:#9a9080;text-align:center;border-top:1px solid #ddd8cc;padding-top:14px;width:100%;margin-top:32px">
+        <b style="color:#1a2040">Light mode</b> · #f5f0e8 warm ivory · ink S · navy 𝑖 · Caslon Display
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+window.addEventListener('load', function() {
+  document.querySelectorAll('.mi').forEach(function(el) {
+    katex.render('i', el, { displayMode:false, throwOnError:false });
+    el.querySelectorAll('span').forEach(s => s.style.color = 'inherit');
+  });
+  ['hero_dark','hero_light','hdr_i'].forEach(function(id) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    katex.render('i', el, { displayMode:false, throwOnError:false });
+    el.querySelectorAll('span').forEach(s => s.style.color = 'inherit');
+  });
+});
+</script>
+</body>
+</html>

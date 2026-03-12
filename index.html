@@ -1,0 +1,1489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Seeze — Predictive &amp; Risk-Aware Space Domain Awareness</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&family=Libre+Caslon+Display&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <style>
+    /* ── Reset ── */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    /* ── Fonts ── */
+    @font-face {
+      font-family: 'Geist';
+      src: local('Geist');
+      font-weight: 100 900;
+      font-display: swap;
+    }
+
+    /* ── Variables ── */
+    :root {
+      --navy: #12223C;
+      --dark: #1E2935;
+      --body: #2A3748;
+      --muted: #5E6A79;
+      --light-bg: #F8F9FB;
+      --card-bg: #EEF2F8;
+      --border: #12223C;
+      --teal: #52C1DD;
+      --sis-bg: #13445B;
+      --green-bg: #164A45;
+      --green-border: #66D2B0;
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 18px;
+      --radius-xl: 20px;
+    }
+
+    body {
+      font-family: 'JetBrains Mono', monospace;
+      background: linear-gradient(180deg, #D7D3CC 0%, #BDB6AB 100%);
+      color: var(--dark);
+      min-height: 100vh;
+    }
+
+    .page-wrapper {
+      max-width: 1440px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    /* ── Nav ── */
+    .top-nav {
+      display: flex;
+      align-items: center;
+      padding: 24px 72px 0;
+    }
+    .nav-logo {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      line-height: 1;
+      text-decoration: none;
+      flex-shrink: 0;
+    }
+    .nav-logo .logo-mark {
+      display: inline-flex;
+      align-items: baseline;
+      line-height: 1;
+    }
+    .nav-logo .logo-s {
+      font-family: 'Libre Caslon Display', 'Palatino Linotype', Palatino, serif;
+      font-weight: 400;
+      font-size: 64px;
+      line-height: 1;
+      color: #000;
+    }
+    .nav-logo .logo-i {
+      display: inline;
+      vertical-align: baseline;
+      line-height: 1;
+      margin: 0 -0.04em;
+      color: #2d6db5;
+      font-size: 28px;
+    }
+    .nav-logo .logo-tagline {
+      font-family: 'Libre Caslon Display', 'Palatino Linotype', Palatino, serif;
+      letter-spacing: .01em;
+      color: #000;
+      margin-top: -10px;
+      text-align: center;
+      line-height: 1.1;
+    }
+    .nav-logo .logo-tagline-top {
+      font-size: 16px;
+    }
+    .nav-logo .logo-tagline-bottom {
+      font-size: 21px;
+    }
+    .nav-logo .logo-i .katex, .nav-logo .logo-i .katex * {
+      color: #2d6db5 !important;
+    }
+    .nav-links {
+      display: flex;
+      gap: 30px;
+      margin-left: auto;
+    }
+    .nav-links a {
+      font-family: 'Poppins', sans-serif;
+      font-size: 20px;
+      font-weight: 500;
+      color: var(--dark);
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+    .nav-links a:hover { opacity: 0.7; }
+
+    /* ── Hero ── */
+    .hero {
+      text-align: center;
+      padding: 24px 72px 0;
+    }
+    .hero-accent {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: clamp(14px, 1.8vw, 20px);
+      font-weight: 400;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: #7a9ab8;
+      margin-bottom: 10px;
+    }
+    .hero-title {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: clamp(32px, 4.5vw, 58px);
+      font-weight: 700;
+      letter-spacing: -1.2px;
+      line-height: 1;
+      color: var(--dark);
+      margin-bottom: 12px;
+    }
+    .hero-tag {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 24px;
+    }
+    #mission-loop {
+      background: #0c1420;
+      border: 1px solid rgba(122,154,184,0.2);
+      border-radius: 16px;
+      padding: 20px 28px;
+      min-width: 420px;
+      max-width: 560px;
+      font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', 'Consolas', monospace;
+      font-size: 13.5px;
+      line-height: 1.8;
+      color: #7a9ab8;
+      text-align: left;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.25), inset 0 1px 0 rgba(122,154,184,0.06);
+    }
+    #mission-loop .term-prompt {
+      color: #5a8a5a;
+    }
+    #mission-loop .term-text {
+      color: #7a9ab8;
+    }
+    #mission-loop .term-cursor {
+      display: inline-block;
+      width: 7px;
+      height: 15px;
+      background: #7a9ab8;
+      vertical-align: text-bottom;
+      margin-left: 1px;
+      animation: blink-cursor 0.8s step-end infinite;
+    }
+    @keyframes blink-cursor {
+      0%,100%{opacity:1} 50%{opacity:0}
+    }
+
+    /* ── Earth Stage ── */
+    .earth-stage {
+      margin: 24px 72px 0;
+      border-radius: 42px;
+      overflow: hidden;
+      position: relative;
+      height: 920px;
+      background:
+        radial-gradient(1100px 650px at 16% 20%, rgba(66, 108, 164, 0.16), transparent 64%),
+        radial-gradient(900px 540px at 82% 22%, rgba(50, 84, 136, 0.14), transparent 62%),
+        radial-gradient(1000px 680px at 54% 84%, rgba(28, 49, 84, 0.24), transparent 70%),
+        linear-gradient(180deg, #05080f 0%, #060b14 42%, #03060c 100%);
+      border: 1px solid #294A73;
+    }
+    .earth-stage::before {
+      content: '';
+      position: absolute; inset: 0; z-index: 3; pointer-events: none;
+      background: radial-gradient(ellipse at center, transparent 48%, rgba(6,12,22,0.28) 80%, rgba(3,7,14,0.55) 100%);
+    }
+    .earth-stage .stars {
+      position: absolute; inset: 0; z-index: 0; pointer-events: none;
+    }
+    .earth-stage .star {
+      position: absolute; border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, #ffffff 0%, #d8eaff 60%, rgba(190,220,255,0.25) 100%);
+      box-shadow: 0 0 8px rgba(170, 212, 255, 0.35);
+      animation: twinkle var(--dur,4s) var(--del,0s) ease-in-out infinite;
+    }
+    @keyframes twinkle { 0%,100%{opacity:.16} 50%{opacity:var(--op,.82)} }
+    #conjunction-canvas {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      z-index: 4; display: block;
+    }
+    .viz-overlay {
+      position: absolute; inset: 0; z-index: 5; pointer-events: none;
+    }
+    .viz-label {
+      position: absolute;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px; font-weight: 500;
+      color: rgba(210, 232, 255, 0.85);
+      white-space: nowrap;
+      transform: translate(-50%, -50%);
+      text-shadow: 0 0 8px rgba(0,0,0,0.8);
+      transition: opacity 0.3s;
+    }
+    .viz-label-a { color: rgba(170, 130, 255, 0.9); }
+    .viz-label-b { color: rgba(100, 215, 230, 0.9); }
+    .viz-label-tca { font-size: 13px; font-weight: 600; color: rgba(255, 225, 170, 0.95); }
+    .viz-label-cube { font-size: 10px; color: rgba(200, 220, 240, 0.55); letter-spacing: 0.5px; }
+    .viz-legend {
+      position: absolute; right: 28px; top: 50%; transform: translateY(-50%);
+      z-index: 6; display: flex; gap: 8px; align-items: stretch;
+    }
+    .viz-legend-bar {
+      width: 10px; height: 140px; border-radius: 5px;
+      background: linear-gradient(180deg, #d94040 0%, #dd8830 30%, #d4c040 55%, #40b860 100%);
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .viz-legend-labels {
+      display: flex; flex-direction: column; justify-content: space-between;
+      font-family: 'JetBrains Mono', monospace; font-size: 9px; font-weight: 500;
+      color: rgba(200, 220, 240, 0.6); letter-spacing: 0.3px;
+    }
+    .viz-title {
+      position: absolute; top: 24px; left: 32px; z-index: 6;
+    }
+    .viz-title-main {
+      display: block; font-family: 'JetBrains Mono', monospace;
+      font-size: 14px; font-weight: 600; color: rgba(210, 232, 255, 0.8);
+    }
+    .viz-title-sub {
+      display: block; font-family: 'JetBrains Mono', monospace;
+      font-size: 10px; font-weight: 400; color: rgba(160, 190, 220, 0.45); margin-top: 4px;
+    }
+    .viz-modes {
+      position: absolute; bottom: 24px; left: 50%; transform: translateX(-50%);
+      z-index: 6; display: flex; gap: 6px;
+    }
+    .viz-mode {
+      font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 500;
+      padding: 7px 14px; border-radius: 999px;
+      border: 1px solid rgba(122, 176, 216, 0.3);
+      background: rgba(8, 16, 28, 0.5); color: rgba(200, 220, 240, 0.6);
+      cursor: pointer; transition: all 0.25s; backdrop-filter: blur(4px);
+    }
+    .viz-mode:hover { border-color: rgba(122, 176, 216, 0.6); color: rgba(220, 236, 255, 0.9); }
+    .viz-mode.active {
+      border-color: rgba(157, 206, 255, 0.7); color: #d2e8ff;
+      box-shadow: 0 0 12px rgba(122, 176, 216, 0.25);
+      background: rgba(20, 40, 70, 0.6);
+    }
+    .viz-tooltip {
+      position: absolute; z-index: 7;
+      font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 500;
+      color: #d2e8ff; background: rgba(8, 16, 30, 0.85);
+      border: 1px solid rgba(122, 176, 216, 0.35); border-radius: 6px;
+      padding: 6px 10px; pointer-events: none; opacity: 0; transition: opacity 0.15s;
+    }
+    .viz-tooltip.visible { opacity: 1; }
+
+    /* ── Section shared ── */
+    .section {
+      margin: 56px 72px 0;
+      padding: 28px;
+      background: var(--light-bg);
+      border: 3px solid var(--border);
+      border-radius: var(--radius-xl);
+    }
+    .section-label {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--muted);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .section-title {
+      font-family: 'Geist', sans-serif;
+      font-size: clamp(28px, 4vw, 42px);
+      font-weight: 700;
+      color: var(--dark);
+      line-height: 1.08;
+      margin-bottom: 12px;
+    }
+    .section-subtitle {
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--body);
+      line-height: 1.55;
+      margin-bottom: 24px;
+    }
+    .section-footer {
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--muted);
+      line-height: 1.5;
+      text-align: center;
+      margin-top: 18px;
+    }
+
+    /* ── Section 2: Three Cards ── */
+    .cards-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+      margin: 56px 72px 0;
+    }
+    @media (max-width: 900px) {
+      .cards-row { grid-template-columns: 1fr; }
+    }
+    .info-card {
+      background: var(--light-bg);
+      border: 3px solid var(--border);
+      border-radius: 10px;
+      padding: 26px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+    .info-card h3 {
+      font-family: 'Poppins', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      line-height: 1.1;
+      color: var(--dark);
+    }
+    .info-card p {
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 1.35;
+      color: var(--dark);
+    }
+    .info-card .card-img {
+      width: 100%;
+      aspect-ratio: 354/300;
+      border-radius: 10px;
+      border: 1px solid #C7CED8;
+      object-fit: cover;
+    }
+    .info-card:nth-child(2) .card-img { border-color: #B7D5E8; }
+
+    /* ── Section 3: Philosophy ── */
+    .philosophy-title {
+      font-family: 'Geist', sans-serif;
+      font-size: clamp(32px, 4.5vw, 54px);
+      font-weight: 700;
+      line-height: 1.05;
+      color: var(--dark);
+      margin-bottom: 12px;
+    }
+    .philosophy-thesis {
+      font-size: 16px;
+      font-weight: 400;
+      color: var(--body);
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+    .philosophy-row {
+      display: flex;
+      align-items: stretch;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .philosophy-card {
+      flex: 1;
+      background: var(--card-bg);
+      border: 3px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 12px;
+    }
+    .philosophy-card .card-icon {
+      width: 32px;
+      height: 32px;
+      flex-shrink: 0;
+    }
+    .philosophy-card h4 {
+      font-family: 'Geist', sans-serif;
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--dark);
+    }
+    .philosophy-card .desc {
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 1.55;
+      color: var(--dark);
+    }
+    .philosophy-card .tags {
+      font-size: 12px;
+      font-weight: 400;
+      line-height: 1.4;
+      color: var(--muted);
+    }
+    .connector {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      flex-shrink: 0;
+      gap: 8px;
+      color: var(--muted);
+    }
+    .connector .line {
+      width: 26px;
+      height: 1px;
+      background: var(--muted);
+    }
+    .connector .arrow {
+      font-family: 'Geist', sans-serif;
+      font-size: 20px;
+      font-weight: 500;
+    }
+    .philosophy-why {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--muted);
+      text-align: center;
+    }
+    @media (max-width: 900px) {
+      .philosophy-row { flex-direction: column; }
+      .connector {
+        flex-direction: row;
+        width: 100%;
+        height: 40px;
+        justify-content: center;
+      }
+      .connector .line { width: 1px; height: 26px; }
+    }
+
+    /* ── Section 4: Architecture Diagram ── */
+    .arch-diagram {
+      width: 100%;
+      border-radius: var(--radius-md);
+      border: 3px solid var(--border);
+      background: var(--card-bg);
+      padding: 24px 28px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      position: relative;
+    }
+    .arch-layer {
+      position: relative;
+      border-radius: 10px;
+      padding: 14px 20px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .arch-layer-obs  { background: rgba(216,223,238,0.55); }
+    .arch-layer-pred { background: rgba(210,230,237,0.55); }
+    .arch-layer-risk { background: rgba(235,226,212,0.55); }
+    .arch-layer-dec  { background: rgba(212,232,224,0.55); }
+
+    .arch-layer-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--dark);
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+    }
+    .arch-modules {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .arch-module {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      width: 200px;
+      min-height: 56px;
+      padding: 10px 12px;
+      border-radius: 8px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      font-weight: 600;
+      line-height: 1.3;
+      position: relative;
+    }
+    .arch-module.baseline {
+      background: var(--card-bg);
+      border: 3px solid var(--navy);
+      color: var(--dark);
+    }
+    .arch-module.sis {
+      background: var(--sis-bg);
+      border: 2px solid var(--teal);
+      color: #D9F7FF;
+      font-family: 'Geist', sans-serif;
+      font-weight: 700;
+      font-size: 13px;
+      box-shadow: 0 2px 8px rgba(82,193,221,0.25);
+    }
+    .arch-module.output {
+      background: var(--green-bg);
+      border: 1px solid var(--green-border);
+      color: #fff;
+      font-family: 'Geist', sans-serif;
+      font-weight: 700;
+      font-size: 13px;
+    }
+    .arch-module .sub-label {
+      font-size: 8px;
+      font-weight: 400;
+      color: #8A94A2;
+      margin-top: 2px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .arch-module .sis-sub {
+      color: rgba(217,247,255,0.6);
+    }
+    .arch-new-pill {
+      position: absolute;
+      top: -9px;
+      right: calc(50% - 17px);
+      background: var(--teal);
+      color: #fff;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 7px;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 4px;
+      letter-spacing: 0.5px;
+    }
+    .arch-arrow {
+      font-family: 'Geist', sans-serif;
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--muted);
+      flex-shrink: 0;
+      line-height: 1;
+    }
+    .arch-arrow.teal { color: var(--teal); }
+    .arch-v-arrows {
+      display: flex;
+      justify-content: center;
+      gap: 200px;
+      padding: 0 40px;
+    }
+    .arch-v-arrow {
+      font-family: 'Geist', sans-serif;
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--muted);
+      text-align: center;
+      width: 200px;
+    }
+    .arch-v-arrow.teal { color: var(--teal); }
+    .arch-annotation {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px;
+      font-weight: 400;
+      color: #8A94A2;
+      text-align: center;
+      margin-top: -4px;
+    }
+    .arch-legend {
+      display: flex;
+      gap: 24px;
+      align-items: center;
+      margin-top: 4px;
+    }
+    .arch-legend-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .arch-legend-swatch {
+      width: 12px;
+      height: 12px;
+      border-radius: 3px;
+      flex-shrink: 0;
+    }
+    .arch-legend-swatch.swatch-baseline {
+      background: var(--card-bg);
+      border: 2px solid var(--navy);
+    }
+    .arch-legend-swatch.swatch-sis {
+      background: var(--sis-bg);
+      border: 2px solid var(--teal);
+    }
+    .arch-legend-swatch.swatch-output {
+      background: var(--green-bg);
+      border: 1px solid var(--green-border);
+    }
+    .arch-legend-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px;
+      font-weight: 500;
+      color: var(--muted);
+    }
+
+    /* ── Section 5: CTA ── */
+    .cta-section {
+      margin: 56px 72px 56px;
+      padding: 80px 72px;
+      background: var(--light-bg);
+      border: 3px solid var(--border);
+      border-radius: var(--radius-xl);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 32px;
+      text-align: center;
+    }
+    .cta-title {
+      font-family: 'Geist', sans-serif;
+      font-size: clamp(28px, 4vw, 42px);
+      font-weight: 700;
+      color: var(--dark);
+    }
+    .cta-subtitle {
+      font-size: 15px;
+      font-weight: 400;
+      color: var(--body);
+      line-height: 1.65;
+      max-width: 800px;
+    }
+    .btn-row {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .btn {
+      font-family: 'Geist', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      padding: 14px 32px;
+      border-radius: var(--radius-sm);
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+    .btn:hover { opacity: 0.85; }
+    .btn-primary {
+      background: var(--navy);
+      color: #fff;
+    }
+    .btn-secondary {
+      background: var(--card-bg);
+      color: var(--dark);
+      border: 2px solid var(--navy);
+    }
+    .cta-cred {
+      font-size: 12px;
+      font-weight: 400;
+      color: var(--muted);
+      line-height: 1.55;
+      max-width: 700px;
+    }
+  </style>
+</head>
+<body>
+  <div class="page-wrapper">
+
+    <!-- Nav -->
+    <nav class="top-nav">
+      <a href="#" class="nav-logo">
+        <div class="logo-mark">
+          <span class="logo-s">S</span>
+          <span class="logo-i" id="nav-mi"></span>
+          <span class="logo-s">S</span>
+        </div>
+        <div class="logo-tagline"><div class="logo-tagline-top">Interpretable</div><div class="logo-tagline-bottom">Simplicity</div></div>
+      </a>
+      <div class="nav-links">
+        <a href="#about">About</a>
+        <a href="#research">Research</a>
+        <a href="#technology">Technology</a>
+        <a href="#work-with-us">Work with us</a>
+      </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero">
+      <div class="hero-accent">Predictive & Risk-Aware</div>
+      <h1 class="hero-title">Space Domain Awareness</h1>
+      <div class="hero-tag">
+        <div id="mission-loop"></div>
+      </div>
+    </section>
+
+    <!-- Earth Stage: Conjunction Visualization -->
+    <div class="earth-stage" id="earth-stage">
+      <div class="stars" id="earth-stars"></div>
+      <canvas id="conjunction-canvas"></canvas>
+      <div class="viz-overlay" id="viz-overlay">
+        <div class="viz-label viz-label-tca" id="label-tca">TCA = t + T<sub>f</sub></div>
+        <div class="viz-label viz-label-a" id="label-ta">t</div>
+        <div class="viz-label viz-label-b" id="label-tb">t</div>
+        <div class="viz-label viz-label-a" id="label-tpa">t &minus; T<sub>p</sub></div>
+        <div class="viz-label viz-label-b" id="label-tpb">t &minus; T<sub>p</sub></div>
+        <div class="viz-label viz-label-cube" id="label-cube">Conjunction Assessment Zone</div>
+      </div>
+      <div class="viz-legend">
+        <div class="viz-legend-bar"></div>
+        <div class="viz-legend-labels">
+          <span>Conjunction<br>zone</span>
+          <span>Safe<br>zone</span>
+        </div>
+      </div>
+      <div class="viz-title">
+        <span class="viz-title-main">Conjunction Forecast</span>
+        <span class="viz-title-sub">Uncertainty-aware trajectory prediction</span>
+      </div>
+      <div class="viz-modes">
+        <button class="viz-mode active" data-mode="orbit">Orbit</button>
+        <button class="viz-mode" data-mode="conjunction">Conjunction</button>
+        <button class="viz-mode" data-mode="risk">Risk Field</button>
+      </div>
+      <div class="viz-tooltip" id="viz-tooltip"></div>
+    </div>
+
+    <!-- Section 2: Startup Philosophy -->
+    <section class="section" id="about" style="padding: 32px 32px 28px;">
+      <div class="section-label" style="letter-spacing: 1.6px;">Startup Philosophy</div>
+      <h2 class="philosophy-title">Simple → Interpretable → Safe</h2>
+      <p class="philosophy-thesis">We design safety-critical systems so they remain simple enough to audit, interpretable enough to trust, and safe enough to deploy.</p>
+
+      <div class="philosophy-row">
+        <!-- Simple -->
+        <div class="philosophy-card">
+          <svg class="card-icon" viewBox="0 0 32 32" fill="none" stroke="#3B82F6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M16 2 L28 9 L28 23 L16 30 L4 23 L4 9 Z M16 2 L16 16 M28 9 L16 16 M4 9 L16 16 M16 16 L16 30"/>
+          </svg>
+          <h4>Simple</h4>
+          <p class="desc">Constraint-first models, bounded complexity, and physics-guided structure keep the system understandable from the start.</p>
+          <p class="tags">bounded models · physics-guided · constrained</p>
+        </div>
+
+        <!-- Connector -->
+        <div class="connector">
+          <div class="line"></div>
+          <span class="arrow">→</span>
+        </div>
+
+        <!-- Interpretable -->
+        <div class="philosophy-card">
+          <svg class="card-icon" viewBox="0 0 32 32" fill="none" stroke="#14B8A6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 27 L5 5 M5 27 L29 27 M8 22 C12 20 14 16 18 13 C22 10 25 7 28 5"/>
+          </svg>
+          <h4>Interpretable</h4>
+          <p class="desc">Clear uncertainty estimates, traceable model behavior, and auditable outputs make decisions explainable.</p>
+          <p class="tags">uncertainty bounds · traceability · auditable</p>
+        </div>
+
+        <!-- Connector -->
+        <div class="connector">
+          <div class="line"></div>
+          <span class="arrow">→</span>
+        </div>
+
+        <!-- Safe -->
+        <div class="philosophy-card">
+          <svg class="card-icon" viewBox="0 0 32 32" fill="none" stroke="#22C55E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M16 3 L27 8 L27 15 C27 22 22 27 16 30 C10 27 5 22 5 15 L5 8 Z M11 16 L14.5 19.5 L21 13"/>
+          </svg>
+          <h4>Safe</h4>
+          <p class="desc">Operational guardrails, calibrated risk signals, and verification-oriented design support safer deployment in critical environments.</p>
+          <p class="tags">guardrails · calibrated risk · verification</p>
+        </div>
+      </div>
+
+      <p class="philosophy-why">Safety emerges when system behavior stays inspectable under operational pressure.</p>
+    </section>
+
+    <!-- Section 3: Challenge / Solution / Impact -->
+    <div class="cards-row" id="research">
+      <div class="info-card">
+        <h3>THE CHALLENGE:<br>CATALOG SCALING</h3>
+        <p>Tens of thousands of space objects require multi-day conjunction screenings. High-fidelity uncertainty propagation is computationally prohibitive, causing false alerts and operator overload.</p>
+        <img class="card-img" src="images/first.png" alt="Challenge visualization">
+      </div>
+      <div class="info-card">
+        <h3>THE SOLUTION:<br>CTPC AUGMENTATION</h3>
+        <p>A lightweight, Machine Learning-augmented probabilistic correction layer that snaps into existing physics-based propagators to provide statistically calibrated uncertainty.</p>
+        <img class="card-img" src="images/second.png" alt="Solution visualization">
+      </div>
+      <div class="info-card">
+        <h3>THE IMPACT:<br>OPERATIONAL SAFETY</h3>
+        <p>Reduces false alerts, mitigates probability dilution, and enables automated risk-aware maneuver planning without disrupting current operational pipelines.</p>
+        <img class="card-img" src="images/third.png" alt="Impact visualization">
+      </div>
+    </div>
+
+    <!-- Section 4: SDA Platform Architecture -->
+    <section class="section" id="technology">
+      <div class="section-label">SDA PLATFORM ARCHITECTURE</div>
+      <h2 class="section-title">From observations to operator maneuver decisions</h2>
+      <p class="section-subtitle">CTPC augments the operational Space Domain Awareness pipeline by calibrating mean and covariance after deterministic propagation and before collision risk estimation.</p>
+
+      <div class="arch-diagram">
+
+        <!-- L1: Observation Layer -->
+        <div class="arch-layer arch-layer-obs">
+          <div class="arch-layer-label">Observation Layer</div>
+          <div class="arch-modules">
+            <div class="arch-module baseline">Sensors</div>
+            <span class="arch-arrow">→</span>
+            <div class="arch-module baseline">Tracking Networks</div>
+            <span class="arch-arrow">→</span>
+            <div class="arch-module baseline">Orbit Determination</div>
+          </div>
+        </div>
+
+        <!-- Vertical arrows: L1 → L2 -->
+        <div class="arch-v-arrows">
+          <div class="arch-v-arrow">↓</div>
+          <div class="arch-v-arrow">↓</div>
+        </div>
+
+        <!-- L2: Prediction Layer -->
+        <div class="arch-layer arch-layer-pred">
+          <div class="arch-layer-label">Prediction Layer</div>
+          <div class="arch-modules">
+            <div class="arch-module baseline">
+              Deterministic Propagation
+              <span class="sub-label">GMAT / physics models</span>
+            </div>
+            <span class="arch-arrow">→</span>
+            <div class="arch-module sis">
+              <span class="arch-new-pill">NEW</span>
+              CTPC Correction
+              <span class="sub-label sis-sub">Probabilistic Corrector</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Vertical arrows: L2 → L3 -->
+        <div class="arch-v-arrows">
+          <div class="arch-v-arrow">↓</div>
+          <div class="arch-v-arrow teal">↓</div>
+        </div>
+
+        <!-- L3: Risk Intelligence Layer -->
+        <div class="arch-layer arch-layer-risk">
+          <div class="arch-layer-label">Risk Intelligence Layer</div>
+          <div class="arch-modules">
+            <div class="arch-module baseline">Calibrated Covariance</div>
+            <span class="arch-arrow">→</span>
+            <div class="arch-module baseline">Collision Probability<br>Computation</div>
+            <span class="arch-arrow">→</span>
+            <div class="arch-module baseline">Refined Alerts</div>
+          </div>
+          <p class="arch-annotation">Stable risk estimation enabled by calibrated uncertainty.</p>
+        </div>
+
+        <!-- Vertical arrows: L3 → L4 -->
+        <div class="arch-v-arrows">
+          <div class="arch-v-arrow teal">↓</div>
+          <div class="arch-v-arrow">↓</div>
+        </div>
+
+        <!-- L4: Decision Layer -->
+        <div class="arch-layer arch-layer-dec">
+          <div class="arch-layer-label">Decision Layer</div>
+          <div class="arch-modules">
+            <div class="arch-module sis">
+              <span class="arch-new-pill">NEW</span>
+              Risk-Aware<br>Maneuver Planning
+            </div>
+            <span class="arch-arrow">→</span>
+            <div class="arch-module output">Operator Decision</div>
+          </div>
+        </div>
+
+        <!-- Legend -->
+        <div class="arch-legend">
+          <div class="arch-legend-item">
+            <div class="arch-legend-swatch swatch-baseline"></div>
+            <span class="arch-legend-label">Existing SDA Module</span>
+          </div>
+          <div class="arch-legend-item">
+            <div class="arch-legend-swatch swatch-sis"></div>
+            <span class="arch-legend-label">SiS Augmentation (New)</span>
+          </div>
+          <div class="arch-legend-item">
+            <div class="arch-legend-swatch swatch-output"></div>
+            <span class="arch-legend-label">Final Output</span>
+          </div>
+        </div>
+
+      </div>
+
+      <p class="section-footer">Our system upgrades the SDA decision pipeline by calibrating uncertainty before collision risk estimation and enabling risk-aware maneuver planning.</p>
+    </section>
+
+    <!-- Section 5: CTA -->
+    <section class="cta-section" id="work-with-us">
+      <h2 class="cta-title">Work With Us</h2>
+      <p class="cta-subtitle">We are building safety-critical AI systems for space operations. If you are working on orbital safety, space traffic management, or mission-critical autonomy, we would love to collaborate.</p>
+      <div class="btn-row">
+        <a href="mailto:mbilalshahed@gmail.com" class="btn btn-primary">Contact Us</a>
+        <a href="mailto:mbilalshahed@gmail.com" class="btn btn-secondary">Research Collaboration</a>
+      </div>
+      <p class="cta-cred">Based in Ames, Iowa. Working at the intersection of machine learning, orbital dynamics, and safety-critical systems.</p>
+    </section>
+
+  </div>
+
+<script>
+  katex.render('i', document.getElementById('nav-mi'), {displayMode:false, throwOnError:false});
+  document.getElementById('nav-mi').querySelectorAll('span').forEach(s => s.style.color = '#2d6db5');
+</script>
+
+<!-- Three.js + OrbitControls -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://unpkg.com/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script>
+// ── Stars ──
+(function(){
+  function sc(t){
+    if(t==='warm')return'radial-gradient(circle at 35% 35%,#fff7e9 0%,#ffd9b3 58%,rgba(255,190,130,.26) 100%)';
+    if(t==='blue')return'radial-gradient(circle at 35% 35%,#f4f9ff 0%,#cde4ff 58%,rgba(161,204,255,.24) 100%)';
+    return'radial-gradient(circle at 35% 35%,#fff 0%,#d8eaff 60%,rgba(190,220,255,.25) 100%)';
+  }
+  function ps(el,n,c){
+    if(!el)return;
+    for(let i=0;i<n;i++){
+      const s=document.createElement('div');s.className='star';
+      const sz=c.min+Math.random()*(c.max-c.min),r=Math.random();
+      const t=r<c.wr?'warm':(r<c.wr+c.br?'blue':'white');
+      s.style.cssText=`width:${sz.toFixed(2)}px;height:${sz.toFixed(2)}px;left:${(Math.random()*100).toFixed(2)}%;top:${(Math.random()*100).toFixed(2)}%;--dur:${(c.tmin+Math.random()*(c.tmax-c.tmin)).toFixed(2)}s;--del:${(Math.random()*7).toFixed(2)}s;--op:${(c.omin+Math.random()*(c.omax-c.omin)).toFixed(2)};background:${sc(t)}`;
+      el.appendChild(s);
+    }
+  }
+  const el=document.getElementById('earth-stars');
+  ps(el,180,{min:.45,max:1.1,tmin:5.5,tmax:11,omin:.24,omax:.58,wr:.07,br:.34});
+  ps(el,120,{min:.8,max:1.8,tmin:4,tmax:8.2,omin:.3,omax:.75,wr:.1,br:.38});
+  ps(el,52,{min:1.4,max:2.8,tmin:2.8,tmax:6,omin:.42,omax:.92,wr:.14,br:.34});
+})();
+
+// ── Conjunction Assessment Visualization ──
+(function(){
+  const container=document.getElementById('earth-stage');
+  const canvas=document.getElementById('conjunction-canvas');
+  if(!container||!canvas)return;
+
+  // Renderer
+  let W=container.clientWidth, H=container.clientHeight;
+  const renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true});
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
+  renderer.setSize(W,H);
+  renderer.toneMapping=THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure=1.1;
+
+  const scene=new THREE.Scene();
+  const camera=new THREE.PerspectiveCamera(38,W/H,0.1,100);
+  camera.position.set(0,0.6,5.2);
+
+  // Controls
+  const controls=new THREE.OrbitControls(camera,canvas);
+  controls.target.set(0,0.3,0);
+  controls.enablePan=false;
+  controls.minDistance=3.5;
+  controls.maxDistance=8;
+  controls.minPolarAngle=0.3;
+  controls.maxPolarAngle=2.2;
+  controls.enableDamping=true;
+  controls.dampingFactor=0.05;
+  controls.update();
+
+  const loader=new THREE.TextureLoader();
+  loader.crossOrigin='anonymous';
+
+  // ── EARTH ──
+  const earthGroup=new THREE.Group();
+  earthGroup.position.set(0,-0.2,0);
+  scene.add(earthGroup);
+  let earth,clouds;
+
+  function buildEarth(day,spec,bump){
+    const g=new THREE.SphereGeometry(1,72,72);
+    const m=new THREE.MeshPhongMaterial({map:day,specularMap:spec,specular:new THREE.Color(0x4488bb),shininess:28,bumpMap:bump,bumpScale:0.05});
+    earth=new THREE.Mesh(g,m);earth.rotation.z=0.41;earthGroup.add(earth);
+  }
+  function buildClouds(tex){
+    const g=new THREE.SphereGeometry(1.01,72,72);
+    const m=new THREE.MeshPhongMaterial({map:tex,transparent:true,opacity:0.5,depthWrite:false,alphaMap:tex});
+    clouds=new THREE.Mesh(g,m);earthGroup.add(clouds);
+  }
+  function loadTex(u){return new Promise(r=>{loader.load(u,r,undefined,()=>r(null))})}
+
+  Promise.all([
+    loadTex('https://raw.githubusercontent.com/turban/webgl-earth/master/images/2_no_clouds_4k.jpg'),
+    loadTex('https://raw.githubusercontent.com/turban/webgl-earth/master/images/water_4k.png'),
+    loadTex('https://raw.githubusercontent.com/turban/webgl-earth/master/images/elev_bump_4k.jpg'),
+    loadTex('https://raw.githubusercontent.com/turban/webgl-earth/master/images/fair_clouds_4k.png'),
+  ]).then(([d,s,b,c])=>{if(d)buildEarth(d,s,b);if(c)buildClouds(c)});
+
+  // Atmosphere
+  function makeAtm(radius,cfg){
+    const mat=new THREE.ShaderMaterial({
+      uniforms:{
+        dayColor:{value:new THREE.Color(cfg.dc)},nightColor:{value:new THREE.Color(cfg.nc)},
+        sunDir:{value:new THREE.Vector3(-1,.35,.8).normalize()},
+        str:{value:cfg.s},fp:{value:cfg.f}
+      },
+      vertexShader:`varying vec3 vN,vV;void main(){vec4 wp=modelMatrix*vec4(position,1.);vN=normalize(mat3(modelMatrix)*normal);vV=normalize(cameraPosition-wp.xyz);gl_Position=projectionMatrix*viewMatrix*wp;}`,
+      fragmentShader:`uniform vec3 dayColor,nightColor,sunDir;uniform float str,fp;varying vec3 vN,vV;void main(){vec3 n=normalize(vN),v=normalize(vV);float ndv=max(dot(n,v),0.),fr=pow(1.-ndv,fp),d=clamp(dot(n,normalize(sunDir))*.5+.5,0.,1.),tw=smoothstep(.25,.75,d);vec3 sc=mix(nightColor,dayColor,tw);gl_FragColor=vec4(sc,fr*str*(.45+.75*d));}`,
+      transparent:true,blending:THREE.AdditiveBlending,depthWrite:false,side:THREE.BackSide
+    });
+    const mesh=new THREE.Mesh(new THREE.SphereGeometry(radius,48,48),mat);
+    earthGroup.add(mesh);return mesh;
+  }
+  const atm=[
+    makeAtm(1.028,{dc:0xa9dcff,nc:0x2f5e9b,s:0.22,f:2.2}),
+    makeAtm(1.07,{dc:0x7fbeff,nc:0x24497e,s:0.18,f:2.6}),
+    makeAtm(1.14,{dc:0x5ca8ef,nc:0x1b3e70,s:0.12,f:3.0})
+  ];
+
+  // Lights
+  const sun=new THREE.DirectionalLight(0xfff5e8,2.0);sun.position.set(-2.5,1.2,2);scene.add(sun);
+  scene.add(new THREE.AmbientLight(0x08101e,0.8));
+  const fill=new THREE.DirectionalLight(0x1a3060,0.2);fill.position.set(3,-2,-2);scene.add(fill);
+
+  // ── COLORS ──
+  const COL_A=0x9b6dff, COL_B=0x52d1dd;
+
+  // ── ORBITAL PATHS ──
+  // Both orbits share r=1.5 and incl=0 with opposite RAAN,
+  // so they naturally intersect at θ=90° (top of Earth) = CONJ
+  const EC=earthGroup.position; // Earth center (0,-0.2,0)
+  const ORB_R=1.5;
+  const CONJ=new THREE.Vector3(EC.x, ORB_R+EC.y, EC.z); // (0,1.3,0)
+
+  function orbitalArc(r,inclDeg,raanDeg,startDeg,endDeg,nPts){
+    const pts=[],incl=inclDeg*Math.PI/180,raan=raanDeg*Math.PI/180;
+    const ci=Math.cos(incl),si=Math.sin(incl),cr=Math.cos(raan),sr=Math.sin(raan);
+    for(let i=0;i<=nPts;i++){
+      const theta=(startDeg+(endDeg-startDeg)*i/nPts)*Math.PI/180;
+      const x0=r*Math.cos(theta),y0=r*Math.sin(theta);
+      const y1=y0*ci,z1=y0*si;
+      pts.push(new THREE.Vector3(x0*cr+z1*sr+EC.x, y1+EC.y, -x0*sr+z1*cr+EC.z));
+    }
+    return pts;
+  }
+
+  // Object A (violet): satellite upper-left (θ=140°), past arc curves down-left
+  const arcAPts=orbitalArc(ORB_R, 0, 22, 210, 140, 64);
+  const posA=arcAPts[arcAPts.length-1].clone();
+  const startA=arcAPts[0].clone();
+
+  // Object B (cyan): satellite upper-right (θ=40°), past arc curves down-right
+  const arcBPts=orbitalArc(ORB_R, 0, -22, 320, 400, 64);
+  const posB=arcBPts[arcBPts.length-1].clone();
+  const startB=arcBPts[0].clone();
+
+  // Forecast paths: orbital arcs from satellite to CONJ (θ=90°)
+  // A: 140° → 90° (upper-left to top), B: 40° → 90° (upper-right to top)
+  const foreAPts=orbitalArc(ORB_R, 0, 22, 140, 90, 24);
+  const pathAFore=new THREE.CatmullRomCurve3(foreAPts);
+
+  const foreBPts=orbitalArc(ORB_R, 0, -22, 400, 450, 24);
+  const pathBFore=new THREE.CatmullRomCurve3(foreBPts);
+
+  // Draw helpers — tube-based lines for thickness
+  const TRAIL_R=0.006;
+  function makeLinePath(pts,color,opacity){
+    const curve=new THREE.CatmullRomCurve3(pts);
+    const geo=new THREE.TubeGeometry(curve,pts.length*2,TRAIL_R,6,false);
+    return new THREE.Mesh(geo,new THREE.MeshBasicMaterial({color,transparent:true,opacity,depthWrite:false}));
+  }
+  function drawDashed(curve,color,opacity){
+    const group=new THREE.Group();
+    const totalPts=80,dashFrac=0.6;
+    const segLen=1/20; // 20 dashes
+    for(let d=0;d<20;d++){
+      const t0=d*segLen,t1=t0+segLen*dashFrac;
+      const nSeg=6,segPts=[];
+      for(let i=0;i<=nSeg;i++){
+        segPts.push(curve.getPointAt(t0+(t1-t0)*i/nSeg));
+      }
+      const sc=new THREE.CatmullRomCurve3(segPts);
+      const geo=new THREE.TubeGeometry(sc,nSeg*2,TRAIL_R,6,false);
+      group.add(new THREE.Mesh(geo,new THREE.MeshBasicMaterial({color,transparent:true,opacity,depthWrite:false})));
+    }
+    return group;
+  }
+
+  const orbitGroup=new THREE.Group();
+  const lineAPast=makeLinePath(arcAPts,COL_A,0.65);
+  const lineAFore=drawDashed(pathAFore,COL_A,0.5);
+  const lineBPast=makeLinePath(arcBPts,COL_B,0.65);
+  const lineBFore=drawDashed(pathBFore,COL_B,0.5);
+  orbitGroup.add(lineAPast,lineAFore,lineBPast,lineBFore);
+  scene.add(orbitGroup);
+
+  // ── SPACECRAFT MARKERS ──
+  function makeSC(color,pos,label){
+    const g=new THREE.Group();
+    g.add(new THREE.Mesh(new THREE.SphereGeometry(0.03,12,12),new THREE.MeshBasicMaterial({color})));
+    g.add(new THREE.Mesh(new THREE.SphereGeometry(0.07,12,12),new THREE.MeshBasicMaterial({color,transparent:true,opacity:0.2,depthWrite:false})));
+    g.position.copy(pos);g.userData.label=label;return g;
+  }
+  const scA=makeSC(COL_A,posA,'Object A — Primary');
+  const scB=makeSC(COL_B,posB,'Object B — Secondary');
+  scene.add(scA,scB);
+
+  // ── UNCERTAINTY ENVELOPES (tapered tubes) ──
+  function makeTube(curve,color,startR,endR,op){
+    const segs=40,rSegs=10;
+    const frames=curve.computeFrenetFrames(segs,false);
+    const v=[],idx=[];
+    for(let i=0;i<=segs;i++){
+      const t=i/segs,r=startR+(endR-startR)*t*t;
+      const P=curve.getPointAt(t),N=frames.normals[i],B=frames.binormals[i];
+      for(let j=0;j<=rSegs;j++){
+        const a=(j/rSegs)*Math.PI*2,cs=Math.cos(a),sn=Math.sin(a);
+        v.push(P.x+r*(cs*N.x+sn*B.x),P.y+r*(cs*N.y+sn*B.y),P.z+r*(cs*N.z+sn*B.z));
+      }
+    }
+    for(let i=0;i<segs;i++)for(let j=0;j<rSegs;j++){
+      const a=i*(rSegs+1)+j,b=a+rSegs+1;
+      idx.push(a,b,a+1,b,b+1,a+1);
+    }
+    const geo=new THREE.BufferGeometry();
+    geo.setAttribute('position',new THREE.Float32BufferAttribute(v,3));
+    geo.setIndex(idx);geo.computeVertexNormals();
+    return new THREE.Mesh(geo,new THREE.MeshBasicMaterial({color,transparent:true,opacity:op,side:THREE.DoubleSide,depthWrite:false}));
+  }
+  const envGroup=new THREE.Group();
+  const envA=makeTube(pathAFore,COL_A,0.008,0.18,0.22);
+  const envB=makeTube(pathBFore,COL_B,0.008,0.18,0.22);
+  envGroup.add(envA,envB);
+  scene.add(envGroup);
+
+  // ── CONJUNCTION CUBE ──
+  const cubeSize=0.72;
+  const cubeGroup=new THREE.Group();
+  cubeGroup.position.copy(CONJ);
+
+  // Wireframe (dashed edges)
+  const boxGeo=new THREE.BoxGeometry(cubeSize,cubeSize,cubeSize);
+  const edgesMat=new THREE.LineDashedMaterial({color:0x8ab4d8,transparent:true,opacity:0.4,dashSize:0.02,gapSize:0.015});
+  const edgesLine=new THREE.LineSegments(new THREE.EdgesGeometry(boxGeo),edgesMat);
+  edgesLine.computeLineDistances();
+  cubeGroup.add(edgesLine);
+
+  // Translucent faces
+  const faceMat=new THREE.MeshBasicMaterial({color:0x1a3050,transparent:true,opacity:0.05,side:THREE.DoubleSide,depthWrite:false});
+  const cubeMesh=new THREE.Mesh(boxGeo,faceMat);
+  cubeMesh.userData.label='Maneuver Decision Volume';
+  cubeGroup.add(cubeMesh);
+
+  // Local R/T/N axes
+  const al=cubeSize*0.55;
+  [[0,-al/2,0,0,al/2,0],[- al/2,0,0,al/2,0,0],[0,0,-al/2,0,0,al/2]].forEach(c=>{
+    const pts=[new THREE.Vector3(c[0],c[1],c[2]),new THREE.Vector3(c[3],c[4],c[5])];
+    cubeGroup.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts),
+      new THREE.LineBasicMaterial({color:0x5588aa,transparent:true,opacity:0.2})));
+  });
+  // Faint grid on bottom face
+  for(let i=-2;i<=2;i++){
+    const t=i/2*cubeSize*0.45,hs=cubeSize*0.45;
+    const p1=[new THREE.Vector3(t,-cubeSize/2,-hs),new THREE.Vector3(t,-cubeSize/2,hs)];
+    const p2=[new THREE.Vector3(-hs,-cubeSize/2,t),new THREE.Vector3(hs,-cubeSize/2,t)];
+    const gm=new THREE.LineBasicMaterial({color:0x4477aa,transparent:true,opacity:0.08});
+    cubeGroup.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(p1),gm));
+    cubeGroup.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(p2),gm.clone()));
+  }
+  scene.add(cubeGroup);
+
+  // ── RISK FIELD (volumetric heat map — X/Y/Z slices) ──
+  const riskGroup=new THREE.Group();
+  riskGroup.position.copy(CONJ);
+  const riskMats=[];
+
+  // Color ramp matching Python (non-uniform stops)
+  const rampStops=[
+    {t:0,   r:0xb3,g:0x00,b:0x00},
+    {t:0.35,r:0xe5,g:0x39,b:0x35},
+    {t:0.60,r:0xf9,g:0xa8,b:0x25},
+    {t:0.80,r:0x9c,g:0xcc,b:0x65},
+    {t:1,   r:0x1b,g:0x5e,b:0x20}
+  ];
+  function riskColor(t){
+    t=Math.max(0,Math.min(1,t));
+    for(let i=0;i<rampStops.length-1;i++){
+      if(t<=rampStops[i+1].t){
+        const s=rampStops[i],e=rampStops[i+1];
+        const f=(t-s.t)/(e.t-s.t);
+        return{r:s.r+(e.r-s.r)*f,g:s.g+(e.g-s.g)*f,b:s.b+(e.b-s.b)*f};
+      }
+    }
+    const last=rampStops[rampStops.length-1];
+    return{r:last.r,g:last.g,b:last.b};
+  }
+
+  // PowerNorm gamma=0.55
+  const gamma=0.55;
+  function powerNorm(v){return Math.pow(Math.max(0,Math.min(1,v)),gamma);}
+
+  const ALPHA_SCALE=0.65;
+  const nSlices=16, res=48;
+  const hs=cubeSize/2;
+  const maxR=Math.sqrt(3)*hs;
+
+  function makeSliceCanvas(axis,slicePos){
+    const cv=document.createElement('canvas');cv.width=res;cv.height=res;
+    const ctx=cv.getContext('2d');
+    const img=ctx.createImageData(res,res);
+    for(let iy=0;iy<res;iy++){
+      for(let ix=0;ix<res;ix++){
+        // Map pixel to local coords within cube face
+        const u=(ix/(res-1)-0.5)*cubeSize;
+        const v=(0.5-iy/(res-1))*cubeSize;
+        let dx,dy,dz;
+        if(axis===0){dx=slicePos;dy=v;dz=u;}       // X-slice (YZ plane)
+        else if(axis===1){dx=u;dy=slicePos;dz=v;}   // Y-slice (XZ plane)
+        else{dx=u;dy=v;dz=slicePos;}                 // Z-slice (XY plane)
+        const dist=Math.sqrt(dx*dx+dy*dy+dz*dz);
+        const normD=dist/maxR;
+        const risk=powerNorm(1-normD);
+        const col=riskColor(1-risk);
+        const alpha=(0.03+0.22*risk)*ALPHA_SCALE;
+        const idx=(iy*res+ix)*4;
+        img.data[idx]=col.r;
+        img.data[idx+1]=col.g;
+        img.data[idx+2]=col.b;
+        img.data[idx+3]=Math.round(alpha*255);
+      }
+    }
+    ctx.putImageData(img,0,0);
+    return cv;
+  }
+
+  const planeSize=cubeSize*0.92;
+  // Create slices for each axis
+  for(let axis=0;axis<3;axis++){
+    for(let i=0;i<nSlices;i++){
+      const slicePos=(i/(nSlices-1)-0.5)*cubeSize*0.85;
+      const cv=makeSliceCanvas(axis,slicePos);
+      const tex=new THREE.CanvasTexture(cv);
+      tex.minFilter=THREE.LinearFilter;
+      tex.magFilter=THREE.LinearFilter;
+      const mat=new THREE.MeshBasicMaterial({
+        map:tex,transparent:true,side:THREE.DoubleSide,
+        depthWrite:false,blending:THREE.AdditiveBlending
+      });
+      riskMats.push(mat);
+      const plane=new THREE.Mesh(new THREE.PlaneGeometry(planeSize,planeSize),mat);
+      if(axis===0){plane.rotation.y=Math.PI/2;plane.position.x=slicePos;}
+      else if(axis===1){plane.rotation.x=Math.PI/2;plane.position.y=slicePos;}
+      else{plane.position.z=slicePos;}
+      riskGroup.add(plane);
+    }
+  }
+  scene.add(riskGroup);
+
+  // ── LABELS (3D→2D projection) ──
+  const labelEls={
+    tca:document.getElementById('label-tca'),
+    ta:document.getElementById('label-ta'),
+    tb:document.getElementById('label-tb'),
+    tpa:document.getElementById('label-tpa'),
+    tpb:document.getElementById('label-tpb'),
+    cube:document.getElementById('label-cube')
+  };
+  const label3D={
+    tca:new THREE.Vector3(CONJ.x,CONJ.y+0.38,CONJ.z),
+    ta:posA.clone().add(new THREE.Vector3(-0.16,0.1,0)),
+    tb:posB.clone().add(new THREE.Vector3(0.16,0.1,0)),
+    tpa:startA.clone().add(new THREE.Vector3(-0.14,0.08,0)),
+    tpb:startB.clone().add(new THREE.Vector3(0.14,0.08,0)),
+    cube:new THREE.Vector3(CONJ.x,CONJ.y-0.38,CONJ.z)
+  };
+  function updateLabels(){
+    const rect=canvas.getBoundingClientRect();
+    for(const[k,el]of Object.entries(labelEls)){
+      if(!el)continue;
+      const v=label3D[k].clone().project(camera);
+      if(v.z>1){el.style.opacity='0';continue;}
+      el.style.left=((v.x*.5+.5)*rect.width)+'px';
+      el.style.top=((-v.y*.5+.5)*rect.height)+'px';
+      el.style.opacity='1';
+    }
+  }
+
+  // ── MODE TOGGLE ──
+  const modes={
+    orbit:{cp:[0,0.6,5.2],ct:[0,0.3,0],oOrbit:1,oEnv:.7,oCube:.35,oRisk:.3},
+    conjunction:{cp:[0.25,1.1,3.6],ct:[0,0.9,0.1],oOrbit:.6,oEnv:1,oCube:1,oRisk:.6},
+    risk:{cp:[0.12,1.4,2.4],ct:[0,1.25,0.12],oOrbit:.25,oEnv:.6,oCube:1,oRisk:1}
+  };
+  let curMode='orbit';
+  let tgtOp={oOrbit:1,oEnv:.7,oCube:.35,oRisk:.3};
+  let curOp={oOrbit:1,oEnv:.7,oCube:.35,oRisk:.3};
+  let isTrans=false,tProg=0;
+  const tFrom={p:new THREE.Vector3(),t:new THREE.Vector3()};
+  const tTo={p:new THREE.Vector3(),t:new THREE.Vector3()};
+
+  function easeIO(t){return t<.5?2*t*t:-1+(4-2*t)*t}
+
+  document.querySelectorAll('.viz-mode').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      const m=btn.dataset.mode;if(m===curMode)return;
+      curMode=m;
+      document.querySelectorAll('.viz-mode').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      const cfg=modes[m];
+      tgtOp={oOrbit:cfg.oOrbit,oEnv:cfg.oEnv,oCube:cfg.oCube,oRisk:cfg.oRisk};
+      isTrans=true;tProg=0;
+      tFrom.p.copy(camera.position);tFrom.t.copy(controls.target);
+      tTo.p.set(...cfg.cp);tTo.t.set(...cfg.ct);
+      controls.enabled=false;
+    });
+  });
+
+  // ── TOOLTIP ──
+  const tooltip=document.getElementById('viz-tooltip');
+  const raycaster=new THREE.Raycaster();
+  const mouse=new THREE.Vector2(-10,-10);
+  const hoverTargets=[scA.children[0],scB.children[0],cubeMesh];
+
+  canvas.addEventListener('mousemove',e=>{
+    const r=canvas.getBoundingClientRect();
+    mouse.x=((e.clientX-r.left)/r.width)*2-1;
+    mouse.y=-((e.clientY-r.top)/r.height)*2+1;
+    raycaster.setFromCamera(mouse,camera);
+    const hits=raycaster.intersectObjects(hoverTargets);
+    if(hits.length){
+      const obj=hits[0].object;
+      tooltip.textContent=obj.userData.label||obj.parent.userData.label||'';
+      tooltip.style.left=(e.clientX-r.left+14)+'px';
+      tooltip.style.top=(e.clientY-r.top-10)+'px';
+      tooltip.classList.add('visible');
+      canvas.style.cursor='pointer';
+    }else{
+      tooltip.classList.remove('visible');
+      canvas.style.cursor='grab';
+    }
+  });
+  canvas.addEventListener('mouseleave',()=>tooltip.classList.remove('visible'));
+
+  // ── RESIZE ──
+  function onResize(){
+    W=container.clientWidth;H=container.clientHeight;
+    renderer.setSize(W,H);camera.aspect=W/H;camera.updateProjectionMatrix();
+  }
+  window.addEventListener('resize',onResize);
+
+  // ── ANIMATE ──
+  let frame=0;
+  // Base opacities for keyed elements
+  const baseOp={
+    lineAPast:0.65,lineAFore:0.5,lineBPast:0.65,lineBFore:0.5,
+    envA:0.22,envB:0.22,edges:0.35,faces:0.05
+  };
+
+  function animate(){
+    requestAnimationFrame(animate);
+    frame++;
+
+    // Earth
+    if(earth)earth.rotation.y+=0.0008;
+    if(clouds)clouds.rotation.y+=0.001;
+
+    // Spacecraft pulse
+    const pulse=0.85+Math.sin(frame*0.04)*0.15;
+    scA.children[1].material.opacity=0.2*pulse;
+    scB.children[1].material.opacity=0.2*pulse;
+
+    // Lerp opacities
+    for(const k of Object.keys(tgtOp))curOp[k]+=(tgtOp[k]-curOp[k])*0.04;
+
+    // Apply opacities
+    lineAPast.material.opacity=baseOp.lineAPast*curOp.oOrbit;
+    lineBPast.material.opacity=baseOp.lineBPast*curOp.oOrbit;
+    lineAFore.traverse(c=>{if(c.isMesh)c.material.opacity=baseOp.lineAFore*curOp.oOrbit});
+    lineBFore.traverse(c=>{if(c.isMesh)c.material.opacity=baseOp.lineBFore*curOp.oOrbit});
+    envA.material.opacity=baseOp.envA*curOp.oEnv;
+    envB.material.opacity=baseOp.envB*curOp.oEnv;
+    edgesMat.opacity=baseOp.edges*curOp.oCube;
+    faceMat.opacity=baseOp.faces*curOp.oCube;
+    riskGroup.traverse(c=>{if(c.isMesh)c.material.opacity=curOp.oRisk});
+
+    // Camera transition
+    if(isTrans){
+      tProg+=0.012;
+      const t=easeIO(Math.min(tProg,1));
+      camera.position.lerpVectors(tFrom.p,tTo.p,t);
+      controls.target.lerpVectors(tFrom.t,tTo.t,t);
+      if(tProg>=1){isTrans=false;controls.enabled=true;}
+    }
+    controls.update();
+    updateLabels();
+    renderer.render(scene,camera);
+  }
+
+  // Lazy init
+  const io=new IntersectionObserver((entries,obs)=>{
+    if(entries.some(e=>e.isIntersecting)){animate();obs.disconnect();}
+  },{rootMargin:'120px 0px'});
+  io.observe(container);
+})();
+</script>
+<script>
+(function(){
+  const sentences=[
+    'Towards safer space',
+    'Engineering safer orbits',
+    'Predicting orbital risk',
+    'Understanding uncertainty',
+    'Safer decisions in orbit',
+    'Where prediction meets safety',
+    'Designing reliable autonomy',
+    'Trustworthy space intelligence',
+    'Seeing risk before it happens',
+    'Safety through prediction'
+  ];
+  const el=document.getElementById('mission-loop');
+  if(!el)return;
+
+  const prompt=document.createElement('span');
+  prompt.className='term-prompt';
+  prompt.textContent='$ ';
+  const text=document.createElement('span');
+  text.className='term-text';
+  const cursor=document.createElement('span');
+  cursor.className='term-cursor';
+  el.appendChild(prompt);
+  el.appendChild(text);
+  el.appendChild(cursor);
+
+  let idx=0;
+  function typeSentence(){
+    const str=sentences[idx];
+    text.textContent='';
+    let ci=0;
+    function nextChar(){
+      if(ci>=str.length){
+        // Hold completed sentence, then clear and move to next
+        setTimeout(()=>{
+          idx=(idx+1)%sentences.length;
+          typeSentence();
+        },1800);
+        return;
+      }
+      text.textContent+=str[ci];
+      ci++;
+      setTimeout(nextChar,60);
+    }
+    nextChar();
+  }
+  typeSentence();
+})();
+</script>
+</body>
+</html>

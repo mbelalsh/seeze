@@ -1,0 +1,235 @@
+
+CONTEXT BRIEF FOR NEW PROJECT CHAT
+
+Researcher Background
+
+I am a PhD student working on uncertainty-aware dynamical systems modeling, particularly for spacecraft trajectory forecasting and conjunction assessment.
+
+My work focuses on Predictor–Corrector frameworks where:
+- a physics-based propagator predicts system dynamics
+- a learned corrector calibrates prediction errors and uncertainty
+
+A key method I am developing is:
+
+CTPC (Continuous-Time Probabilistic Corrector)
+
+This model learns to correct uncertainty evolution in dynamical systems.
+
+----------------------------------------------------------------
+
+Startup Concept
+
+I am building a deep-tech startup called:
+
+SiS — Simple, Interpretable, Safe
+
+The goal is to develop reliable decision-support systems for safety-critical aerospace applications, particularly:
+
+- Space Domain Awareness (SDA)
+- conjunction assessment
+- collision risk estimation
+- maneuver planning
+
+The core philosophy of the platform is:
+
+Simple models
+Interpretable uncertainty
+Safe decision-making
+
+----------------------------------------------------------------
+
+Core Technical Idea
+
+Most space traffic systems rely on deterministic orbit propagation with simple uncertainty assumptions.
+
+However, real operational conditions include:
+
+- thermospheric density variability
+- atmospheric drag uncertainty
+- solar activity effects
+- geomagnetic disturbances
+
+These environmental factors distort orbital prediction uncertainty.
+
+The key problem is:
+
+uncertainty miscalibration in orbit prediction.
+
+This leads to:
+
+- unstable collision probability estimates
+- alert thrashing
+- conservative or unnecessary maneuvers
+
+----------------------------------------------------------------
+
+Proposed Solution
+
+The proposed framework introduces:
+
+Environment-Aware Uncertainty Calibration
+
+Architecture:
+
+Sensors
+↓
+Orbit Determination
+↓
+Deterministic Propagation (GMAT / physics models)
+↓
+Environmental disturbances (space weather, drag variability)
+↓
+Uncertainty distortion
+↓
+CTPC probabilistic correction
+↓
+Calibrated covariance
+↓
+Collision probability computation
+↓
+Risk-aware maneuver planning
+↓
+Operator decision support
+
+The key role of CTPC is to recalibrate propagated uncertainty using:
+
+- trajectory history
+- environmental signals
+
+----------------------------------------------------------------
+
+Research Program
+
+The research roadmap includes three papers and one system demonstrator.
+
+----------------------------------------------------------------
+
+Paper 1
+Environmental Disturbances and Uncertainty Miscalibration in Satellite Conjunction Assessment
+
+Goal:
+Quantify how space weather and environmental disturbances degrade orbital uncertainty propagation.
+
+Key metrics:
+- Mahalanobis consistency
+- covariance coverage
+- Pc volatility
+- forecast reliability
+
+----------------------------------------------------------------
+
+Paper 2
+Environment-Aware Continuous-Time Probabilistic Correction for Orbital Uncertainty
+
+Goal:
+Develop a probabilistic correction model that conditions on environmental signals.
+
+Corrector form:
+
+CTPC(state history, environmental signals)
+
+Environmental features include:
+
+- F10.7 solar flux
+- Ap/Kp geomagnetic indices
+- drag variability proxies
+- forecast horizon
+
+----------------------------------------------------------------
+
+Paper 3
+Risk-Aware Maneuver Planning with Environment-Calibrated Uncertainty
+
+Goal:
+Show that calibrated uncertainty improves maneuver decisions.
+
+Metrics:
+
+- violation rate
+- fuel optimality gap
+- maneuver stability
+- false-safe recommendations
+
+----------------------------------------------------------------
+
+Demonstration System
+
+A working system prototype will show:
+
+Environment-Aware Conjunction Decision Engine
+
+Pipeline:
+
+1. satellite propagation
+2. environmental disturbance scenario
+3. CTPC uncertainty calibration
+4. collision probability computation
+5. risk-aware maneuver optimization
+6. operator decision visualization
+
+The demo will compare:
+
+baseline propagation
+vs
+environment-aware CTPC
+
+under geomagnetic storm scenarios.
+
+----------------------------------------------------------------
+
+Funding Strategy
+
+I am preparing proposals for funding agencies.
+
+Potential targets include:
+
+NOAA
+Focus:
+- space weather effects
+- environmental impact on orbital prediction
+
+Proposal framing:
+
+Environment-Aware Uncertainty Calibration for Satellite Orbit Prediction
+
+----------------------------------------------------------------
+
+AFRL / SpaceWERX
+Focus:
+- conjunction assessment
+- maneuver planning
+- space traffic management
+
+Proposal framing:
+
+Probabilistic Correction of Orbital Uncertainty for Reliable Collision Risk Estimation
+
+----------------------------------------------------------------
+
+Current Goals
+
+The next steps are:
+
+1. develop proposal drafts
+2. design evaluation experiments
+3. build a demonstration prototype
+4. refine the SiS platform architecture
+5. produce publishable research papers
+
+----------------------------------------------------------------
+
+What I want help with
+
+In the new project chat, I want assistance with:
+
+- refining the proposal
+- designing experiments
+- defining evaluation metrics
+- connecting the research to startup strategy
+- identifying funding opportunities
+
+----------------------------------------------------------------
+
+Suggested opening sentence for the new chat:
+
+"This project develops environment-aware uncertainty calibration for orbital prediction and conjunction assessment using CTPC."

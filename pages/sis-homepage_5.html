@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SiS — Safe · Interpretable · Simple</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Display&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --bg:       #08111f;
+  --bg2:      #0a1628;
+  --blue:     #4a90d9;
+  --blue2:    #5aa0e8;
+  --S:        #c8dff5;
+  --tagline:  #7ab0d8;
+  --body:     #8ab8d8;
+  --faint:    #1e3a5a;
+  --white:    #e8f4ff;
+  --accent:   #6aaff5;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--body);
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  overflow-x: hidden;
+}
+
+/* ── NOISE OVERLAY ── */
+body::before {
+  content:'';
+  position:fixed; inset:0; z-index:0; pointer-events:none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  opacity: 0.35;
+}
+
+.katex, .katex * { color: inherit !important; }
+
+/* ══════════════════════════════════════
+   NAV
+══════════════════════════════════════ */
+nav {
+  position: fixed; top:0; left:0; right:0; z-index:100;
+  display: flex; align-items:center; justify-content:space-between;
+  padding: 16px 60px;
+  background: linear-gradient(to bottom, rgba(8,17,31,.98) 0%, transparent 100%);
+  backdrop-filter: blur(2px);
+}
+
+.nav-logo {
+  display: inline-flex; align-items:baseline; line-height:1;
+  font-family: 'Libre Caslon Display', Palatino, serif;
+}
+.nav-S { font-size:32px; color: var(--S); }
+.nav-i { font-size:14px; color: var(--blue); margin:0 -0.04em; display:inline; vertical-align:baseline; line-height:1; }
+
+.nav-links {
+  display: flex; gap:40px; list-style:none;
+}
+.nav-links a {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px; font-weight:300;
+  letter-spacing: .18em; text-transform:uppercase;
+  color: var(--tagline); text-decoration:none;
+  transition: color .3s;
+}
+.nav-links a:hover { color: var(--S); }
+
+.nav-cta {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px; font-weight:300; letter-spacing:.15em; text-transform:uppercase;
+  color: var(--blue); border:1px solid var(--faint);
+  padding: 9px 20px; text-decoration:none;
+  transition: all .3s;
+}
+.nav-cta:hover { border-color: var(--blue); color: var(--white); }
+
+/* ══════════════════════════════════════
+   HERO
+══════════════════════════════════════ */
+#hero {
+  position:relative; min-height:100vh;
+  display:flex; flex-direction:column;
+  align-items:center; justify-content:center;
+  overflow:hidden;
+}
+
+/* Star field */
+.stars {
+  position:absolute; inset:0; z-index:0; pointer-events:none;
+}
+.star {
+  position:absolute; border-radius:50%;
+  background:white;
+  animation: twinkle var(--dur,4s) var(--del,0s) infinite;
+}
+@keyframes twinkle { 0%,100%{opacity:.05} 50%{opacity:var(--op,.7)} }
+
+/* Hero background SVG */
+.hero-svg {
+  position:absolute; inset:0; width:100%; height:100%;
+  pointer-events:none; z-index:1;
+}
+
+/* Hero mark */
+.hero-mark {
+  position:relative; z-index:10;
+  display:inline-flex; flex-direction:column; align-items:center; gap:0;
+  animation: fadeUp 1.2s cubic-bezier(.16,1,.3,1) both;
+}
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(28px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+
+.hero-sis {
+  display:inline-flex; align-items:baseline; line-height:1;
+  font-family: 'Libre Caslon Display', Palatino, serif;
+}
+.hero-S { font-size:160px; line-height:1; color: var(--S); }
+.hero-i { font-size:70px; line-height:1; margin:0 -0.04em; color: var(--blue); display:inline; vertical-align:baseline; }
+
+.hero-tagline {
+  font-family: 'Libre Caslon Display', Palatino, serif;
+  font-size:15px; letter-spacing:.01em; color: var(--tagline);
+  margin-top: -18px;
+  animation: fadeUp 1.2s .2s cubic-bezier(.16,1,.3,1) both;
+}
+
+.hero-sub {
+  margin-top: 52px;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 18px; font-weight:300; font-style:italic;
+  color: #8ab8d8; letter-spacing:.04em;
+  max-width: 500px; text-align:center; line-height:1.7;
+  animation: fadeUp 1.2s .4s cubic-bezier(.16,1,.3,1) both;
+}
+
+.hero-buttons {
+  margin-top: 40px;
+  display:flex; gap:16px;
+  animation: fadeUp 1.2s .6s cubic-bezier(.16,1,.3,1) both;
+}
+.btn-primary {
+  font-family:'DM Mono',monospace; font-size:10px; font-weight:300;
+  letter-spacing:.18em; text-transform:uppercase;
+  background: var(--blue); color: var(--bg);
+  padding:13px 32px; text-decoration:none; transition:all .3s;
+}
+.btn-primary:hover { background: var(--accent); }
+.btn-ghost {
+  font-family:'DM Mono',monospace; font-size:10px; font-weight:300;
+  letter-spacing:.18em; text-transform:uppercase;
+  border:1px solid var(--faint); color: var(--tagline);
+  padding:13px 32px; text-decoration:none; transition:all .3s;
+}
+.btn-ghost:hover { border-color:var(--S); color:var(--S); }
+
+/* scroll indicator */
+.scroll-hint {
+  position:absolute; bottom:36px; left:50%; transform:translateX(-50%);
+  display:flex; flex-direction:column; align-items:center; gap:8px; z-index:10;
+  animation: fadeUp 1.2s .9s cubic-bezier(.16,1,.3,1) both;
+}
+.scroll-hint span {
+  font-family:'DM Mono',monospace; font-size:8px; letter-spacing:.22em;
+  text-transform:uppercase; color:var(--faint);
+}
+.scroll-line {
+  width:1px; height:40px;
+  background: linear-gradient(to bottom, var(--faint), transparent);
+  animation: scrollPulse 2s infinite;
+}
+@keyframes scrollPulse { 0%,100%{opacity:.3} 50%{opacity:1} }
+
+/* ══════════════════════════════════════
+   SECTION BASE
+══════════════════════════════════════ */
+section {
+  position:relative; z-index:2;
+  padding: 120px 60px;
+}
+
+.section-label {
+  font-family:'DM Mono',monospace; font-size:9px; font-weight:300;
+  letter-spacing:.28em; text-transform:uppercase; color:var(--blue);
+  margin-bottom:20px;
+}
+
+.section-title {
+  font-family:'Libre Caslon Display', Palatino, serif;
+  font-size:52px; color:var(--white); line-height:1.1;
+  margin-bottom:24px;
+}
+
+.section-body {
+  font-family:'Cormorant Garamond',serif;
+  font-size:17px; font-weight:300; line-height:1.85;
+  color:var(--body); max-width:560px;
+}
+
+/* ══════════════════════════════════════
+   PROBLEM / ABOUT
+══════════════════════════════════════ */
+#about {
+  display:grid; grid-template-columns:1fr 1fr; gap:100px; align-items:center;
+  border-top: 1px solid var(--faint);
+}
+
+.about-visual {
+  position:relative; height:420px;
+}
+.about-svg {
+  width:100%; height:100%;
+}
+
+/* ══════════════════════════════════════
+   WHAT WE DO — 3 pillars
+══════════════════════════════════════ */
+#pillars {
+  border-top: 1px solid var(--faint);
+  background: linear-gradient(to bottom, transparent, rgba(13,22,40,.6), transparent);
+}
+
+.pillars-header {
+  max-width: 600px; margin-bottom:80px;
+}
+
+.pillars-grid {
+  display:grid; grid-template-columns:repeat(3,1fr); gap:2px;
+}
+
+.pillar {
+  padding:48px 40px;
+  border:1px solid var(--faint);
+  position:relative; overflow:hidden;
+  transition: border-color .4s;
+}
+.pillar::before {
+  content:'';
+  position:absolute; inset:0;
+  background: linear-gradient(135deg, rgba(45,109,181,.04), transparent);
+  opacity:0; transition: opacity .4s;
+}
+.pillar:hover { border-color: rgba(45,109,181,.4); }
+.pillar:hover::before { opacity:1; }
+
+.pillar-num {
+  font-family:'DM Mono',monospace; font-size:9px; letter-spacing:.22em;
+  color:var(--blue); opacity:.5; margin-bottom:32px; display:block;
+}
+.pillar-icon {
+  margin-bottom:28px; opacity:.7;
+}
+.pillar-title {
+  font-family:'Libre Caslon Display',Palatino,serif;
+  font-size:26px; color:var(--white); margin-bottom:16px; line-height:1.2;
+}
+.pillar-text {
+  font-family:'Cormorant Garamond',serif;
+  font-size:15px; font-weight:300; line-height:1.8;
+  color:var(--body);
+}
+
+/* ══════════════════════════════════════
+   RESEARCH / TECHNOLOGY
+══════════════════════════════════════ */
+#research {
+  border-top:1px solid var(--faint);
+  display:grid; grid-template-columns:1fr 1fr; gap:100px; align-items:start;
+}
+
+.research-items { display:flex; flex-direction:column; gap:0; }
+.research-item {
+  padding:32px 0;
+  border-bottom:1px solid var(--faint);
+  cursor:default; transition: padding-left .3s;
+}
+.research-item:hover { padding-left:12px; }
+.research-item:first-child { border-top:1px solid var(--faint); }
+
+.ri-tag {
+  font-family:'DM Mono',monospace; font-size:8px; letter-spacing:.2em;
+  text-transform:uppercase; color:var(--blue); margin-bottom:10px; display:block;
+}
+.ri-title {
+  font-family:'Cormorant Garamond',serif; font-size:19px; font-weight:400;
+  color:var(--white); margin-bottom:8px; line-height:1.3;
+}
+.ri-text {
+  font-family:'Cormorant Garamond',serif; font-size:14px; font-weight:300;
+  line-height:1.7; color:var(--body);
+}
+
+/* ══════════════════════════════════════
+   METRICS / STATS
+══════════════════════════════════════ */
+#stats {
+  border-top:1px solid var(--faint);
+  display:grid; grid-template-columns:repeat(4,1fr); gap:2px;
+  padding-top:0; padding-bottom:0;
+}
+.stat {
+  padding:64px 40px;
+  border:1px solid var(--faint);
+  display:flex; flex-direction:column; gap:12px;
+}
+.stat-num {
+  font-family:'Libre Caslon Display',Palatino,serif;
+  font-size:52px; color:var(--white); line-height:1;
+}
+.stat-label {
+  font-family:'Cormorant Garamond',serif; font-size:14px; font-weight:300;
+  font-style:italic; color:var(--tagline); line-height:1.5;
+}
+
+/* ══════════════════════════════════════
+   CTA / CONTACT
+══════════════════════════════════════ */
+#contact {
+  border-top:1px solid var(--faint);
+  text-align:center;
+  background: linear-gradient(to bottom, transparent, rgba(13,22,40,.8));
+}
+#contact .section-title { font-size:64px; }
+#contact .section-body { margin: 0 auto 48px; text-align:center; }
+
+/* ══════════════════════════════════════
+   FOOTER
+══════════════════════════════════════ */
+footer {
+  position:relative; z-index:2;
+  padding:40px 60px;
+  border-top:1px solid var(--faint);
+  display:flex; align-items:center; justify-content:space-between;
+}
+.footer-copy {
+  font-family:'DM Mono',monospace; font-size:9px; letter-spacing:.14em;
+  color:var(--faint); text-transform:uppercase;
+}
+.footer-tagline {
+  font-family:'Cormorant Garamond',serif; font-size:13px; font-style:italic;
+  color:var(--faint);
+}
+
+/* ══════════════════════════════════════
+   SCROLL ANIMATIONS
+══════════════════════════════════════ */
+.reveal {
+  opacity:0; transform:translateY(24px);
+  transition: opacity .8s cubic-bezier(.16,1,.3,1), transform .8s cubic-bezier(.16,1,.3,1);
+}
+.reveal.visible { opacity:1; transform:translateY(0); }
+.reveal-delay-1 { transition-delay:.1s; }
+.reveal-delay-2 { transition-delay:.2s; }
+.reveal-delay-3 { transition-delay:.3s; }
+</style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav>
+<!-- NAV LOGO: user's exact logo scaled to fit nav -->
+  <div style="transform:scale(0.55);transform-origin:left center;width:550px;height:130px;pointer-events:none;flex-shrink:0;">
+    <div style="position:relative;display:inline-flex;flex-direction:column;align-items:center;gap:0;padding:60px 72px 36px;background:transparent;border:none;">
+      <svg style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;" viewBox="300 40 440 300" preserveAspectRatio="xMidYMid slice">
+        <defs><clipPath id="nc"><rect x="380" y="40" width="280" height="300"/></clipPath></defs>
+        <g clip-path="url(#nc)">
+          <path d="M -20,310 Q 520,60 1060,200" stroke="#6aaff5" stroke-width="2.2" fill="none" opacity="1"/>
+          <path d="M 860,10 Q 520,185 160,320" stroke="#80c0ff" stroke-width="1.8" fill="none" opacity=".95" stroke-dasharray="5 3"/>
+          <ellipse cx="520" cy="190" rx="110" ry="17" stroke="#6aaff5" stroke-width="2.0" stroke-dasharray="5 3.5" fill="none" opacity="1"/>
+        </g>
+      </svg>
+      <div style="position:relative;display:inline-flex;align-items:baseline;line-height:1;z-index:2;">
+        <span style="font-family:'Libre Caslon Display','Palatino Linotype',Palatino,serif;font-weight:400;font-size:160px;line-height:1;color:#c8dff5;">S</span>
+        <span id="nav-i" style="display:inline;vertical-align:baseline;line-height:1;margin:0 -0.04em;color:#4a90d9;font-size:70px;"></span>
+        <span style="font-family:'Libre Caslon Display','Palatino Linotype',Palatino,serif;font-weight:400;font-size:160px;line-height:1;color:#c8dff5;">S</span>
+      </div>
+    </div>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#pillars">Research</a></li>
+    <li><a href="#research">Technology</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Get in Touch</a>
+</nav>
+
+<!-- ── HERO ── -->
+<section id="hero">
+
+  <!-- Stars -->
+  <div class="stars" id="stars"></div>
+
+  <!-- Three.js Earth canvas -->
+  <div id="earth-wrap" style="position:relative;z-index:5;width:520px;height:520px;margin-bottom:20px;">
+    <canvas id="earth-canvas" style="width:100%;height:100%;"></canvas>
+  </div>
+
+  <p class="hero-sub" style="animation-delay:.2s;">
+    Uncertainty-aware trajectory forecasting for spacecraft conjunction analysis and space domain awareness.
+  </p>
+
+  <div class="hero-buttons" style="animation-delay:.4s;">
+    <a href="#pillars" class="btn-primary">Explore Research</a>
+    <a href="#contact" class="btn-ghost">Work With Us</a>
+  </div>
+
+  <div class="scroll-hint">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- ── ABOUT ── -->
+<section id="about">
+  <div class="reveal">
+    <p class="section-label">01 — The Problem</p>
+    <h2 class="section-title">Space is getting<br>crowded.</h2>
+    <p class="section-body">
+      With thousands of active satellites and millions of debris fragments in orbit, the risk of collision is no longer theoretical. Current conjunction analysis tools produce massive false alert volumes — operators can't tell signal from noise.<br><br>
+      SiS builds the uncertainty-aware forecasting layer that transforms raw trajectory data into credible, interpretable collision risk estimates.
+    </p>
+  </div>
+
+  <div class="about-visual reveal reveal-delay-1">
+    <svg class="about-svg" viewBox="0 0 480 420">
+      <defs>
+        <radialGradient id="cg" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#e05050" stop-opacity=".15"/>
+          <stop offset="100%" stop-color="#e05050" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="eg" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#0d1e38" stop-opacity="1"/>
+          <stop offset="100%" stop-color="#081220" stop-opacity="1"/>
+        </radialGradient>
+      </defs>
+
+      <!-- Earth -->
+      <circle cx="240" cy="380" r="200" fill="url(#eg)" opacity=".9"/>
+      <circle cx="240" cy="380" r="200" fill="none" stroke="#1a3a60" stroke-width="1.5"/>
+      <circle cx="240" cy="380" r="202" fill="none" stroke="#2d6db5" stroke-width=".4" opacity=".3"/>
+
+      <!-- Orbit 1 -->
+      <ellipse cx="240" cy="200" rx="200" ry="30"
+        stroke="#2d6db5" stroke-width="1" stroke-dasharray="5 3" fill="none" opacity=".5"/>
+      <!-- Orbit 2 -->
+      <ellipse cx="240" cy="210" rx="160" ry="22"
+        stroke="#3a7abf" stroke-width=".8" stroke-dasharray="4 5" fill="none" opacity=".4"/>
+
+      <!-- Trajectory 1 -->
+      <path d="M 20,320 Q 240,60 460,180" stroke="#2d6db5" stroke-width="1.2" fill="none" opacity=".7"/>
+      <!-- Probability cone -->
+      <path d="M 240,60 Q 350,90 460,150" stroke="#2d6db5" stroke-width="8" fill="none" opacity=".06"/>
+      <path d="M 240,60 Q 350,130 460,210" stroke="#2d6db5" stroke-width="8" fill="none" opacity=".06"/>
+      <!-- Trajectory 2 -->
+      <path d="M 440,40 Q 240,180 60,300" stroke="#3a7abf" stroke-width=".9" fill="none" opacity=".6" stroke-dasharray="5 3"/>
+
+      <!-- Conjunction zone -->
+      <circle cx="240" cy="148" r="28" fill="url(#cg)"/>
+      <circle cx="240" cy="148" r="10" fill="none" stroke="#e05050" stroke-width="1.5" opacity=".7"/>
+      <circle cx="240" cy="148" r="3.5" fill="#e05050" opacity=".9"/>
+
+      <!-- Sat 1 -->
+      <circle cx="120" cy="192" r="4" fill="#2d6db5" opacity=".9"/>
+      <circle cx="120" cy="192" r="8" fill="none" stroke="#2d6db5" stroke-width=".6" opacity=".3"/>
+      <!-- Sat 2 -->
+      <circle cx="370" cy="120" r="3.5" fill="#3a7abf" opacity=".8"/>
+
+      <!-- Uncertainty ellipse -->
+      <ellipse cx="240" cy="148" rx="38" ry="16"
+        stroke="#e05050" stroke-width=".8" stroke-dasharray="3 3" fill="none" opacity=".4"
+        transform="rotate(-30 240 148)"/>
+
+      <!-- Labels -->
+      <text x="128" y="182" font-family="DM Mono,monospace" font-size="7" fill="#4a6888" letter-spacing="1">SAT-A</text>
+      <text x="375" y="114" font-family="DM Mono,monospace" font-size="7" fill="#4a6888" letter-spacing="1">SAT-B</text>
+      <text x="248" y="145" font-family="DM Mono,monospace" font-size="7" fill="#e05050" letter-spacing="1" opacity=".7">TCA</text>
+    </svg>
+  </div>
+</section>
+
+<!-- ── PILLARS ── -->
+<section id="pillars">
+  <div class="pillars-header reveal">
+    <p class="section-label">02 — What We Build</p>
+    <h2 class="section-title">Three principles.<br>One framework.</h2>
+  </div>
+
+  <div class="pillars-grid">
+    <div class="pillar reveal">
+      <span class="pillar-num">01</span>
+      <svg class="pillar-icon" width="36" height="36" viewBox="0 0 36 36">
+        <circle cx="18" cy="18" r="14" fill="none" stroke="#2d6db5" stroke-width="1" opacity=".6"/>
+        <circle cx="18" cy="18" r="7" fill="none" stroke="#2d6db5" stroke-width="1.2" stroke-dasharray="3 2" opacity=".8"/>
+        <circle cx="18" cy="18" r="2.5" fill="#2d6db5" opacity=".9"/>
+      </svg>
+      <h3 class="pillar-title">Safe</h3>
+      <p class="pillar-text">
+        Probabilistic uncertainty quantification that never overconfidently dismisses collision risk. Our corrector framework propagates uncertainty faithfully from observation to decision — reducing false negatives that matter most.
+      </p>
+    </div>
+
+    <div class="pillar reveal reveal-delay-1">
+      <span class="pillar-num">02</span>
+      <svg class="pillar-icon" width="36" height="36" viewBox="0 0 36 36">
+        <path d="M 6,30 Q 18,6 30,18" stroke="#2d6db5" stroke-width="1.2" fill="none" opacity=".7"/>
+        <path d="M 30,6 Q 18,18 6,18" stroke="#3a7abf" stroke-width=".9" fill="none" opacity=".6" stroke-dasharray="3 2"/>
+        <circle cx="18" cy="14" r="2.5" fill="#2d6db5" opacity=".9"/>
+      </svg>
+      <h3 class="pillar-title">Interpretable</h3>
+      <p class="pillar-text">
+        Neural CDEs and predictor–corrector architectures grounded in physical dynamics. Operators understand what the model knows, what it doesn't, and why — bridging the gap between ML systems and mission-critical decisions.
+      </p>
+    </div>
+
+    <div class="pillar reveal reveal-delay-2">
+      <span class="pillar-num">03</span>
+      <svg class="pillar-icon" width="36" height="36" viewBox="0 0 36 36">
+        <line x1="6" y1="30" x2="30" y2="6" stroke="#2d6db5" stroke-width="1.2" opacity=".7"/>
+        <ellipse cx="18" cy="18" rx="14" ry="5" stroke="#2d6db5" stroke-width="1" stroke-dasharray="4 3" fill="none" opacity=".5"/>
+        <circle cx="18" cy="18" r="2.5" fill="#3a7abf" opacity=".9"/>
+      </svg>
+      <h3 class="pillar-title">Simple</h3>
+      <p class="pillar-text">
+        Deployable on operational timelines. Clean interfaces for conjunction screening, risk scoring, and alert triage. Designed to reduce the cognitive burden on analysts — not add to it.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ── RESEARCH ── -->
+<section id="research">
+  <div class="reveal">
+    <p class="section-label">03 — Technology</p>
+    <h2 class="section-title">The science<br>underneath.</h2>
+    <p class="section-body">
+      Built on a rigorous foundation of continuous-time probabilistic modelling, orbital mechanics, and uncertainty propagation theory.
+    </p>
+  </div>
+
+  <div class="research-items reveal reveal-delay-1">
+    <div class="research-item">
+      <span class="ri-tag">Core Architecture</span>
+      <div class="ri-title">Continuous-Time Probabilistic Corrector (CTPC)</div>
+      <p class="ri-text">Neural CDE-based framework that learns physics-residual corrections to SGP4/GMAT propagators while maintaining calibrated uncertainty intervals across the full forecast horizon.</p>
+    </div>
+    <div class="research-item">
+      <span class="ri-tag">Uncertainty Quantification</span>
+      <div class="ri-title">Fokker–Planck & SDE Propagation</div>
+      <p class="ri-text">Monte Carlo ensemble methods combined with Fokker–Planck-guided SDE dynamics for full covariance tracking — not just point estimates. PAC-Bayes bounds provide theoretical guarantees.</p>
+    </div>
+    <div class="research-item">
+      <span class="ri-tag">Conjunction Analysis</span>
+      <div class="ri-title">Probabilistic Collision Risk Inference</div>
+      <p class="ri-text">Direct probabilistic inference of Pc values with calibrated confidence intervals. Replaces hard thresholds with a continuous risk surface that informs operator decisions.</p>
+    </div>
+    <div class="research-item">
+      <span class="ri-tag">Data Pipeline</span>
+      <div class="ri-title">TLE / SGP4 Integration</div>
+      <p class="ri-text">End-to-end pipeline from raw TLE ingestion through GMAT propagation to ML corrector inference. Compatible with NASA CARA conjunction data message formats.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── STATS ── -->
+<section id="stats">
+  <div class="stat reveal">
+    <div class="stat-num">10<sup style="font-size:.45em;vertical-align:super">×</sup></div>
+    <div class="stat-label">Reduction in false alert volume vs. deterministic baselines</div>
+  </div>
+  <div class="stat reveal reveal-delay-1">
+    <div class="stat-num">48h</div>
+    <div class="stat-label">Calibrated uncertainty horizon for LEO conjunction forecasting</div>
+  </div>
+  <div class="stat reveal reveal-delay-2">
+    <div class="stat-num">Pc</div>
+    <div class="stat-label">Full probability of collision distribution, not a point estimate</div>
+  </div>
+  <div class="stat reveal reveal-delay-3">
+    <div class="stat-num">∞</div>
+    <div class="stat-label">Scalable to full catalogues — thousands of object pairs per run</div>
+  </div>
+</section>
+
+<!-- ── CONTACT ── -->
+<section id="contact">
+  <p class="section-label reveal">04 — Get Involved</p>
+  <h2 class="section-title reveal">Ready to reduce<br>collision risk?</h2>
+  <p class="section-body reveal">
+    We work with space agencies, satellite operators, and research institutions. If you're building the future of space traffic management, we should talk.
+  </p>
+  <div class="hero-buttons reveal">
+    <a href="mailto:contact@sis-space.io" class="btn-primary">Contact Us</a>
+    <a href="#pillars" class="btn-ghost">Read the Research</a>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-copy">© 2025 SiS · All rights reserved</div>
+  <div class="footer-tagline">Safe · Interpretable · Simple</div>
+  <div class="nav-logo" style="transform:scale(.75); transform-origin:right center;">
+    <span class="nav-S">S</span>
+    <span id="footer-i" style="display:inline;vertical-align:baseline;line-height:1;margin:0 -0.04em;color:var(--blue);font-size:14px;"></span>
+    <span class="nav-S">S</span>
+  </div>
+</footer>
+
+<!-- Three.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+// ── KaTeX renders ──
+katex.render('i', document.getElementById('nav-i'), {displayMode:false, throwOnError:false});
+katex.render('i', document.getElementById('footer-i'), {displayMode:false, throwOnError:false});
+['nav-i','footer-i'].forEach(id => {
+  const el = document.getElementById(id);
+  if (el) el.querySelectorAll('span').forEach(s => s.style.color = '#4a90d9');
+});
+
+// ── Stars ──
+const starsEl = document.getElementById('stars');
+for (let i = 0; i < 120; i++) {
+  const s = document.createElement('div');
+  s.className = 'star';
+  const size = Math.random() < 0.85 ? Math.random() * 1.5 + 0.5 : Math.random() * 2.5 + 1.5;
+  s.style.cssText = `width:${size}px;height:${size}px;left:${Math.random()*100}%;top:${Math.random()*100}%;--dur:${3+Math.random()*5}s;--del:${Math.random()*6}s;--op:${0.3+Math.random()*0.6};`;
+  starsEl.appendChild(s);
+}
+
+// ── Scroll reveal ──
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.12 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// ── THREE.JS EARTH ──
+(function() {
+  const canvas = document.getElementById('earth-canvas');
+  const W = 520, H = 520;
+  canvas.width = W * 2; canvas.height = H * 2;
+
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias:true, alpha:true });
+  renderer.setPixelRatio(2);
+  renderer.setSize(W, H);
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.1;
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(42, 1, 0.1, 100);
+  camera.position.set(0, 0, 3.2);
+
+  // ── Procedural Earth texture ──
+  function makeEarthTexture() {
+    const tw = 1024, th = 512;
+    const c = document.createElement('canvas');
+    c.width = tw; c.height = th;
+    const ctx = c.getContext('2d');
+    const img = ctx.createImageData(tw, th);
+    const d = img.data;
+
+    function hash(x, y) {
+      let h = Math.sin(x * 127.1 + y * 311.7) * 43758.5453;
+      return h - Math.floor(h);
+    }
+    function noise(x, y) {
+      const ix = Math.floor(x), iy = Math.floor(y);
+      const fx = x - ix, fy = y - iy;
+      const ux = fx*fx*(3-2*fx), uy = fy*fy*(3-2*fy);
+      return hash(ix,iy)*(1-ux)*(1-uy) + hash(ix+1,iy)*ux*(1-uy) +
+             hash(ix,iy+1)*(1-ux)*uy   + hash(ix+1,iy+1)*ux*uy;
+    }
+    function fbm(x, y, oct) {
+      let v=0, a=0.5, freq=1;
+      for(let i=0;i<oct;i++){v+=a*noise(x*freq,y*freq);a*=0.5;freq*=2;}
+      return v;
+    }
+
+    for (let py = 0; py < th; py++) {
+      const lat = (py / th - 0.5) * Math.PI; // -π/2 .. π/2
+      const absLat = Math.abs(lat) / (Math.PI/2); // 0..1
+      for (let px = 0; px < tw; px++) {
+        const lon = px / tw;
+        const n = fbm(lon * 6, (lat / Math.PI + 0.5) * 3, 6);
+        const n2 = fbm(lon * 12 + 5, (lat / Math.PI + 0.5) * 6 + 3, 4);
+        const land = n > 0.52;
+        let r, g, b;
+        if (absLat > 0.85) {
+          // Polar ice
+          const blend = (absLat - 0.85) / 0.15;
+          r = 200 + blend * 55; g = 220 + blend * 35; b = 230 + blend * 25;
+          if (land) { r=Math.min(255,r+10); g=Math.min(255,g+5); }
+        } else if (land) {
+          if (absLat < 0.15) { r=34; g=85; b=34; }       // tropical
+          else if (absLat < 0.35) { r=60; g=100; b=40; }  // temperate
+          else if (absLat < 0.55) { r=120; g=110; b=60; } // steppe
+          else { r=80; g=90; b=70; }                       // tundra
+          const t = n2 * 30 - 15;
+          r = Math.max(0,Math.min(255,r+t)); g=Math.max(0,Math.min(255,g+t)); b=Math.max(0,Math.min(255,b+t));
+        } else {
+          // Ocean depth
+          const depth = Math.max(0, 0.52 - n) / 0.52;
+          r = Math.round(10 + depth * 20);
+          g = Math.round(30 + depth * 60);
+          b = Math.round(80 + depth * 120);
+        }
+        const idx = (py * tw + px) * 4;
+        d[idx]=r; d[idx+1]=g; d[idx+2]=b; d[idx+3]=255;
+      }
+    }
+    ctx.putImageData(img, 0, 0);
+    return new THREE.CanvasTexture(c);
+  }
+
+  const earthTex = makeEarthTexture();
+
+  // ── Earth sphere ──
+  const earthGeo = new THREE.SphereGeometry(1, 64, 64);
+  const earthMat = new THREE.MeshPhongMaterial({
+    map: earthTex,
+    specular: new THREE.Color(0x224466),
+    shininess: 18,
+    bumpScale: 0.012,
+  });
+  const earth = new THREE.Mesh(earthGeo, earthMat);
+  earth.rotation.z = 0.41;
+  scene.add(earth);
+
+  // ── Atmosphere ──
+  const atmGeo = new THREE.SphereGeometry(1.04, 64, 64);
+  const atmMat = new THREE.MeshPhongMaterial({
+    color: 0x1a3da8, transparent:true, opacity:0.08, side:THREE.BackSide
+  });
+  scene.add(new THREE.Mesh(atmGeo, atmMat));
+
+  // ── Lighting ──
+  const sun = new THREE.DirectionalLight(0xfff3e0, 1.6);
+  sun.position.set(-1.4, 0.8, 2.2);
+  scene.add(sun);
+  scene.add(new THREE.AmbientLight(0x0c1828, 0.5));
+  const rim = new THREE.DirectionalLight(0x1a38aa, 0.25);
+  rim.position.set(2, -1, -1);
+  scene.add(rim);
+
+  // ── Orbital rings ──
+  function makeOrbit(rx, ry, rz, tiltX, tiltY, color, dashed) {
+    const pts = [];
+    for (let i = 0; i <= 128; i++) {
+      const a = (i / 128) * Math.PI * 2;
+      pts.push(new THREE.Vector3(Math.cos(a) * rx, Math.sin(a) * ry, 0));
+    }
+    const geo = new THREE.BufferGeometry().setFromPoints(pts);
+    const mat = new THREE.LineBasicMaterial({ color, transparent:true, opacity: dashed ? 0.5 : 0.7 });
+    const line = new THREE.LineLoop(geo, mat);
+    line.rotation.x = tiltX;
+    line.rotation.y = tiltY;
+    scene.add(line);
+    return line;
+  }
+
+  const orbit1 = makeOrbit(1.55, 1.55, 0, Math.PI*0.18, Math.PI*0.1,  0x2d6db5, false);
+  const orbit2 = makeOrbit(1.85, 1.85, 0, Math.PI*0.42, Math.PI*0.3,  0x3a7abf, true);
+  const orbit3 = makeOrbit(2.20, 2.20, 0, Math.PI*0.08, Math.PI*0.55, 0x1a3a60, true);
+
+  // ── Satellites ──
+  function makeSat(orbit, t, color) {
+    const geo = new THREE.SphereGeometry(0.03, 8, 8);
+    const mat = new THREE.MeshBasicMaterial({ color });
+    const sat = new THREE.Mesh(geo, mat);
+    sat._orbit = orbit; sat._t = t;
+    scene.add(sat);
+    return sat;
+  }
+  const sat1 = makeSat(orbit1, 0,    0x4f8ff2);
+  const sat2 = makeSat(orbit2, 2.1,  0x3a7abf);
+  const sat3 = makeSat(orbit1, 3.4,  0x7ab3f5);
+
+  function updateSat(sat, t, rx, ry) {
+    const local = new THREE.Vector3(Math.cos(t) * rx, Math.sin(t) * ry, 0);
+    local.applyEuler(sat._orbit.rotation);
+    sat.position.copy(local);
+  }
+
+  // ── Animate ──
+  let frame = 0;
+  function animate() {
+    requestAnimationFrame(animate);
+    frame++;
+    earth.rotation.y += 0.0018;
+
+    orbit1.rotation.y += 0.0003;
+    orbit2.rotation.y += 0.0002;
+    orbit3.rotation.y += 0.0001;
+
+    updateSat(sat1, frame * 0.012,      1.55, 1.55);
+    updateSat(sat2, frame * 0.008 + 2.1, 1.85, 1.85);
+    updateSat(sat3, frame * 0.012 + 3.4, 1.55, 1.55);
+
+    renderer.render(scene, camera);
+  }
+  animate();
+})();
+</script>
+</body>
+</html>

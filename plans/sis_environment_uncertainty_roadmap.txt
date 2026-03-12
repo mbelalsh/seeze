@@ -1,0 +1,270 @@
+
+ENVIRONMENT-AWARE UNCERTAINTY CALIBRATION FOR CONJUNCTION ASSESSMENT
+3-PAPER + 1-DEMO RESEARCH AND STARTUP ROADMAP
+
+====================================================================
+CORE THEME
+====================================================================
+
+Environmental disturbances distort orbital uncertainty. SiS calibrates
+this uncertainty using CTPC (Continuous-Time Probabilistic Corrector)
+to produce stable collision-risk estimates and better maneuver decisions.
+
+System chain:
+
+Observation → Prediction → Uncertainty Calibration → Risk Estimation → Decision Support
+
+This roadmap ensures that:
+• the PhD thesis is coherent
+• papers are publishable
+• the SiS startup narrative is strengthened
+• a working demonstrator is produced
+
+
+====================================================================
+PAPER 1 — CHARACTERIZING THE PROBLEM
+====================================================================
+
+Working title:
+Environmental Disturbances and Uncertainty Miscalibration in Satellite Conjunction Assessment
+
+Purpose:
+Demonstrate that environmental disturbances (e.g., space weather effects)
+create measurable uncertainty miscalibration in conjunction prediction.
+
+Main question:
+How do environmental disturbances degrade covariance calibration and
+destabilize collision probability estimates?
+
+Setup:
+Simulate conjunction prediction under:
+
+• quiet space weather conditions
+• moderate geomagnetic activity
+• strong disturbance conditions
+
+Baseline uncertainty methods:
+
+• STM / linearized covariance propagation
+• tuned process noise models
+• Monte Carlo reference propagation
+
+Key variables:
+
+• forecast horizon
+• orbital altitude
+• solar activity indices
+• drag variability
+
+Metrics:
+
+• squared Mahalanobis consistency
+• negative log-likelihood (NLL)
+• covariance coverage error
+• Pc volatility across updates
+• alert inflation under disturbance
+
+Key figures:
+
+• calibration error vs forecast horizon
+• Pc instability vs disturbance intensity
+• covariance inflation maps
+• altitude × solar activity heatmaps
+
+Value:
+Establishes the operational problem and motivates the SiS solution.
+
+
+====================================================================
+PAPER 2 — ENVIRONMENT-AWARE CTPC
+====================================================================
+
+Working title:
+Environment-Conditioned Continuous-Time Probabilistic Correction
+for Orbital Uncertainty Calibration
+
+Purpose:
+Develop the environment-aware CTPC method.
+
+Main question:
+Can environmental signals improve uncertainty correction during disturbed
+orbital prediction regimes?
+
+Method extension:
+
+Baseline CTPC:
+corrector(state history)
+
+Environment-aware CTPC:
+corrector(state history, environment features)
+
+Environment features:
+
+• F10.7 solar flux
+• Ap / Kp geomagnetic indices
+• density-model residual proxies
+• drag variability indicators
+• forecast horizon
+
+Model comparisons:
+
+• deterministic propagation
+• deterministic + tuned process noise
+• CTPC without environment features
+• environment-conditioned CTPC
+
+Metrics:
+
+• Mahalanobis consistency
+• covariance calibration curves
+• probability distribution distance
+• Pc stability across updates
+• horizon-dependent performance
+
+Expected outcome:
+
+Environment-aware CTPC should outperform standard CTPC particularly
+under disturbed conditions.
+
+Value:
+This becomes the core technical contribution of the research program.
+
+
+====================================================================
+PAPER 3 — DECISION IMPACT
+====================================================================
+
+Working title:
+Risk-Aware Maneuver Planning with Environment-Calibrated Uncertainty
+for Conjunction Assessment
+
+Purpose:
+Show that improved uncertainty calibration leads to better maneuver decisions.
+
+Main question:
+Does environment-aware uncertainty calibration improve maneuver planning
+quality and safety?
+
+Comparison scenarios:
+
+• baseline uncertainty propagation
+• standard CTPC
+• environment-aware CTPC
+
+Decision framework:
+
+Constrained maneuver optimization:
+
+objective: minimize fuel / Δv
+constraint: Pc below safety threshold
+
+Optional risk-aware formulation:
+robust constraint or CVaR-based safety margin
+
+Metrics:
+
+• violation rate (true Pc after maneuver)
+• fuel optimality gap
+• false-safe recommendation rate
+• conservatism gap
+• maneuver stability across updates
+• alert-to-action decision quality
+
+Expected result:
+
+Environment-aware calibration produces safer and more stable maneuver
+recommendations.
+
+Value:
+Transforms uncertainty calibration into operational decision support.
+
+
+====================================================================
+DEMO — SIS CONJUNCTION DECISION ENGINE
+====================================================================
+
+Title:
+Environment-Aware Conjunction Decision Demonstrator
+
+Purpose:
+Show the complete SiS system working end-to-end.
+
+Demo scenario:
+
+Two satellites in a conjunction event under varying environmental conditions.
+
+System pipeline:
+
+1. Orbit propagation
+2. Environmental disturbance input
+3. CTPC uncertainty calibration
+4. Collision probability estimation
+5. Risk-aware maneuver recommendation
+6. Operator decision output
+
+Interface layout:
+
+Panel 1 — Orbital visualization
+• satellite tracks
+• uncertainty ellipsoids
+• time-of-closest-approach indicator
+
+Panel 2 — Risk metrics
+• baseline Pc
+• calibrated Pc
+• disturbance condition indicator
+
+Panel 3 — Maneuver planning
+• recommended maneuver time
+• Δv requirement
+• expected Pc after maneuver
+• robustness margin
+
+Key demonstration scenario:
+
+Quiet vs geomagnetic storm conditions.
+
+Expected visualization:
+
+• baseline Pc fluctuates heavily
+• CTPC-calibrated Pc stabilizes
+• maneuver recommendation becomes consistent
+
+
+====================================================================
+THESIS STRUCTURE
+====================================================================
+
+Chapter 1 — Operational motivation and SDA background
+Chapter 2 — Environmental disturbances and uncertainty miscalibration
+Chapter 3 — Environment-aware CTPC methodology
+Chapter 4 — Risk-aware maneuver planning with calibrated uncertainty
+Chapter 5 — Integrated decision engine demonstration
+
+
+====================================================================
+STARTUP VALUE FOR SIS
+====================================================================
+
+Paper 1:
+Demonstrates real operational pain points.
+
+Paper 2:
+Introduces the core technical innovation.
+
+Paper 3:
+Shows operational decision benefits.
+
+Demo:
+Provides a working system for proposals, investors, and partners.
+
+
+====================================================================
+KEY PRINCIPLE
+====================================================================
+
+Paper 1 proves the problem.
+Paper 2 solves the uncertainty.
+Paper 3 proves the decision benefit.
+The demo turns the stack into a product narrative.
+

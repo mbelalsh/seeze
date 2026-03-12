@@ -1,0 +1,270 @@
+
+ENVIRONMENT-AWARE UNCERTAINTY CALIBRATION FOR CONJUNCTION ASSESSMENT
+Strategic Research and Startup Development Plan
+
+------------------------------------------------------------
+1. Core Idea
+------------------------------------------------------------
+
+The central concept is to model how environmental disturbances affect orbital
+uncertainty and then use CTPC (Continuous-Time Probabilistic Corrector) to
+recalibrate the resulting covariance.
+
+Conceptual pipeline:
+
+Sensors
+↓
+Orbit Determination
+↓
+Deterministic Propagation (GMAT / physics model)
+↓
+Environmental Drivers
+(space weather, drag variability)
+↓
+Uncertainty Distortion
+↓
+CTPC Correction
+↓
+Calibrated Covariance
+↓
+Collision Probability (Pc) Computation
+↓
+Risk-Aware Maneuver Planning
+↓
+Operator Decision
+
+Key hypothesis:
+Environmental disturbances distort orbital uncertainty. CTPC can learn to
+recalibrate this distorted uncertainty to produce stable collision probability
+estimates.
+
+------------------------------------------------------------
+2. Main Research Question
+------------------------------------------------------------
+
+How do environmental disturbances affect the evolution of orbital uncertainty,
+and how can learned correctors recalibrate the resulting covariance to maintain
+statistical consistency for conjunction assessment?
+
+------------------------------------------------------------
+3. Environmental Drivers to Model
+------------------------------------------------------------
+
+Focus on disturbances that directly influence orbital prediction errors.
+
+Primary factors:
+
+• Solar activity (F10.7 solar flux)
+• Geomagnetic storms (Ap / Kp index)
+• Thermospheric density variability
+• Atmospheric drag fluctuations
+• Density model errors (NRLMSISE-00, JB2008)
+
+These environmental variables primarily affect Low Earth Orbit satellites by
+changing atmospheric drag.
+
+------------------------------------------------------------
+4. Research Direction 1: Space-Weather-Driven Drag Uncertainty
+------------------------------------------------------------
+
+Objective:
+Understand how space weather affects drag uncertainty and propagation error.
+
+Approach:
+
+1. Collect solar activity indices:
+   - F10.7 solar flux
+   - Ap geomagnetic index
+
+2. Use atmospheric models:
+   - NRLMSISE-00
+   - JB2008
+
+3. Simulate orbital propagation under varying solar conditions.
+
+Study how the following quantities change:
+
+• drag acceleration uncertainty
+• orbital decay variability
+• covariance growth
+
+Deliverable:
+
+Quantitative model of how space weather amplifies orbital prediction uncertainty.
+
+------------------------------------------------------------
+5. Research Direction 2: Environment-Conditioned CTPC
+------------------------------------------------------------
+
+Extend CTPC so that it uses environmental inputs.
+
+Baseline corrector:
+
+corrector(state history)
+
+Environment-aware corrector:
+
+corrector(state history, environment features)
+
+Possible environmental features:
+
+• F10.7 solar flux
+• Ap geomagnetic index
+• density model residuals
+• estimated drag variability
+
+Goal:
+
+Allow CTPC to adapt its uncertainty correction based on environmental conditions.
+
+------------------------------------------------------------
+6. Research Direction 3: Storm-Aware Covariance Propagation
+------------------------------------------------------------
+
+Simulate orbital propagation under three scenarios:
+
+1. Quiet solar conditions
+2. Moderate geomagnetic storm
+3. Extreme geomagnetic storm
+
+For each scenario compute uncertainty using:
+
+• STM covariance propagation
+• Monte Carlo simulation
+• CTPC calibrated covariance
+
+Evaluate:
+
+• Mahalanobis distance consistency
+• covariance calibration error
+• Pc stability
+
+------------------------------------------------------------
+7. Research Direction 4: Environmental Uncertainty Maps
+------------------------------------------------------------
+
+Construct maps showing how prediction uncertainty grows under environmental disturbances.
+
+Key variables:
+
+• orbit altitude
+• solar activity level
+• forecast horizon
+
+Outputs:
+
+uncertainty growth surfaces
+covariance inflation factors
+risk sensitivity maps
+
+These visualizations could become important figures for publications and the startup website.
+
+------------------------------------------------------------
+8. Research Direction 5: Pc Stability Under Environmental Disturbances
+------------------------------------------------------------
+
+Simulate conjunction scenarios under:
+
+• quiet space weather
+• geomagnetic storms
+• density spikes
+
+Measure:
+
+• Pc variance across CDM updates
+• alert stability
+• maneuver planning consistency
+
+Compare:
+
+baseline propagator Pc
+vs
+CTPC calibrated Pc
+
+Goal:
+
+Demonstrate that CTPC stabilizes collision risk estimation under environmental disturbances.
+
+------------------------------------------------------------
+9. Data Sources
+------------------------------------------------------------
+
+Environmental data:
+
+• NOAA space weather indices
+• F10.7 solar flux dataset
+• Ap / Kp geomagnetic indices
+
+Atmospheric models:
+
+• NRLMSISE-00
+• JB2008
+
+Orbital data:
+
+• TLE catalog
+• Space-track historical data
+• ESA conjunction datasets (if available)
+
+------------------------------------------------------------
+10. Potential Paper Topics
+------------------------------------------------------------
+
+Paper 1:
+Environment-Aware Uncertainty Calibration for Satellite Conjunction Assessment
+
+Paper 2:
+Learning Environment-Conditioned Correctors for Orbital Forecasting
+
+Paper 3:
+Stabilizing Collision Probability Estimation under Space Weather Disturbances
+
+------------------------------------------------------------
+11. Startup Relevance
+------------------------------------------------------------
+
+This work strengthens the SiS platform by demonstrating that:
+
+• the system handles real-world environmental disturbances
+• uncertainty calibration improves operational reliability
+• collision risk estimates remain stable during space weather events
+
+Framing for the startup:
+
+"SiS accounts for environmental drivers of orbital uncertainty, including
+space weather effects on atmospheric drag."
+
+------------------------------------------------------------
+12. Demonstration Scenario
+------------------------------------------------------------
+
+Build a demonstration showing:
+
+Scenario:
+Geomagnetic storm event affecting LEO satellites.
+
+Compare:
+
+Baseline propagation:
+• large covariance inflation
+• unstable Pc estimates
+
+CTPC calibrated propagation:
+• calibrated covariance
+• stable Pc
+• improved maneuver recommendations
+
+This demo can be used in:
+
+• research papers
+• proposals
+• startup presentations
+• website visualizations
+
+------------------------------------------------------------
+13. One-Sentence Vision
+------------------------------------------------------------
+
+SiS calibrates orbital uncertainty under environmental disturbances such as
+space weather, enabling reliable collision risk estimation and safer maneuver
+planning for space traffic management.

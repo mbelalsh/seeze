@@ -1,0 +1,3370 @@
+{
+  "version": "2.8",
+  "children": [
+    {
+      "type": "frame",
+      "id": "sq14S",
+      "x": 7502,
+      "y": -2871,
+      "name": "Hero/Space Startup",
+      "width": 1440,
+      "height": 3460,
+      "fill": {
+        "type": "gradient",
+        "gradientType": "linear",
+        "enabled": true,
+        "rotation": 180,
+        "size": {
+          "height": 1
+        },
+        "colors": [
+          {
+            "color": "#D7D3CC",
+            "position": 0
+          },
+          {
+            "color": "#BDB6AB",
+            "position": 1
+          }
+        ]
+      },
+      "layout": "none",
+      "children": [
+        {
+          "type": "frame",
+          "id": "73imx",
+          "x": 230,
+          "y": 105,
+          "name": "taglineWrap",
+          "width": 979,
+          "height": 122,
+          "stroke": {
+            "align": "inside",
+            "thickness": 1
+          },
+          "gap": 12,
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "text",
+              "id": "M8YsD",
+              "name": "mainTag",
+              "fill": "#1E2935",
+              "textGrowth": "fixed-width-height",
+              "width": 969,
+              "height": 76,
+              "content": "Operational Space Safety",
+              "lineHeight": 1,
+              "textAlign": "center",
+              "fontFamily": "JetBrains Mono",
+              "fontSize": 64,
+              "fontWeight": "700",
+              "letterSpacing": -1.2
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "cdZ9m",
+          "x": 567,
+          "y": 210,
+          "name": "codeTagWrap",
+          "width": 305,
+          "height": 33,
+          "fill": "#FFFFFF",
+          "cornerRadius": "$--radius-pill",
+          "stroke": {
+            "align": "inside",
+            "thickness": 1,
+            "fill": "#C8D1DC"
+          },
+          "padding": [
+            0,
+            16
+          ],
+          "justifyContent": "center",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "text",
+              "id": "oEuTH",
+              "name": "codeTag",
+              "fill": "#5E6A79",
+              "textGrowth": "fixed-width-height",
+              "width": 320,
+              "height": 20,
+              "content": "$ echo \"Towards Safer space\"",
+              "textAlign": "center",
+              "fontFamily": "JetBrains Mono",
+              "fontSize": 16,
+              "fontWeight": "500",
+              "letterSpacing": 0.2
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "sEF3q",
+          "x": 72,
+          "y": 280,
+          "name": "earthStage",
+          "width": 1296,
+          "height": 560,
+          "layout": "none",
+          "children": [
+            {
+              "type": "rectangle",
+              "cornerRadius": 42,
+              "id": "i3DEi",
+              "x": 0,
+              "y": 0,
+              "name": "Deep Space Background",
+              "fill": {
+                "type": "gradient",
+                "gradientType": "radial",
+                "enabled": true,
+                "rotation": 0,
+                "size": {
+                  "width": 1,
+                  "height": 1
+                },
+                "colors": [
+                  {
+                    "color": "#0A1628",
+                    "position": 0
+                  },
+                  {
+                    "color": "#102846",
+                    "position": 0.62
+                  },
+                  {
+                    "color": "#040A14",
+                    "position": 1
+                  }
+                ],
+                "center": {
+                  "y": 0.45
+                }
+              },
+              "width": 1296,
+              "height": 560,
+              "stroke": {
+                "align": "inside",
+                "thickness": 1,
+                "fill": "#294A73"
+              }
+            },
+            {
+              "type": "rectangle",
+              "cornerRadius": 55,
+              "id": "84iJp",
+              "x": 406,
+              "y": 58,
+              "fill": {
+                "type": "image",
+                "enabled": true,
+                "url": "Picture1.png",
+                "mode": "fill"
+              },
+              "width": 485,
+              "height": 445
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "8Bqjx",
+          "x": 734,
+          "y": 38,
+          "name": "topNav",
+          "width": 475,
+          "height": 44,
+          "gap": 30,
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "text",
+              "id": "t7PMS",
+              "name": "about",
+              "fill": "#1E2935",
+              "content": "About",
+              "fontFamily": "Poppins",
+              "fontSize": 20,
+              "fontWeight": "500"
+            },
+            {
+              "type": "text",
+              "id": "bunbx",
+              "name": "research",
+              "fill": "#1E2935",
+              "content": "Research",
+              "fontFamily": "Poppins",
+              "fontSize": 20,
+              "fontWeight": "500"
+            },
+            {
+              "type": "text",
+              "id": "P074B",
+              "name": "technology",
+              "fill": "#1E2935",
+              "content": "Technology",
+              "fontFamily": "Poppins",
+              "fontSize": 20,
+              "fontWeight": "500"
+            },
+            {
+              "type": "text",
+              "id": "PFYkc",
+              "name": "contact",
+              "fill": "#1E2935",
+              "content": "Contact",
+              "fontFamily": "Poppins",
+              "fontSize": 20,
+              "fontWeight": "500"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "gHcgz",
+          "x": 72,
+          "y": 900,
+          "name": "Section 2 / Challenge-Solution-Impact",
+          "width": 1296,
+          "gap": 28,
+          "children": [
+            {
+              "type": "frame",
+              "id": "UYBUB",
+              "name": "Card / Challenge",
+              "width": 410,
+              "fill": "#F8F9FB",
+              "cornerRadius": 10,
+              "stroke": {
+                "align": "inside",
+                "thickness": 3,
+                "fill": "#12223C"
+              },
+              "layout": "vertical",
+              "gap": 18,
+              "padding": 26,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "h1Bhv",
+                  "name": "h1",
+                  "fill": "#1E2935",
+                  "textGrowth": "fixed-width",
+                  "width": 358,
+                  "content": "THE CHALLENGE:\nCATALOG SCALING",
+                  "lineHeight": 1.1,
+                  "fontFamily": "Poppins",
+                  "fontSize": 20,
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "text",
+                  "id": "4XRBR",
+                  "name": "p1",
+                  "fill": "#1E2935",
+                  "textGrowth": "fixed-width",
+                  "width": 358,
+                  "content": "Tens of thousands of space objects require multi-day conjunction screenings. High-fidelity uncertainty propagation is computationally prohibitive, causing false alerts and operator overload.",
+                  "lineHeight": 1.35,
+                  "fontFamily": "JetBrains Mono",
+                  "fontSize": 14
+                },
+                {
+                  "type": "frame",
+                  "id": "w9kMi",
+                  "name": "Challenge Visual",
+                  "width": 354,
+                  "height": 300,
+                  "fill": {
+                    "type": "image",
+                    "enabled": true,
+                    "url": "./images/first.png",
+                    "mode": "fill"
+                  },
+                  "cornerRadius": 10,
+                  "stroke": {
+                    "align": "inside",
+                    "thickness": 1,
+                    "fill": "#C7CED8"
+                  },
+                  "layout": "none"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "w9QC4",
+              "name": "Card / Solution",
+              "width": 410,
+              "fill": "#F8F9FB",
+              "cornerRadius": 10,
+              "stroke": {
+                "align": "inside",
+                "thickness": 3,
+                "fill": "#12223C"
+              },
+              "layout": "vertical",
+              "gap": 18,
+              "padding": 26,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "rQ1XP",
+                  "name": "h2",
+                  "fill": "#1E2935",
+                  "textGrowth": "fixed-width",
+                  "width": 358,
+                  "content": "THE SOLUTION:\nCTPC AUGMENTATION",
+                  "lineHeight": 1.1,
+                  "fontFamily": "Poppins",
+                  "fontSize": 20,
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "text",
+                  "id": "YwSyB",
+                  "name": "p2",
+                  "fill": "#1E2935",
+                  "textGrowth": "fixed-width",
+                  "width": 358,
+                  "content": "A lightweight, Machine Learning-augmented probabilistic correction layer that snaps into existing physics-based propagators to provide statistically calibrated uncertainty.",
+                  "lineHeight": 1.35,
+                  "fontFamily": "JetBrains Mono",
+                  "fontSize": 14
+                },
+                {
+                  "type": "frame",
+                  "id": "R3awL",
+                  "name": "Solution Visual",
+                  "width": 354,
+                  "height": 300,
+                  "fill": {
+                    "type": "image",
+                    "enabled": true,
+                    "url": "./images/second.png",
+                    "mode": "fill"
+                  },
+                  "cornerRadius": 10,
+                  "stroke": {
+                    "align": "inside",
+                    "thickness": 1,
+                    "fill": "#B7D5E8"
+                  },
+                  "layout": "none"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "KWYsi",
+              "name": "Card / Impact",
+              "width": 410,
+              "fill": "#F8F9FB",
+              "cornerRadius": 10,
+              "stroke": {
+                "align": "inside",
+                "thickness": 3,
+                "fill": "#12223C"
+              },
+              "layout": "vertical",
+              "gap": 18,
+              "padding": 26,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "xTfHa",
+                  "name": "h3",
+                  "fill": "#1E2935",
+                  "textGrowth": "fixed-width",
+                  "width": 358,
+                  "content": "THE IMPACT:\nOPERATIONAL SAFETY",
+                  "lineHeight": 1.1,
+                  "fontFamily": "Poppins",
+                  "fontSize": 20,
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "text",
+                  "id": "CMiUy",
+                  "name": "p3",
+                  "fill": "#1E2935",
+                  "textGrowth": "fixed-width",
+                  "width": 358,
+                  "content": "Reduces false alerts, mitigates probability dilution, and enables automated risk-aware maneuver planning without disrupting current operational pipelines.",
+                  "lineHeight": 1.35,
+                  "fontFamily": "JetBrains Mono",
+                  "fontSize": 14
+                },
+                {
+                  "type": "frame",
+                  "id": "GI32q",
+                  "name": "Impact Visual",
+                  "width": 354,
+                  "height": 300,
+                  "fill": {
+                    "type": "image",
+                    "enabled": true,
+                    "url": "./images/third.png",
+                    "mode": "fill"
+                  },
+                  "cornerRadius": 10,
+                  "stroke": {
+                    "align": "inside",
+                    "thickness": 1,
+                    "fill": "#C7CED8"
+                  },
+                  "layout": "none"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "HvRVw",
+          "x": 72,
+          "y": 1483,
+          "name": "Section 3 / Startup Philosophy",
+          "width": 1296,
+          "fill": "#F8F9FB",
+          "cornerRadius": 20,
+          "stroke": {
+            "align": "inside",
+            "thickness": 3,
+            "fill": "#12223C"
+          },
+          "layout": "vertical",
+          "gap": 24,
+          "padding": [
+            32,
+            32,
+            28,
+            32
+          ],
+          "children": [
+            {
+              "type": "text",
+              "id": "7tz8y",
+              "name": "label",
+              "fill": "#5E6A79",
+              "textGrowth": "fixed-width",
+              "width": 1232,
+              "content": "Startup Philosophy",
+              "fontFamily": "JetBrains Mono",
+              "fontSize": 13,
+              "fontWeight": "500",
+              "letterSpacing": 1.6
+            },
+            {
+              "type": "text",
+              "id": "b4DGQ",
+              "name": "title",
+              "fill": "#1E2935",
+              "textGrowth": "fixed-width",
+              "width": 1232,
+              "content": "Simple → Interpretable → Safe",
+              "lineHeight": 1.05,
+              "fontFamily": "Geist",
+              "fontSize": 54,
+              "fontWeight": "700"
+            },
+            {
+              "type": "text",
+              "id": "ANSGG",
+              "name": "thesis",
+              "fill": "#2A3748",
+              "textGrowth": "fixed-width",
+              "width": 1232,
+              "content": "We design safety-critical systems so they remain simple enough to audit, interpretable enough to trust, and safe enough to deploy.",
+              "lineHeight": 1.6,
+              "fontFamily": "JetBrains Mono",
+              "fontSize": 16,
+              "fontWeight": "normal"
+            },
+            {
+              "type": "frame",
+              "id": "S2kMh",
+              "name": "philosophy progression",
+              "width": 1232,
+              "height": 316,
+              "gap": 14,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "S3t2S",
+                  "name": "Simple card",
+                  "width": "fill_container",
+                  "height": "fill_container",
+                  "fill": "#EEF2F8",
+                  "cornerRadius": 14,
+                  "stroke": {
+                    "align": "inside",
+                    "thickness": 3,
+                    "fill": "#12223C"
+                  },
+                  "layout": "vertical",
+                  "gap": 10,
+                  "padding": [
+                    20,
+                    20,
+                    18,
+                    20
+                  ],
+                  "children": [
+                    {
+                      "type": "rectangle",
+                      "cornerRadius": 999,
+                      "id": "OXqv4",
+                      "fill": "#4D8ED6",
+                      "width": "fill_container",
+                      "height": 2
+                    },
+                    {
+                      "type": "text",
+                      "id": "zkZM4",
+                      "fill": "#5E6A79",
+                      "content": "01",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 12,
+                      "fontWeight": "500"
+                    },
+                    {
+                      "type": "text",
+                      "id": "6YihG",
+                      "fill": "#1E2935",
+                      "content": "Simple",
+                      "fontFamily": "Geist",
+                      "fontSize": 32,
+                      "fontWeight": "700"
+                    },
+                    {
+                      "type": "text",
+                      "id": "sj6PH",
+                      "fill": "#1E2935",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Constraint-first models, bounded complexity, and physics-guided structure keep the system understandable from the start.",
+                      "lineHeight": 1.55,
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 14,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "text",
+                      "id": "mYLQU",
+                      "fill": "#5E6A79",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "bounded models · physics-guided · constrained",
+                      "lineHeight": 1.4,
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 12,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "YOO3L",
+                  "name": "connector 1",
+                  "width": 40,
+                  "height": "fill_container",
+                  "layout": "vertical",
+                  "gap": 8,
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "rectangle",
+                      "id": "9q8dY",
+                      "fill": "#5E6A79",
+                      "width": 26,
+                      "height": 1
+                    },
+                    {
+                      "type": "text",
+                      "id": "muFLB",
+                      "fill": "#5E6A79",
+                      "content": "→",
+                      "fontFamily": "Geist",
+                      "fontSize": 20,
+                      "fontWeight": "500"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "08l4H",
+                  "name": "Interpretable card",
+                  "width": "fill_container",
+                  "height": "fill_container",
+                  "fill": "#EEF2F8",
+                  "cornerRadius": 14,
+                  "stroke": {
+                    "align": "inside",
+                    "thickness": 3,
+                    "fill": "#12223C"
+                  },
+                  "layout": "vertical",
+                  "gap": 10,
+                  "padding": [
+                    20,
+                    20,
+                    18,
+                    20
+                  ],
+                  "children": [
+                    {
+                      "type": "rectangle",
+                      "cornerRadius": 999,
+                      "id": "P8rKr",
+                      "fill": "#4EB2DB",
+                      "width": "fill_container",
+                      "height": 2
+                    },
+                    {
+                      "type": "text",
+                      "id": "0mdE2",
+                      "fill": "#5E6A79",
+                      "content": "02",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 12,
+                      "fontWeight": "500"
+                    },
+                    {
+                      "type": "text",
+                      "id": "TSh8P",
+                      "fill": "#1E2935",
+                      "content": "Interpretable",
+                      "fontFamily": "Geist",
+                      "fontSize": 32,
+                      "fontWeight": "700"
+                    },
+                    {
+                      "type": "text",
+                      "id": "k7vTz",
+                      "fill": "#1E2935",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Clear uncertainty estimates, traceable model behavior, and auditable outputs make decisions explainable.",
+                      "lineHeight": 1.55,
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 14,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "text",
+                      "id": "tos8A",
+                      "fill": "#5E6A79",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "uncertainty bounds · traceability · auditable",
+                      "lineHeight": 1.4,
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 12,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "SNQd5",
+                  "name": "connector 2",
+                  "width": 40,
+                  "height": "fill_container",
+                  "layout": "vertical",
+                  "gap": 8,
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "rectangle",
+                      "id": "KRHlS",
+                      "fill": "#5E6A79",
+                      "width": 26,
+                      "height": 1
+                    },
+                    {
+                      "type": "text",
+                      "id": "gnupm",
+                      "fill": "#5E6A79",
+                      "content": "→",
+                      "fontFamily": "Geist",
+                      "fontSize": 20,
+                      "fontWeight": "500"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "blVuN",
+                  "name": "Safe card",
+                  "width": "fill_container",
+                  "height": "fill_container",
+                  "fill": "#EEF2F8",
+                  "cornerRadius": 14,
+                  "stroke": {
+                    "align": "inside",
+                    "thickness": 3,
+                    "fill": "#12223C"
+                  },
+                  "layout": "vertical",
+                  "gap": 10,
+                  "padding": [
+                    20,
+                    20,
+                    18,
+                    20
+                  ],
+                  "children": [
+                    {
+                      "type": "rectangle",
+                      "cornerRadius": 999,
+                      "id": "i1imG",
+                      "fill": "#45C0B8",
+                      "width": "fill_container",
+                      "height": 2
+                    },
+                    {
+                      "type": "text",
+                      "id": "85WgL",
+                      "fill": "#5E6A79",
+                      "content": "03",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 12,
+                      "fontWeight": "500"
+                    },
+                    {
+                      "type": "text",
+                      "id": "K3YP6",
+                      "fill": "#1E2935",
+                      "content": "Safe",
+                      "fontFamily": "Geist",
+                      "fontSize": 32,
+                      "fontWeight": "700"
+                    },
+                    {
+                      "type": "text",
+                      "id": "kzIMI",
+                      "fill": "#1E2935",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Operational guardrails, calibrated risk signals, and verification-oriented design support safer deployment in critical environments.",
+                      "lineHeight": 1.55,
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 14,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "text",
+                      "id": "2wTIa",
+                      "fill": "#5E6A79",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "guardrails · calibrated risk · verification",
+                      "lineHeight": 1.4,
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 12,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "id": "ndaiB",
+              "name": "why line",
+              "fill": "#5E6A79",
+              "textGrowth": "fixed-width",
+              "width": 1232,
+              "content": "Safety emerges when system behavior stays inspectable under operational pressure.",
+              "textAlign": "center",
+              "fontFamily": "JetBrains Mono",
+              "fontSize": 13,
+              "fontWeight": "500"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "WWmgV",
+          "x": 72,
+          "y": 2140,
+          "name": "Section 4 / SDA System Diagram",
+          "width": 1296,
+          "fill": "#F8F9FB",
+          "cornerRadius": 18,
+          "stroke": {
+            "align": "inside",
+            "thickness": 3,
+            "fill": "#12223C"
+          },
+          "layout": "vertical",
+          "gap": 18,
+          "padding": 28,
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "text",
+              "id": "NRhov",
+              "name": "l1",
+              "fill": "#5E6A79",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "SDA SYSTEM ARCHITECTURE",
+              "fontFamily": "JetBrains Mono",
+              "fontSize": 13,
+              "fontWeight": "500",
+              "letterSpacing": 1.5
+            },
+            {
+              "type": "text",
+              "id": "eL1Qs",
+              "name": "t1",
+              "fill": "#1E2935",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "From observations to operator maneuver decisions",
+              "lineHeight": 1.08,
+              "fontFamily": "Geist",
+              "fontSize": 42,
+              "fontWeight": "700"
+            },
+            {
+              "type": "text",
+              "id": "XM1aC",
+              "name": "s1",
+              "fill": "#2A3748",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "CTPC augments the operational Space Domain Awareness pipeline by calibrating mean and covariance after deterministic propagation and before collision risk estimation.",
+              "lineHeight": 1.55,
+              "fontFamily": "JetBrains Mono",
+              "fontSize": 14,
+              "fontWeight": "normal"
+            },
+            {
+              "type": "frame",
+              "id": "zoesP",
+              "name": "Serpentine Pipeline",
+              "width": 1240,
+              "height": 280,
+              "fill": "#EEF2F8",
+              "cornerRadius": 12,
+              "stroke": {
+                "align": "inside",
+                "thickness": 3,
+                "fill": "#12223C"
+              },
+              "layout": "none",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "sDp1g",
+                  "x": 120,
+                  "y": 10,
+                  "name": "opLabel",
+                  "fill": "#5E6A79",
+                  "content": "OPERATIONAL SDA PIPELINE",
+                  "fontFamily": "JetBrains Mono",
+                  "fontSize": 10,
+                  "fontWeight": "500",
+                  "letterSpacing": 1.2
+                },
+                {
+                  "type": "rectangle",
+                  "cornerRadius": 10,
+                  "id": "1Hb6k",
+                  "x": 120,
+                  "y": 26,
+                  "name": "opBg",
+                  "opacity": 0.5,
+                  "fill": "#E4E9F0",
+                  "width": 740,
+                  "height": 80
+                },
+                {
+                  "type": "frame",
+                  "id": "KvuFt",
+                  "x": 130,
+                  "y": 34,
+                  "name": "b1",
+                  "width": 220,
+                  "height": 64,
+                  "fill": "#EEF2F8",
+                  "cornerRadius": 8,
+                  "stroke": {
+                    "align": "inside",
+                    "thickness": 3,
+                    "fill": "#12223C"
+                  },
+                  "layout": "vertical",
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "AWV3I",
+                      "name": "b1t",
+                      "fill": "#1E2935",
+                      "content": "Sensors",
+                      "textAlign": "center",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 12,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "p7nRj",
+                  "x": 356,
+                  "y": 50,
+                  "name": "ar1",
+                  "fill": "#5E6A79",
+                  "content": "→",
+                  "fontFamily": "Geist",
+                  "fontSize": 24,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "frame",
+                  "id": "KdW31",
+                  "x": 382,
+                  "y": 34,
+                  "name": "b2",
+                  "width": 220,
+                  "height": 64,
+                  "fill": "#EEF2F8",
+                  "cornerRadius": 8,
+                  "stroke": {
+                    "align": "inside",
+                    "thickness": 3,
+                    "fill": "#12223C"
+                  },
+                  "layout": "vertical",
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "uIVij",
+                      "name": "b2t",
+                      "fill": "#1E2935",
+                      "content": "Orbit Determination",
+                      "textAlign": "center",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 12,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "403ul",
+                  "x": 608,
+                  "y": 50,
+                  "name": "ar2",
+                  "fill": "#5E6A79",
+                  "content": "→",
+                  "fontFamily": "Geist",
+                  "fontSize": 24,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "frame",
+                  "id": "i7nbI",
+                  "x": 634,
+                  "y": 34,
+                  "name": "b3",
+                  "width": 220,
+                  "height": 64,
+                  "fill": "#EEF2F8",
+                  "cornerRadius": 8,
+                  "stroke": {
+                    "align": "inside",
+                    "thickness": 3,
+                    "fill": "#12223C"
+                  },
+                  "layout": "vertical",
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "F5EVV",
+                      "name": "b3t1",
+                      "fill": "#1E2935",
+                      "content": "Deterministic Propagation",
+                      "textAlign": "center",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "text",
+                      "id": "Gy5D4",
+                      "name": "b3t2",
+                      "fill": "#5E6A79",
+                      "content": "uncertainty degrades",
+                      "textAlign": "center",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 9,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "nArO5",
+                  "x": 867,
+                  "y": 50,
+                  "name": "ar3",
+                  "fill": "#5E6A79",
+                  "content": "→",
+                  "fontFamily": "Geist",
+                  "fontSize": 24,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "text",
+                  "id": "6J2tL",
+                  "x": 900,
+                  "y": 10,
+                  "name": "sisLabel",
+                  "fill": "#52C1DD",
+                  "content": "SiS AUGMENTATION",
+                  "fontFamily": "JetBrains Mono",
+                  "fontSize": 10,
+                  "fontWeight": "600",
+                  "letterSpacing": 1.2
+                },
+                {
+                  "type": "rectangle",
+                  "cornerRadius": 10,
+                  "id": "f6SOo",
+                  "x": 896,
+                  "y": 26,
+                  "name": "sisBg",
+                  "opacity": 0.15,
+                  "fill": "#0D2E3D",
+                  "width": 248,
+                  "height": 80
+                },
+                {
+                  "type": "frame",
+                  "id": "AltkL",
+                  "x": 900,
+                  "y": 34,
+                  "name": "ctpc",
+                  "width": 220,
+                  "height": 64,
+                  "fill": "#13445B",
+                  "cornerRadius": 8,
+                  "stroke": {
+                    "align": "inside",
+                    "thickness": 2,
+                    "fill": "#52C1DD"
+                  },
+                  "layout": "vertical",
+                  "gap": 2,
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "rU1oR",
+                      "name": "ctpcT1",
+                      "fill": "#D9F7FF",
+                      "content": "CTPC Correction",
+                      "textAlign": "center",
+                      "fontFamily": "Geist",
+                      "fontSize": 13,
+                      "fontWeight": "700"
+                    },
+                    {
+                      "type": "text",
+                      "id": "cZU13",
+                      "name": "ctpcT2",
+                      "fill": "#B8EAF4",
+                      "content": "Probabilistic Corrector",
+                      "textAlign": "center",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 10,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "536Nt",
+                  "x": 992,
+                  "y": 24,
+                  "name": "newTag1",
+                  "width": 36,
+                  "height": 16,
+                  "fill": "#52C1DD",
+                  "cornerRadius": 4,
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "PLhCN",
+                      "name": "newTag1t",
+                      "fill": "#FFFFFF",
+                      "content": "NEW",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 8,
+                      "fontWeight": "700"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "mjWeg",
+                  "x": 1002,
+                  "y": 116,
+                  "name": "vArrow",
+                  "fill": "#5E6A79",
+                  "content": "↓",
+                  "fontFamily": "Geist",
+                  "fontSize": 24,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "text",
+                  "id": "57uIJ",
+                  "x": 640,
+                  "y": 144,
+                  "name": "opLabel2",
+                  "fill": "#5E6A79",
+                  "content": "OPERATIONAL SDA PIPELINE",
+                  "fontFamily": "JetBrains Mono",
+                  "fontSize": 10,
+                  "fontWeight": "500",
+                  "letterSpacing": 1.2
+                },
+                {
+                  "type": "rectangle",
+                  "cornerRadius": 10,
+                  "id": "GGdj2",
+                  "x": 630,
+                  "y": 158,
+                  "name": "opBg2",
+                  "opacity": 0.5,
+                  "fill": "#E4E9F0",
+                  "width": 500,
+                  "height": 80
+                },
+                {
+                  "type": "rectangle",
+                  "cornerRadius": 10,
+                  "id": "VtJOD",
+                  "x": 358,
+                  "y": 158,
+                  "name": "sisBg2",
+                  "opacity": 0.15,
+                  "fill": "#0D2E3D",
+                  "width": 248,
+                  "height": 80
+                },
+                {
+                  "type": "text",
+                  "id": "YN9sE",
+                  "x": 362,
+                  "y": 144,
+                  "name": "sisLabel2",
+                  "fill": "#52C1DD",
+                  "content": "SiS AUGMENTATION",
+                  "fontFamily": "JetBrains Mono",
+                  "fontSize": 10,
+                  "fontWeight": "600",
+                  "letterSpacing": 1.2
+                },
+                {
+                  "type": "frame",
+                  "id": "uVp2A",
+                  "x": 900,
+                  "y": 166,
+                  "name": "r2b1",
+                  "width": 220,
+                  "height": 64,
+                  "fill": "#EEF2F8",
+                  "cornerRadius": 8,
+                  "stroke": {
+                    "align": "inside",
+                    "thickness": 3,
+                    "fill": "#12223C"
+                  },
+                  "layout": "vertical",
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "nxTyJ",
+                      "name": "r2b1t",
+                      "fill": "#1E2935",
+                      "content": "Pc Computation",
+                      "textAlign": "center",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 12,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "e7GmZ",
+                  "x": 873,
+                  "y": 182,
+                  "name": "la1",
+                  "fill": "#5E6A79",
+                  "content": "←",
+                  "fontFamily": "Geist",
+                  "fontSize": 24,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "frame",
+                  "id": "jX6BD",
+                  "x": 646,
+                  "y": 166,
+                  "name": "r2b2",
+                  "width": 220,
+                  "height": 64,
+                  "fill": "#EEF2F8",
+                  "cornerRadius": 8,
+                  "stroke": {
+                    "align": "inside",
+                    "thickness": 3,
+                    "fill": "#12223C"
+                  },
+                  "layout": "vertical",
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "w4ohX",
+                      "name": "r2b2t",
+                      "fill": "#1E2935",
+                      "content": "Refined Alerts",
+                      "textAlign": "center",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 12,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "8KYfC",
+                  "x": 607,
+                  "y": 182,
+                  "name": "la2",
+                  "fill": "#5E6A79",
+                  "content": "←",
+                  "fontFamily": "Geist",
+                  "fontSize": 24,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "frame",
+                  "id": "YaTrs",
+                  "x": 368,
+                  "y": 166,
+                  "name": "r2b3",
+                  "width": 220,
+                  "height": 64,
+                  "fill": "#13445B",
+                  "cornerRadius": 8,
+                  "stroke": {
+                    "align": "inside",
+                    "thickness": 2,
+                    "fill": "#52C1DD"
+                  },
+                  "layout": "vertical",
+                  "gap": 2,
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "3vzQI",
+                      "name": "r2b3t",
+                      "fill": "#D9F7FF",
+                      "textGrowth": "fixed-width",
+                      "width": 180,
+                      "content": "Risk-Aware\nManeuver Planning",
+                      "textAlign": "center",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 11,
+                      "fontWeight": "600"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "mACZE",
+                  "x": 460,
+                  "y": 156,
+                  "name": "newTag2",
+                  "width": 36,
+                  "height": 16,
+                  "fill": "#52C1DD",
+                  "cornerRadius": 4,
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "lPqNJ",
+                      "name": "newTag2t",
+                      "fill": "#FFFFFF",
+                      "content": "NEW",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 8,
+                      "fontWeight": "700"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "lKytR",
+                  "x": 337,
+                  "y": 182,
+                  "name": "la3",
+                  "fill": "#5E6A79",
+                  "content": "←",
+                  "fontFamily": "Geist",
+                  "fontSize": 24,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "frame",
+                  "id": "OjRxj",
+                  "x": 110,
+                  "y": 166,
+                  "name": "opDec",
+                  "width": 220,
+                  "height": 64,
+                  "fill": "#164A45",
+                  "cornerRadius": 8,
+                  "stroke": {
+                    "align": "inside",
+                    "thickness": 1,
+                    "fill": "#66D2B0"
+                  },
+                  "layout": "vertical",
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "LBLrX",
+                      "name": "opDecT",
+                      "fill": "#E9FFF6",
+                      "content": "Operator Decision",
+                      "textAlign": "center",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 12,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "SnI8g",
+                  "x": 130,
+                  "y": 252,
+                  "name": "legend",
+                  "gap": 6,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "rectangle",
+                      "cornerRadius": 3,
+                      "id": "Kwg1b",
+                      "name": "lk1",
+                      "fill": "#E4E9F0",
+                      "width": 14,
+                      "height": 14,
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": 2,
+                        "fill": "#12223C"
+                      }
+                    },
+                    {
+                      "type": "text",
+                      "id": "M8owv",
+                      "name": "lt1",
+                      "fill": "#5E6A79",
+                      "content": "Existing SDA Modules",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 10,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "rectangle",
+                      "id": "1cwS1",
+                      "name": "sep1",
+                      "fill": "#C8D1DC",
+                      "width": 1,
+                      "height": 12
+                    },
+                    {
+                      "type": "rectangle",
+                      "cornerRadius": 3,
+                      "id": "ziFu5",
+                      "name": "lk2",
+                      "fill": "#13445B",
+                      "width": 14,
+                      "height": 14,
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": 2,
+                        "fill": "#52C1DD"
+                      }
+                    },
+                    {
+                      "type": "text",
+                      "id": "8sON4",
+                      "name": "lt2",
+                      "fill": "#52C1DD",
+                      "content": "SiS Augmentation (New)",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 10,
+                      "fontWeight": "600"
+                    },
+                    {
+                      "type": "rectangle",
+                      "id": "OxnJI",
+                      "name": "sep2",
+                      "fill": "#C8D1DC",
+                      "width": 1,
+                      "height": 12
+                    },
+                    {
+                      "type": "rectangle",
+                      "cornerRadius": 3,
+                      "id": "F00sc",
+                      "name": "lk3",
+                      "fill": "#164A45",
+                      "width": 14,
+                      "height": 14,
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": 2,
+                        "fill": "#66D2B0"
+                      }
+                    },
+                    {
+                      "type": "text",
+                      "id": "Osouh",
+                      "name": "lt3",
+                      "fill": "#5E6A79",
+                      "content": "Final Output",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 10,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "pAgTX",
+              "name": "Augmented Pipeline",
+              "enabled": false,
+              "width": "fill_container",
+              "fill": "#EEF2F8",
+              "cornerRadius": 12,
+              "stroke": {
+                "align": "inside",
+                "thickness": 3,
+                "fill": "#12223C"
+              },
+              "gap": 6,
+              "padding": 10,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "HHrXY",
+                  "name": "bLbl",
+                  "enabled": false,
+                  "width": 120,
+                  "height": 100,
+                  "fill": "#EEF2F8",
+                  "cornerRadius": 8,
+                  "stroke": {
+                    "align": "inside",
+                    "thickness": 3,
+                    "fill": "#12223C"
+                  },
+                  "layout": "vertical",
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "8kcfl",
+                      "fill": "#5E6A79",
+                      "textGrowth": "fixed-width",
+                      "width": 100,
+                      "content": "Augmented Pipeline",
+                      "textAlign": "center",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "YTAHk",
+                  "name": "b1",
+                  "width": "fill_container",
+                  "height": 100,
+                  "fill": "#EEF2F8",
+                  "cornerRadius": 8,
+                  "stroke": {
+                    "align": "inside",
+                    "thickness": 3,
+                    "fill": "#12223C"
+                  },
+                  "layout": "vertical",
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "1W3zr",
+                      "fill": "#1E2935",
+                      "textGrowth": "fixed-width",
+                      "width": 100,
+                      "content": "Sensors",
+                      "textAlign": "center",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "rv1mN",
+                  "name": "b2",
+                  "width": "fill_container",
+                  "height": 100,
+                  "fill": "#EEF2F8",
+                  "cornerRadius": 8,
+                  "stroke": {
+                    "align": "inside",
+                    "thickness": 3,
+                    "fill": "#12223C"
+                  },
+                  "layout": "vertical",
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "7Jz8D",
+                      "fill": "#1E2935",
+                      "textGrowth": "fixed-width",
+                      "width": 100,
+                      "content": "Orbit Determination",
+                      "textAlign": "center",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "Bp3ui",
+                  "name": "b3",
+                  "width": "fill_container",
+                  "height": 100,
+                  "fill": "#EEF2F8",
+                  "cornerRadius": 8,
+                  "stroke": {
+                    "align": "inside",
+                    "thickness": 3,
+                    "fill": "#12223C"
+                  },
+                  "layout": "vertical",
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "g8z1G",
+                      "fill": "#1E2935",
+                      "textGrowth": "fixed-width",
+                      "width": 100,
+                      "content": "Deterministic Propagation",
+                      "textAlign": "center",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 10,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "7tERr",
+                  "name": "ba4",
+                  "enabled": false,
+                  "fill": "#5E6A79",
+                  "content": "→",
+                  "fontFamily": "Geist",
+                  "fontSize": 16,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "text",
+                  "id": "aTG9o",
+                  "name": "ba5",
+                  "enabled": false,
+                  "fill": "#5E6A79",
+                  "content": "→",
+                  "fontFamily": "Geist",
+                  "fontSize": 16,
+                  "fontWeight": "600"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "pjzRc",
+              "name": "Decision Chain",
+              "enabled": false,
+              "width": "fill_container",
+              "height": 88,
+              "fill": "#EEF2F8",
+              "cornerRadius": 10,
+              "stroke": {
+                "align": "inside",
+                "thickness": 3,
+                "fill": "#12223C"
+              },
+              "gap": 10,
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "jc2A7",
+                  "fill": "#5E6A79",
+                  "content": "from refined alerts",
+                  "fontFamily": "JetBrains Mono",
+                  "fontSize": 12,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "frame",
+                  "id": "1nhpU",
+                  "width": 260,
+                  "height": 56,
+                  "fill": "#174157",
+                  "cornerRadius": 8,
+                  "stroke": {
+                    "align": "inside",
+                    "thickness": 1,
+                    "fill": "#5BC4AA"
+                  },
+                  "layout": "vertical",
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "pmC0E",
+                      "fill": "#E8FFF8",
+                      "textGrowth": "fixed-width",
+                      "width": 230,
+                      "content": "Risk-Aware Maneuver Planning",
+                      "textAlign": "center",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 12,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "EihZK",
+                  "fill": "#78CDBB",
+                  "content": "→",
+                  "fontFamily": "Geist",
+                  "fontSize": 22,
+                  "fontWeight": "600"
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "id": "S4eqg",
+              "name": "f1",
+              "fill": "#5E6A79",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "Our system upgrades the SDA decision pipeline by calibrating uncertainty before collision risk estimation and enabling risk-aware maneuver planning.",
+              "lineHeight": 1.5,
+              "textAlign": "center",
+              "fontFamily": "JetBrains Mono",
+              "fontSize": 13,
+              "fontWeight": "normal"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "yB8gJ",
+          "x": 72,
+          "y": 2754,
+          "name": "Section 5 / Layered SDA Architecture",
+          "width": 1296,
+          "fill": "#F8F9FB",
+          "cornerRadius": 18,
+          "stroke": {
+            "align": "inside",
+            "thickness": 3,
+            "fill": "#12223C"
+          },
+          "layout": "vertical",
+          "gap": 18,
+          "padding": 28,
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "text",
+              "id": "SOm4R",
+              "name": "l1",
+              "fill": "#5E6A79",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "Layered SDA Architecture",
+              "fontFamily": "JetBrains Mono",
+              "fontSize": 13,
+              "fontWeight": "500",
+              "letterSpacing": 1.5
+            },
+            {
+              "type": "text",
+              "id": "4gDWK",
+              "name": "t1",
+              "fill": "#1E2935",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "Operational infrastructure augmented with calibrated uncertainty and decision intelligence",
+              "lineHeight": 1.08,
+              "fontFamily": "Geist",
+              "fontSize": 42,
+              "fontWeight": "700"
+            },
+            {
+              "type": "text",
+              "id": "bKfdK",
+              "name": "s1",
+              "fill": "#2A3748",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "CTPC calibrates uncertainty before collision risk estimation and enables risk-aware maneuver planning.",
+              "lineHeight": 1.55,
+              "fontFamily": "JetBrains Mono",
+              "fontSize": 14,
+              "fontWeight": "normal"
+            },
+            {
+              "type": "frame",
+              "id": "bz24f",
+              "name": "Layered SDA Architecture",
+              "width": 1240,
+              "height": 336,
+              "fill": "#EEF2F8",
+              "cornerRadius": 12,
+              "stroke": {
+                "align": "inside",
+                "thickness": 3,
+                "fill": "#12223C"
+              },
+              "layout": "none",
+              "children": [
+                {
+                  "type": "rectangle",
+                  "cornerRadius": 10,
+                  "id": "1Rs0o",
+                  "x": 222,
+                  "y": 96,
+                  "name": "augmentationBand",
+                  "opacity": 0.12,
+                  "fill": "#0D2E3D",
+                  "width": 778,
+                  "height": 228
+                },
+                {
+                  "type": "text",
+                  "id": "qJylL",
+                  "x": 36,
+                  "y": 52,
+                  "name": "opLabel",
+                  "fill": "#5E6A79",
+                  "content": "Observation Layer",
+                  "fontFamily": "JetBrains Mono",
+                  "fontSize": 10,
+                  "fontWeight": "500",
+                  "letterSpacing": 1.2
+                },
+                {
+                  "type": "rectangle",
+                  "cornerRadius": 10,
+                  "id": "hM02r",
+                  "x": 18,
+                  "y": 24,
+                  "name": "opBg",
+                  "opacity": 0.42,
+                  "fill": "#E4E9F0",
+                  "width": 1204,
+                  "height": 64
+                },
+                {
+                  "type": "frame",
+                  "id": "sb4DB",
+                  "x": 220,
+                  "y": 36,
+                  "name": "b1",
+                  "width": 220,
+                  "height": 48,
+                  "fill": "#EEF2F8",
+                  "cornerRadius": 8,
+                  "stroke": {
+                    "align": "inside",
+                    "thickness": 3,
+                    "fill": "#12223C"
+                  },
+                  "layout": "vertical",
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "H6Tah",
+                      "name": "b1t",
+                      "fill": "#1E2935",
+                      "content": "Sensors",
+                      "textAlign": "center",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 12,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "Cbu97",
+                  "x": 452,
+                  "y": 47,
+                  "name": "ar1",
+                  "fill": "#5E6A79",
+                  "content": "→",
+                  "fontFamily": "Geist",
+                  "fontSize": 24,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "frame",
+                  "id": "St4TM",
+                  "x": 500,
+                  "y": 36,
+                  "name": "b2",
+                  "width": 220,
+                  "height": 48,
+                  "fill": "#EEF2F8",
+                  "cornerRadius": 8,
+                  "stroke": {
+                    "align": "inside",
+                    "thickness": 3,
+                    "fill": "#12223C"
+                  },
+                  "layout": "vertical",
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "wn0HL",
+                      "name": "b2t",
+                      "fill": "#1E2935",
+                      "content": "Orbit Determination",
+                      "textAlign": "center",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 12,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "8EaGL",
+                  "x": 472,
+                  "y": 47,
+                  "name": "ar2",
+                  "fill": "#5E6A79",
+                  "content": "→",
+                  "fontFamily": "Geist",
+                  "fontSize": 24,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "frame",
+                  "id": "SsQFR",
+                  "x": 500,
+                  "y": 112,
+                  "name": "b3",
+                  "width": 220,
+                  "height": 48,
+                  "fill": "#EEF2F8",
+                  "cornerRadius": 8,
+                  "stroke": {
+                    "align": "inside",
+                    "thickness": 3,
+                    "fill": "#12223C"
+                  },
+                  "layout": "vertical",
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "cURCr",
+                      "name": "b3t1",
+                      "fill": "#1E2935",
+                      "content": "Deterministic Propagation",
+                      "textAlign": "center",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 10,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "text",
+                      "id": "2d9aj",
+                      "name": "b3t2",
+                      "enabled": false,
+                      "fill": "#5E6A79",
+                      "content": "uncertainty degrades",
+                      "textAlign": "center",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 9,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "DXZwm",
+                  "x": 602,
+                  "y": 87,
+                  "name": "ar3",
+                  "fill": "#5E6A79",
+                  "content": "↓",
+                  "fontFamily": "Geist",
+                  "fontSize": 24,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "text",
+                  "id": "gvyiV",
+                  "x": 36,
+                  "y": 128,
+                  "name": "sisLabel",
+                  "fill": "#5E6A79",
+                  "content": "Prediction Layer",
+                  "fontFamily": "JetBrains Mono",
+                  "fontSize": 10,
+                  "fontWeight": "600",
+                  "letterSpacing": 1.2
+                },
+                {
+                  "type": "rectangle",
+                  "cornerRadius": 10,
+                  "id": "HUy0T",
+                  "x": 18,
+                  "y": 100,
+                  "name": "sisBg",
+                  "opacity": 0.42,
+                  "fill": "#E4E9F0",
+                  "width": 1204,
+                  "height": 64
+                },
+                {
+                  "type": "frame",
+                  "id": "je1Z7",
+                  "x": 240,
+                  "y": 108,
+                  "name": "ctpc",
+                  "width": 220,
+                  "height": 56,
+                  "fill": "#13445B",
+                  "cornerRadius": 8,
+                  "stroke": {
+                    "align": "inside",
+                    "thickness": 3,
+                    "fill": "#52C1DD"
+                  },
+                  "layout": "vertical",
+                  "gap": 2,
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "Uj5nL",
+                      "name": "ctpcT1",
+                      "fill": "#D9F7FF",
+                      "content": "CTPC Probabilistic Corrector",
+                      "textAlign": "center",
+                      "fontFamily": "Geist",
+                      "fontSize": 11,
+                      "fontWeight": "700"
+                    },
+                    {
+                      "type": "text",
+                      "id": "2p3uS",
+                      "name": "ctpcT2",
+                      "fill": "#B8EAF4",
+                      "content": "Probabilistic Corrector",
+                      "textAlign": "center",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 9,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "DPHWj",
+                  "x": 992,
+                  "y": 24,
+                  "name": "newTag1",
+                  "enabled": false,
+                  "width": 36,
+                  "height": 16,
+                  "fill": "#52C1DD",
+                  "cornerRadius": 4,
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "S9oCR",
+                      "name": "newTag1t",
+                      "fill": "#FFFFFF",
+                      "content": "NEW",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 8,
+                      "fontWeight": "700"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "YbK7z",
+                  "x": 472,
+                  "y": 121,
+                  "name": "vArrow",
+                  "fill": "#5E6A79",
+                  "content": "←",
+                  "fontFamily": "Geist",
+                  "fontSize": 24,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "text",
+                  "id": "hjKDT",
+                  "x": 36,
+                  "y": 204,
+                  "name": "opLabel2",
+                  "fill": "#5E6A79",
+                  "content": "Risk Intelligence Layer",
+                  "fontFamily": "JetBrains Mono",
+                  "fontSize": 10,
+                  "fontWeight": "500",
+                  "letterSpacing": 1.2
+                },
+                {
+                  "type": "rectangle",
+                  "cornerRadius": 10,
+                  "id": "dTz6z",
+                  "x": 18,
+                  "y": 176,
+                  "name": "opBg2",
+                  "opacity": 0.42,
+                  "fill": "#E4E9F0",
+                  "width": 1204,
+                  "height": 64
+                },
+                {
+                  "type": "rectangle",
+                  "cornerRadius": 10,
+                  "id": "VHMfK",
+                  "x": 18,
+                  "y": 252,
+                  "name": "sisBg2",
+                  "opacity": 0.42,
+                  "fill": "#E4E9F0",
+                  "width": 1204,
+                  "height": 64
+                },
+                {
+                  "type": "text",
+                  "id": "yB2UG",
+                  "x": 36,
+                  "y": 280,
+                  "name": "sisLabel2",
+                  "fill": "#5E6A79",
+                  "content": "Decision Layer",
+                  "fontFamily": "JetBrains Mono",
+                  "fontSize": 10,
+                  "fontWeight": "600",
+                  "letterSpacing": 1.2
+                },
+                {
+                  "type": "frame",
+                  "id": "ZBu0W",
+                  "x": 500,
+                  "y": 188,
+                  "name": "r2b1",
+                  "width": 220,
+                  "height": 48,
+                  "fill": "#EEF2F8",
+                  "cornerRadius": 8,
+                  "stroke": {
+                    "align": "inside",
+                    "thickness": 3,
+                    "fill": "#12223C"
+                  },
+                  "layout": "vertical",
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "jtpMb",
+                      "name": "r2b1t",
+                      "fill": "#1E2935",
+                      "content": "Collision Probability Computation",
+                      "textAlign": "center",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 10,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "XshN2",
+                  "x": 472,
+                  "y": 199,
+                  "name": "la1",
+                  "fill": "#5E6A79",
+                  "content": "→",
+                  "fontFamily": "Geist",
+                  "fontSize": 24,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "frame",
+                  "id": "UMv6u",
+                  "x": 760,
+                  "y": 188,
+                  "name": "r2b2",
+                  "width": 220,
+                  "height": 48,
+                  "fill": "#EEF2F8",
+                  "cornerRadius": 8,
+                  "stroke": {
+                    "align": "inside",
+                    "thickness": 3,
+                    "fill": "#12223C"
+                  },
+                  "layout": "vertical",
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "mEfmV",
+                      "name": "r2b2t",
+                      "fill": "#1E2935",
+                      "content": "Refined Alerts",
+                      "textAlign": "center",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 12,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "NfRQh",
+                  "x": 732,
+                  "y": 199,
+                  "name": "la2",
+                  "fill": "#5E6A79",
+                  "content": "→",
+                  "fontFamily": "Geist",
+                  "fontSize": 24,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "frame",
+                  "id": "5TSX2",
+                  "x": 760,
+                  "y": 264,
+                  "name": "r2b3",
+                  "width": 220,
+                  "height": 56,
+                  "fill": "#13445B",
+                  "cornerRadius": 8,
+                  "stroke": {
+                    "align": "inside",
+                    "thickness": 3,
+                    "fill": "#52C1DD"
+                  },
+                  "layout": "vertical",
+                  "gap": 2,
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "wRkvj",
+                      "name": "r2b3t",
+                      "fill": "#D9F7FF",
+                      "textGrowth": "fixed-width",
+                      "width": 200,
+                      "content": "Risk-Aware Maneuver Planning",
+                      "textAlign": "center",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 10,
+                      "fontWeight": "600"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "bSSl1",
+                  "x": 460,
+                  "y": 156,
+                  "name": "newTag2",
+                  "enabled": false,
+                  "width": 36,
+                  "height": 16,
+                  "fill": "#52C1DD",
+                  "cornerRadius": 4,
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "fWOqI",
+                      "name": "newTag2t",
+                      "fill": "#FFFFFF",
+                      "content": "NEW",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 8,
+                      "fontWeight": "700"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "hSe3L",
+                  "x": 992,
+                  "y": 275,
+                  "name": "la3",
+                  "fill": "#5E6A79",
+                  "content": "→",
+                  "fontFamily": "Geist",
+                  "fontSize": 24,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "frame",
+                  "id": "x3AnC",
+                  "x": 1020,
+                  "y": 264,
+                  "name": "opDec",
+                  "width": 220,
+                  "height": 56,
+                  "fill": "#EEF2F8",
+                  "cornerRadius": 8,
+                  "stroke": {
+                    "align": "inside",
+                    "thickness": 3,
+                    "fill": "#12223C"
+                  },
+                  "layout": "vertical",
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "pOnbA",
+                      "name": "opDecT",
+                      "fill": "#1E2935",
+                      "content": "Operator Decision",
+                      "textAlign": "center",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 12,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "05AdD",
+                  "x": 130,
+                  "y": 252,
+                  "name": "legend",
+                  "enabled": false,
+                  "gap": 6,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "rectangle",
+                      "cornerRadius": 3,
+                      "id": "2lEc0",
+                      "name": "lk1",
+                      "fill": "#E4E9F0",
+                      "width": 14,
+                      "height": 14,
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": 2,
+                        "fill": "#12223C"
+                      }
+                    },
+                    {
+                      "type": "text",
+                      "id": "M3yRD",
+                      "name": "lt1",
+                      "fill": "#5E6A79",
+                      "content": "Existing SDA Modules",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 10,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "rectangle",
+                      "id": "izedf",
+                      "name": "sep1",
+                      "fill": "#C8D1DC",
+                      "width": 1,
+                      "height": 12
+                    },
+                    {
+                      "type": "rectangle",
+                      "cornerRadius": 3,
+                      "id": "lC4M4",
+                      "name": "lk2",
+                      "fill": "#13445B",
+                      "width": 14,
+                      "height": 14,
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": 2,
+                        "fill": "#52C1DD"
+                      }
+                    },
+                    {
+                      "type": "text",
+                      "id": "Dm1ax",
+                      "name": "lt2",
+                      "fill": "#52C1DD",
+                      "content": "SiS Augmentation (New)",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 10,
+                      "fontWeight": "600"
+                    },
+                    {
+                      "type": "rectangle",
+                      "id": "DjYi1",
+                      "name": "sep2",
+                      "fill": "#C8D1DC",
+                      "width": 1,
+                      "height": 12
+                    },
+                    {
+                      "type": "rectangle",
+                      "cornerRadius": 3,
+                      "id": "MNG1R",
+                      "name": "lk3",
+                      "fill": "#164A45",
+                      "width": 14,
+                      "height": 14,
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": 2,
+                        "fill": "#66D2B0"
+                      }
+                    },
+                    {
+                      "type": "text",
+                      "id": "ulnLm",
+                      "name": "lt3",
+                      "fill": "#5E6A79",
+                      "content": "Final Output",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 10,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "xQeJo",
+                  "x": 480,
+                  "y": 36,
+                  "name": "tracking",
+                  "width": 220,
+                  "height": 48,
+                  "fill": "#EEF2F8",
+                  "cornerRadius": 8,
+                  "stroke": {
+                    "align": "inside",
+                    "thickness": 3,
+                    "fill": "#12223C"
+                  },
+                  "layout": "vertical",
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "42LMW",
+                      "name": "trackTxt",
+                      "fill": "#1E2935",
+                      "content": "Tracking Networks",
+                      "textAlign": "center",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 12,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "2K0y9",
+                  "x": 240,
+                  "y": 188,
+                  "name": "covariance",
+                  "width": 220,
+                  "height": 48,
+                  "fill": "#EEF2F8",
+                  "cornerRadius": 8,
+                  "stroke": {
+                    "align": "inside",
+                    "thickness": 3,
+                    "fill": "#12223C"
+                  },
+                  "layout": "vertical",
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "6dL8L",
+                      "name": "covTxt",
+                      "fill": "#1E2935",
+                      "content": "Calibrated Covariance",
+                      "textAlign": "center",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "EjNlN",
+                  "x": 342,
+                  "y": 166,
+                  "name": "v1",
+                  "fill": "#5E6A79",
+                  "content": "↓",
+                  "fontFamily": "Geist",
+                  "fontSize": 24,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "text",
+                  "id": "MKrgA",
+                  "x": 862,
+                  "y": 242,
+                  "name": "v2",
+                  "fill": "#5E6A79",
+                  "content": "↓",
+                  "fontFamily": "Geist",
+                  "fontSize": 24,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "text",
+                  "id": "PQqms",
+                  "x": 728,
+                  "y": 84,
+                  "name": "augmentationLabel",
+                  "fill": "#52C1DD",
+                  "content": "SiS Augmentation Layer",
+                  "fontFamily": "JetBrains Mono",
+                  "fontSize": 10,
+                  "fontWeight": "600",
+                  "letterSpacing": 1.2
+                },
+                {
+                  "type": "text",
+                  "id": "ZHuYp",
+                  "x": 224,
+                  "y": 14,
+                  "name": "infraLbl",
+                  "fill": "#5E6A79",
+                  "content": "Existing SDA Infrastructure",
+                  "fontFamily": "JetBrains Mono",
+                  "fontSize": 10,
+                  "fontWeight": "500",
+                  "letterSpacing": 1.1
+                },
+                {
+                  "type": "text",
+                  "id": "3CL5W",
+                  "x": 168,
+                  "y": 94,
+                  "name": "vL1",
+                  "fill": "#8A95A5",
+                  "content": "↓",
+                  "fontFamily": "Geist",
+                  "fontSize": 18,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "text",
+                  "id": "N3qox",
+                  "x": 168,
+                  "y": 170,
+                  "name": "vL2",
+                  "fill": "#8A95A5",
+                  "content": "↓",
+                  "fontFamily": "Geist",
+                  "fontSize": 18,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "text",
+                  "id": "mM7Ga",
+                  "x": 168,
+                  "y": 246,
+                  "name": "vL3",
+                  "fill": "#8A95A5",
+                  "content": "↓",
+                  "fontFamily": "Geist",
+                  "fontSize": 18,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "text",
+                  "id": "LYk3L",
+                  "x": 500,
+                  "y": 240,
+                  "name": "riskNote",
+                  "fill": "#5E6A79",
+                  "textGrowth": "fixed-width",
+                  "width": 460,
+                  "content": "Stable risk estimation enabled by calibrated uncertainty.",
+                  "textAlign": "center",
+                  "fontFamily": "JetBrains Mono",
+                  "fontSize": 9,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "4aNbG",
+              "name": "Augmented Pipeline",
+              "enabled": false,
+              "width": "fill_container",
+              "fill": "#EEF2F8",
+              "cornerRadius": 12,
+              "stroke": {
+                "align": "inside",
+                "thickness": 3,
+                "fill": "#12223C"
+              },
+              "gap": 6,
+              "padding": 10,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "LIISP",
+                  "name": "bLbl",
+                  "enabled": false,
+                  "width": 120,
+                  "height": 100,
+                  "fill": "#EEF2F8",
+                  "cornerRadius": 8,
+                  "stroke": {
+                    "align": "inside",
+                    "thickness": 3,
+                    "fill": "#12223C"
+                  },
+                  "layout": "vertical",
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "soLmS",
+                      "fill": "#5E6A79",
+                      "textGrowth": "fixed-width",
+                      "width": 100,
+                      "content": "Augmented Pipeline",
+                      "textAlign": "center",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "6XmRE",
+                  "name": "b1",
+                  "width": "fill_container",
+                  "height": 100,
+                  "fill": "#EEF2F8",
+                  "cornerRadius": 8,
+                  "stroke": {
+                    "align": "inside",
+                    "thickness": 3,
+                    "fill": "#12223C"
+                  },
+                  "layout": "vertical",
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "cNgb5",
+                      "fill": "#1E2935",
+                      "textGrowth": "fixed-width",
+                      "width": 100,
+                      "content": "Sensors",
+                      "textAlign": "center",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "68LTE",
+                  "name": "b2",
+                  "width": "fill_container",
+                  "height": 100,
+                  "fill": "#EEF2F8",
+                  "cornerRadius": 8,
+                  "stroke": {
+                    "align": "inside",
+                    "thickness": 3,
+                    "fill": "#12223C"
+                  },
+                  "layout": "vertical",
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "FgYTt",
+                      "fill": "#1E2935",
+                      "textGrowth": "fixed-width",
+                      "width": 100,
+                      "content": "Orbit Determination",
+                      "textAlign": "center",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "EqKW2",
+                  "name": "b3",
+                  "width": "fill_container",
+                  "height": 100,
+                  "fill": "#EEF2F8",
+                  "cornerRadius": 8,
+                  "stroke": {
+                    "align": "inside",
+                    "thickness": 3,
+                    "fill": "#12223C"
+                  },
+                  "layout": "vertical",
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "ozhPE",
+                      "fill": "#1E2935",
+                      "textGrowth": "fixed-width",
+                      "width": 100,
+                      "content": "Deterministic Propagation",
+                      "textAlign": "center",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 10,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "JQcQ1",
+                  "name": "ba4",
+                  "enabled": false,
+                  "fill": "#5E6A79",
+                  "content": "→",
+                  "fontFamily": "Geist",
+                  "fontSize": 16,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "text",
+                  "id": "99Iai",
+                  "name": "ba5",
+                  "enabled": false,
+                  "fill": "#5E6A79",
+                  "content": "→",
+                  "fontFamily": "Geist",
+                  "fontSize": 16,
+                  "fontWeight": "600"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "npaNU",
+              "name": "Decision Chain",
+              "enabled": false,
+              "width": "fill_container",
+              "height": 88,
+              "fill": "#EEF2F8",
+              "cornerRadius": 10,
+              "stroke": {
+                "align": "inside",
+                "thickness": 3,
+                "fill": "#12223C"
+              },
+              "gap": 10,
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "HSfaA",
+                  "fill": "#5E6A79",
+                  "content": "from refined alerts",
+                  "fontFamily": "JetBrains Mono",
+                  "fontSize": 12,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "frame",
+                  "id": "ERepp",
+                  "width": 260,
+                  "height": 56,
+                  "fill": "#174157",
+                  "cornerRadius": 8,
+                  "stroke": {
+                    "align": "inside",
+                    "thickness": 1,
+                    "fill": "#5BC4AA"
+                  },
+                  "layout": "vertical",
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "OgFxN",
+                      "fill": "#E8FFF8",
+                      "textGrowth": "fixed-width",
+                      "width": 230,
+                      "content": "Risk-Aware Maneuver Planning",
+                      "textAlign": "center",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 12,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "fnrrU",
+                  "fill": "#78CDBB",
+                  "content": "→",
+                  "fontFamily": "Geist",
+                  "fontSize": 22,
+                  "fontWeight": "600"
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "id": "lnn4D",
+              "name": "f1",
+              "fill": "#5E6A79",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "Existing SDA infrastructure is enhanced by CTPC uncertainty calibration and risk-aware maneuver planning to produce better operator decisions.",
+              "lineHeight": 1.5,
+              "textAlign": "center",
+              "fontFamily": "JetBrains Mono",
+              "fontSize": 13,
+              "fontWeight": "normal"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "themes": {
+    "Mode": [
+      "Light",
+      "Dark"
+    ]
+  },
+  "variables": {
+    "--sidebar": {
+      "type": "color",
+      "value": [
+        {
+          "value": "#E7E8E5"
+        },
+        {
+          "value": "#18181b",
+          "theme": {
+            "Mode": "Dark"
+          }
+        }
+      ]
+    },
+    "--sidebar-foreground": {
+      "type": "color",
+      "value": [
+        {
+          "value": "#666666"
+        },
+        {
+          "value": "#fafafa",
+          "theme": {
+            "Mode": "Dark"
+          }
+        }
+      ]
+    },
+    "--sidebar-primary": {
+      "type": "color",
+      "value": [
+        {
+          "value": "#18181b"
+        },
+        {
+          "value": "#18181b",
+          "theme": {
+            "Mode": "Dark"
+          }
+        }
+      ]
+    },
+    "--sidebar-primary-foreground": {
+      "type": "color",
+      "value": [
+        {
+          "value": "#fafafa"
+        },
+        {
+          "value": "#fafafa",
+          "theme": {
+            "Mode": "Dark"
+          }
+        }
+      ]
+    },
+    "--sidebar-border": {
+      "type": "color",
+      "value": [
+        {
+          "value": "#CBCCC9"
+        },
+        {
+          "value": "#ffffff1a",
+          "theme": {
+            "Mode": "Dark"
+          }
+        }
+      ]
+    },
+    "--sidebar-accent": {
+      "type": "color",
+      "value": [
+        {
+          "value": "#CBCCC9"
+        },
+        {
+          "value": "#2a2a30",
+          "theme": {
+            "Mode": "Dark"
+          }
+        }
+      ]
+    },
+    "--sidebar-accent-foreground": {
+      "type": "color",
+      "value": [
+        {
+          "value": "#18181b"
+        },
+        {
+          "value": "#fafafa",
+          "theme": {
+            "Mode": "Dark"
+          }
+        }
+      ]
+    },
+    "--sidebar-ring": {
+      "type": "color",
+      "value": [
+        {
+          "value": "#71717a"
+        },
+        {
+          "value": "#71717a",
+          "theme": {
+            "Mode": "Dark"
+          }
+        }
+      ]
+    },
+    "--background": {
+      "type": "color",
+      "value": [
+        {
+          "value": "#F2F3F0"
+        },
+        {
+          "value": "#111111",
+          "theme": {
+            "Mode": "Dark"
+          }
+        }
+      ]
+    },
+    "--foreground": {
+      "type": "color",
+      "value": [
+        {
+          "value": "#111111"
+        },
+        {
+          "value": "#FFFFFF",
+          "theme": {
+            "Mode": "Dark"
+          }
+        }
+      ]
+    },
+    "--card": {
+      "type": "color",
+      "value": [
+        {
+          "value": "#FFFFFF"
+        },
+        {
+          "value": "#1A1A1A",
+          "theme": {
+            "Mode": "Dark"
+          }
+        }
+      ]
+    },
+    "--card-foreground": {
+      "type": "color",
+      "value": [
+        {
+          "value": "#111111"
+        },
+        {
+          "value": "#FFFFFF",
+          "theme": {
+            "Mode": "Dark"
+          }
+        }
+      ]
+    },
+    "--popover": {
+      "type": "color",
+      "value": [
+        {
+          "value": "#FFFFFF"
+        },
+        {
+          "value": "#1A1A1A",
+          "theme": {
+            "Mode": "Dark"
+          }
+        }
+      ]
+    },
+    "--popover-foreground": {
+      "type": "color",
+      "value": [
+        {
+          "value": "#111111"
+        },
+        {
+          "value": "#FFFFFF",
+          "theme": {
+            "Mode": "Dark"
+          }
+        }
+      ]
+    },
+    "--primary": {
+      "type": "color",
+      "value": [
+        {
+          "value": "#FF8400"
+        },
+        {
+          "value": "#FF8400",
+          "theme": {
+            "Mode": "Dark"
+          }
+        }
+      ]
+    },
+    "--primary-foreground": {
+      "type": "color",
+      "value": [
+        {
+          "value": "#111111"
+        },
+        {
+          "value": "#111111",
+          "theme": {
+            "Mode": "Dark"
+          }
+        }
+      ]
+    },
+    "--secondary": {
+      "type": "color",
+      "value": [
+        {
+          "value": "#E7E8E5"
+        },
+        {
+          "value": "#2E2E2E",
+          "theme": {
+            "Mode": "Dark"
+          }
+        }
+      ]
+    },
+    "--secondary-foreground": {
+      "type": "color",
+      "value": [
+        {
+          "value": "#111111"
+        },
+        {
+          "value": "#FFFFFF",
+          "theme": {
+            "Mode": "Dark"
+          }
+        }
+      ]
+    },
+    "--muted": {
+      "type": "color",
+      "value": [
+        {
+          "value": "#F2F3F0"
+        },
+        {
+          "value": "#2E2E2E",
+          "theme": {
+            "Mode": "Dark"
+          }
+        }
+      ]
+    },
+    "--muted-foreground": {
+      "type": "color",
+      "value": [
+        {
+          "value": "#666666"
+        },
+        {
+          "value": "#B8B9B6",
+          "theme": {
+            "Mode": "Dark"
+          }
+        }
+      ]
+    },
+    "--accent": {
+      "type": "color",
+      "value": [
+        {
+          "value": "#F2F3F0"
+        },
+        {
+          "value": "#111111",
+          "theme": {
+            "Mode": "Dark"
+          }
+        }
+      ]
+    },
+    "--accent-foreground": {
+      "type": "color",
+      "value": [
+        {
+          "value": "#111111"
+        },
+        {
+          "value": "#F2F3F0",
+          "theme": {
+            "Mode": "Dark"
+          }
+        }
+      ]
+    },
+    "--destructive": {
+      "type": "color",
+      "value": [
+        {
+          "value": "#D93C15"
+        },
+        {
+          "value": "#FF5C33",
+          "theme": {
+            "Mode": "Dark"
+          }
+        }
+      ]
+    },
+    "--border": {
+      "type": "color",
+      "value": [
+        {
+          "value": "#CBCCC9"
+        },
+        {
+          "value": "#2E2E2E",
+          "theme": {
+            "Mode": "Dark"
+          }
+        }
+      ]
+    },
+    "--input": {
+      "type": "color",
+      "value": [
+        {
+          "value": "#CBCCC9"
+        },
+        {
+          "value": "#2E2E2E",
+          "theme": {
+            "Mode": "Dark"
+          }
+        }
+      ]
+    },
+    "--ring": {
+      "type": "color",
+      "value": [
+        {
+          "value": "#666666"
+        },
+        {
+          "value": "#666666",
+          "theme": {
+            "Mode": "Dark"
+          }
+        }
+      ]
+    },
+    "--white": {
+      "type": "color",
+      "value": "#FFFFFF"
+    },
+    "--black": {
+      "type": "color",
+      "value": "#000000"
+    },
+    "--font-primary": {
+      "type": "string",
+      "value": "JetBrains Mono"
+    },
+    "--font-secondary": {
+      "type": "string",
+      "value": "Geist"
+    },
+    "--radius-none": {
+      "type": "number",
+      "value": 0
+    },
+    "--radius-pill": {
+      "type": "number",
+      "value": 999
+    },
+    "--color-success": {
+      "type": "color",
+      "value": [
+        {
+          "value": "#DFE6E1"
+        },
+        {
+          "value": "#222924",
+          "theme": {
+            "Mode": "Dark"
+          }
+        }
+      ]
+    },
+    "--color-success-foreground": {
+      "type": "color",
+      "value": [
+        {
+          "value": "#004D1A"
+        },
+        {
+          "value": "#B6FFCE",
+          "theme": {
+            "Mode": "Dark"
+          }
+        }
+      ]
+    },
+    "--color-warning": {
+      "type": "color",
+      "value": [
+        {
+          "value": "#E9E3D8"
+        },
+        {
+          "value": "#291C0F",
+          "theme": {
+            "Mode": "Dark"
+          }
+        }
+      ]
+    },
+    "--color-warning-foreground": {
+      "type": "color",
+      "value": [
+        {
+          "value": "#804200"
+        },
+        {
+          "value": "#FF8400",
+          "theme": {
+            "Mode": "Dark"
+          }
+        }
+      ]
+    },
+    "--color-error": {
+      "type": "color",
+      "value": [
+        {
+          "value": "#E5DCDA"
+        },
+        {
+          "value": "#24100B",
+          "theme": {
+            "Mode": "Dark"
+          }
+        }
+      ]
+    },
+    "--color-error-foreground": {
+      "type": "color",
+      "value": [
+        {
+          "value": "#8C1C00"
+        },
+        {
+          "value": "#FF5C33",
+          "theme": {
+            "Mode": "Dark"
+          }
+        }
+      ]
+    },
+    "--color-info": {
+      "type": "color",
+      "value": [
+        {
+          "value": "#DFDFE6"
+        },
+        {
+          "value": "#222229",
+          "theme": {
+            "Mode": "Dark"
+          }
+        }
+      ]
+    },
+    "--color-info-foreground": {
+      "type": "color",
+      "value": [
+        {
+          "value": "#000066"
+        },
+        {
+          "value": "#B2B2FF",
+          "theme": {
+            "Mode": "Dark"
+          }
+        }
+      ]
+    },
+    "--radius-m": {
+      "type": "number",
+      "value": 16
+    }
+  }
+}
